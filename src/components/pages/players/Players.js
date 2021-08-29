@@ -16,11 +16,14 @@ createStyles({
 );
 
 export default function Players(props){
-  const classes = useStyles(); 
+    const classes = useStyles(); 
   
-
     const renderPlayerCards = players => {
-        return (
+        return (players.map((player) => <PlayerCard player={player}></PlayerCard>))
+    };
+
+  return (
+    <Container>
         <Grid
             container
             direction="column"
@@ -28,14 +31,9 @@ export default function Players(props){
             alignItems="stretch"
             spacing={2}
         >
-            {players.map((player) => <PlayerCard player={player}></PlayerCard>)}
-        </Grid>)
-    };
-
-  return (
-    <Container>
-       <SummaryPlayers players={props.save.players}></SummaryPlayers>
-       {renderPlayerCards(props.save.players.list)}
+            <SummaryPlayers players={props.save.players}></SummaryPlayers>
+            {renderPlayerCards(props.save.players.list)}
+       </Grid>
     </Container>
   );
 }

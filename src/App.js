@@ -23,9 +23,8 @@ const useStyles = makeStyles((theme) =>
 );
 
 function App() {
-  const save = {
+  let save = {
     players: {
-      count: 1,
       list: [
         { username: "BranlySt",
           last_update: "202108291455",
