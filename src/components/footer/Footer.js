@@ -21,18 +21,12 @@ createStyles({
   },
 }),
 );
-  
-export default function Footer(){
+  // khfjds
+export default function Footer(props){
   const classes = useStyles(); 
   
-  const [value, setValue] = React.useState('recents');
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
   return (
-    <BottomNavigation value={value} onChange={handleChange} className={classes.root}>
+    <BottomNavigation value={props.value_currentPage} onChange={props.handleChange_currentPage} className={classes.root}>
       <BottomNavigationAction label="Summary" value="summary" icon={<Timeline />} />
       <BottomNavigationAction label="Games" value="games" icon={<EmojiEvents />} />
       <BottomNavigationAction label="Players" value="players" icon={<Group />} />

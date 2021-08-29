@@ -1,5 +1,7 @@
 import Header from './components/header/Header'
 import Footer from './components/footer/Footer'
+import Pages from './components/pages/Pages'
+import React from 'react';
 
 import { createMuiTheme, ThemeProvider, createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 
@@ -23,11 +25,18 @@ const useStyles = makeStyles((theme) =>
 function App() {
   const classes = useStyles(); 
 
+  const [value, setValue] = React.useState('summary');
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
         <Header></Header>
-        <Footer className={classes.footer}></Footer>
+        <Pages value_currentPage={value}></Pages>
+        <Footer className={classes.footer} handleChange_currentPage={handleChange} value_currentPage={value}></Footer>
       </div>
     </ThemeProvider>
   );
