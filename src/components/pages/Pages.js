@@ -1,5 +1,6 @@
 import React from 'react';
 import Summary from "./summary/Summary"
+import Players from "./players/Players"
 import {
   makeStyles,
   createStyles,
@@ -17,16 +18,18 @@ createStyles({
 export default function Pages(props){
   const classes = useStyles(); 
   
-  const renderPage = page => {
+  const renderPage = (page,save) => {
     switch(page) {
         case 'summary':
           return <Summary></Summary>;
+        case 'players':
+            return <Players save={save}></Players>;
         default:
-          return "autre page";
+            return "autre page";
       }
   };
 
   return (
-    renderPage(props.value_currentPage)
+    renderPage(props.value_currentPage, props.save)
   );
 }

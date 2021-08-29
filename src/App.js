@@ -23,6 +23,35 @@ const useStyles = makeStyles((theme) =>
 );
 
 function App() {
+  const save = {
+    players: {
+      count: 1,
+      list: [
+        { username: "BranlySt",
+          last_update: "202108291455",
+          color: "#AAFB00",
+        },
+        {
+          username: "Gazome",
+          last_update: "202108291455",
+          color: "#AAFB00",
+        },
+        {
+          username: "Sebichou",
+          last_update: "202108291455",
+          color: "#AAFB00",
+        },
+        {
+          username: "Lisouille",
+          last_update: "202108291455",
+          color: "#AAFB00",
+        }
+      ]
+    }
+  }
+
+
+
   const classes = useStyles(); 
 
   const [value, setValue] = React.useState('summary');
@@ -35,7 +64,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <div className="App">
         <Header></Header>
-        <Pages value_currentPage={value}></Pages>
+        <Pages value_currentPage={value} save={save}></Pages>
         <Footer className={classes.footer} handleChange_currentPage={handleChange} value_currentPage={value}></Footer>
       </div>
     </ThemeProvider>

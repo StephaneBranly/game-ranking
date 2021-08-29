@@ -32,16 +32,16 @@ createStyles({
 }),
 );
 
-export default function Footer(props){
+export default function Summary(props){
   const classes = useStyles(); 
   
   return (
     <Container>
         <Grid
-        container
-        direction="row"
-        justify="space-evenly"
-        alignItems="stretch"
+            container
+            direction="row"
+            justify="space-evenly"
+            alignItems="stretch"
         >
             <Grid item><Paper className={classes.second}>Best player <EmojiEvents></EmojiEvents></Paper></Grid>
             <Grid item><Paper className={classes.first}>Best player <EmojiEvents></EmojiEvents></Paper></Grid>
