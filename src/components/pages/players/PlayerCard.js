@@ -35,7 +35,7 @@ export default function PlayerCard(props){
   const classes = useStyles(); 
   console.log(props)
   return (
-    <Grid item spacing={2}>
+    <Grid item spacing={1}>
         <Card className={classes.PlayerProfile}>
             <Grid
                 container
@@ -49,7 +49,7 @@ export default function PlayerCard(props){
                         direction="row"
                         justify="space-between"
                         alignItems="baseline"
-                        spacing={2}
+                        spacing={1}
                     >
                         <Grid item>
                             <IconButton size="small">
@@ -67,7 +67,7 @@ export default function PlayerCard(props){
                         direction="row"
                         justify="space-between"
                         alignItems="baseline"
-                        spacing={2}
+                        spacing={1}
                     >
                         <Grid item><Badge badgeContent={4} showZero className={classes.first} color="primary"><EmojiEvents /></Badge></Grid>
                         <Grid item><Badge badgeContent={14} showZero className={classes.second} color="primary"><EmojiEvents /></Badge></Grid>

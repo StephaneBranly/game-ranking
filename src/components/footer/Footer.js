@@ -26,7 +26,7 @@ export default function Footer(props){
   const classes = useStyles(); 
   
   return (
-    <BottomNavigation value={props.value_currentPage} onChange={props.handleChange_currentPage} className={classes.root}>
+    <BottomNavigation value={props.currentPage} onChange={props.handleChangeCurrentPage} className={classes.root}>
       <BottomNavigationAction label="Summary" value="summary" icon={<Timeline />} />
       <BottomNavigationAction label="Games" value="games" icon={<EmojiEvents />} />
       <BottomNavigationAction label="Players" value="players" icon={<Group />} />

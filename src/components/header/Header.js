@@ -15,6 +15,9 @@ createStyles({
     flexGrow: 1,
     marginBottom: theme.spacing(4),
   },
+  AppBar: {
+    background: "radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 110%)"
+  },
   EmojiEvents: {
     marginRight: theme.spacing(2),
   },
@@ -29,7 +32,7 @@ export default function Header(){
   
   return (
       <div className={classes.root}>
-          <AppBar position="static">
+          <AppBar className={classes.AppBar} position="static">
           <Toolbar>
               <EmojiEvents className={classes.EmojiEvents}/>
               <Typography variant="h6" className={classes.title}>

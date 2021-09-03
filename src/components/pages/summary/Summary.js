@@ -16,25 +16,20 @@ createStyles({
         padding: theme.spacing(1),
     },
     first: {
-        color: "#FFD700",
         padding: theme.spacing(2),
-        boxShadow: "0px 5px 10px #FFD700",
         border: "1px solid #FFD700",
+        background: "linear-gradient(to top, #FFD700, #FCF6BA)"
     },
     second: {
-        color: "#C0C0C0",
         padding: theme.spacing(2),
-        boxShadow: "0px 5px 10px #C0C0C0",
         border: "1px solid #C0C0C0",
-
+        background: "linear-gradient(to top, #B0B0B0, #DFDFDF)"
     },
     third: {
-        color: "#cd7f32",
         padding: theme.spacing(2),
-        boxShadow: "0px 5px 10px #cd7f32",
         border: "1px solid #cd7f32",
+        background: "linear-gradient(to top, #ad5f12, #dd9f52)"
     }
-
 }),
 );
 

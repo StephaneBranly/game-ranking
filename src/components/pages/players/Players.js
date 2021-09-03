@@ -29,10 +29,10 @@ export default function Players(props){
             direction="column"
             justify="flex-start"
             alignItems="stretch"
-            spacing={2}
+            spacing={1}
         >
-            <SummaryPlayers players={props.save.players}></SummaryPlayers>
-            {renderPlayerCards(props.save.players.list)}
+            <SummaryPlayers players={props.data.players}></SummaryPlayers>
+            {renderPlayerCards(props.data.players.list)}
        </Grid>
     </Container>
   );
