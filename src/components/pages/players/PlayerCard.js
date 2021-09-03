@@ -5,6 +5,7 @@ import {
   Card,
   Typography,
   Grid,
+  Container,
 } from "@material-ui/core";
 import Person from '@material-ui/icons/Person';
 import EmojiEvents from '@material-ui/icons/EmojiEvents';
@@ -40,14 +41,14 @@ export default function PlayerCard(props){
                 container
                 direction="row"
                 justify="space-between"
-                alignItems="stretch"
+                alignItems="baseline"
             >
                 <Grid item>
                     <Grid
                         container
                         direction="row"
                         justify="space-between"
-                        alignItems="stretch"
+                        alignItems="baseline"
                         spacing={2}
                     >
                         <Grid item>
@@ -55,7 +56,7 @@ export default function PlayerCard(props){
                                 <MoreVert />
                             </IconButton>
                         </Grid>
-                        <Grid item><Person style={{color: props.player.color}}></Person></Grid>
+                        <Grid item><Badge><Person style={{color: props.player.color}}/></Badge></Grid>
 
                         <Grid item><Typography>{props.player.username}</Typography></Grid>
                     </Grid>
@@ -65,7 +66,7 @@ export default function PlayerCard(props){
                         container
                         direction="row"
                         justify="space-between"
-                        alignItems="stretch"
+                        alignItems="baseline"
                         spacing={2}
                     >
                         <Grid item><Badge badgeContent={4} showZero className={classes.first} color="primary"><EmojiEvents /></Badge></Grid>

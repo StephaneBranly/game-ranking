@@ -33,17 +33,17 @@ function App() {
         {
           username: "Gazome",
           last_update: "202108291455",
-          color: "#AAFB00",
+          color: "#BA2B00",
         },
         {
           username: "Sebichou",
           last_update: "202108291455",
-          color: "#AAFB00",
+          color: "#9ADBF4",
         },
         {
           username: "Lisouille",
           last_update: "202108291455",
-          color: "#AAFB00",
+          color: "#5A4BD0",
         }
       ]
     }

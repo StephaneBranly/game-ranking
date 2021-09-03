@@ -28,7 +28,7 @@ export default function SummaryPlayers(props){
             container
             direction="row"
             justify="space-evenly"
-            alignItems="stretch"
+            alignItems="baseline"
             spacing={2}
             className={classes.root}
           >
