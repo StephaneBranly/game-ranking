@@ -22,31 +22,23 @@ const useStyles = makeStyles((theme) =>
 );
 
 function App() {
-  let data = {
+  let datatmp = {
     players: {
       list: [
         { username: "BranlySt",
           last_update: "202108291455",
           color: "#AAFB00",
-        },
-        {
-          username: "Gazome",
-          last_update: "202108291455",
-          color: "#BA2B00",
-        },
-        {
-          username: "Sebichou",
-          last_update: "202108291455",
-          color: "#9ADBF4",
-        },
-        {
-          username: "Lisouille",
-          last_update: "202108291455",
-          color: "#5A4BD0",
         }
       ]
     }
   }
+
+  const [value, setValue] = React.useState('summary');
+  const [data, setData] = React.useState(datatmp);
+
+  const classes = useStyles(); 
+
+  
 
   const handlerSaveData = () => {
     var FileSaver = require('file-saver');
@@ -54,10 +46,6 @@ function App() {
     var blob = new Blob([json], {type: "application/json"});
     FileSaver.saveAs(blob, "save_game-ranking.json");
   } 
-
-  const classes = useStyles(); 
-
-  const [value, setValue] = React.useState('summary');
 
   const handleChangeCurrentPage = (event, newValue) => {
     setValue(newValue);
@@ -67,6 +55,7 @@ function App() {
     currentPage:value,
     data:data,
     handlerSaveData: handlerSaveData,
+    setData: setData,
   }
   let footer_prop={
     handleChangeCurrentPage:handleChangeCurrentPage,

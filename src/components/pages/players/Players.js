@@ -31,7 +31,7 @@ export default function Players(props){
             alignItems="stretch"
             spacing={1}
         >
-            <SummaryPlayers players={props.data.players}></SummaryPlayers>
+            <SummaryPlayers data={props.data} setData={props.setData}></SummaryPlayers>
             {renderPlayerCards(props.data.players.list)}
        </Grid>
     </Container>
