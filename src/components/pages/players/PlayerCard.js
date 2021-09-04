@@ -5,17 +5,20 @@ import {
   Card,
   Typography,
   Grid,
-  Container,
+  IconButton,
+  Badge,
+  ClickAwayListener,
+  InputBase
 } from "@material-ui/core";
 import Person from '@material-ui/icons/Person';
 import EmojiEvents from '@material-ui/icons/EmojiEvents';
-import MoreVert from '@material-ui/icons/MoreVert';
-import Badge from '@material-ui/core/Badge';
-import IconButton from '@material-ui/core/IconButton';
+import Delete from '@material-ui/icons/Delete';
+import { ChromePicker } from 'react-color';
+
 
 const useStyles = makeStyles((theme) =>
 createStyles({  
-    PlayerProfile: {
+    Padding: {
         padding: theme.spacing(2),
     },
     first: {
@@ -27,16 +30,42 @@ createStyles({
     },
     third: {
         color: "#cd7f32",
+    },
+    ColorPicker: {
+        position: "absolute",
+        zIndex: 2
+    },
+    Name: {
+        paddingLeft: theme.spacing(1),
+        paddingRight: theme.spacing(1),
+        borderRadius: theme.spacing(1),
+        margin: "0px",
+        border: "1px solid rgba(0,0,0,0.1)",
     }
 }),
 );
 
 export default function PlayerCard(props){
   const classes = useStyles(); 
-  console.log(props)
+
+  const [colorPickerOpen, setColorPickerOpen] = React.useState(false);
+  const [username, setUsername] = React.useState(props.player.username);
+
+  const handleColorChangeComplete = (color) => {
+    let new_data = Object.assign({}, props.player); 
+    new_data.color = color.hex;
+    props.changeUserData(new_data, props.player.uuid);
+  };
+
+  const handleChangeUsername = () => {
+    let new_data = Object.assign({}, props.player); 
+    new_data.username = username;
+    props.changeUserData(new_data, props.player.uuid);
+  }
+
   return (
     <Grid item spacing={1}>
-        <Card className={classes.PlayerProfile}>
+        <Card className={classes.Padding}>
             <Grid
                 container
                 direction="row"
@@ -51,14 +80,10 @@ export default function PlayerCard(props){
                         alignItems="baseline"
                         spacing={1}
                     >
+                        <Grid item><IconButton size="small" onClick={()=>{setColorPickerOpen(true)}}><Person style={{color: props.player.color}}/></IconButton></Grid>
                         <Grid item>
-                            <IconButton size="small">
-                                <MoreVert />
-                            </IconButton>
+                                <ClickAwayListener onClickAway={() => handleChangeUsername()}><InputBase className={classes.Name} onChange={(e) => setUsername(e.target.value)} label="username" defaultValue={props.player.username}/></ClickAwayListener>
                         </Grid>
-                        <Grid item><Badge><Person style={{color: props.player.color}}/></Badge></Grid>
-
-                        <Grid item><Typography>{props.player.username}</Typography></Grid>
                     </Grid>
                 </Grid>
                 <Grid item>
@@ -75,7 +100,14 @@ export default function PlayerCard(props){
                     </Grid>
                 </Grid>
             </Grid>
+
+            {colorPickerOpen && (
+                <ClickAwayListener onClickAway={() => setColorPickerOpen(false)}>
+                    <ChromePicker className={classes.ColorPicker} color={props.player.color} onChangeComplete={handleColorChangeComplete} disableAlpha={true}/>
+                </ClickAwayListener>
+            )}
         </Card>
     </Grid>
+    
   );
 }

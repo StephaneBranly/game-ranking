@@ -19,8 +19,14 @@ export default function Players(props){
     const classes = useStyles(); 
   
     const renderPlayerCards = players => {
-        return (players.map((player) => <PlayerCard player={player}></PlayerCard>))
+        return (players.map((player) => <PlayerCard player={player} changeUserData={changeUserData}></PlayerCard>))
     };
+
+    const changeUserData = (data, uuid) => {
+      let new_data = Object.assign({}, props.data);
+      new_data.players.map(el => (el.uuid === uuid ? Object.assign(el, data) : el))   
+      props.setData(new_data);
+    }
 
   return (
     <Container>
@@ -32,7 +38,7 @@ export default function Players(props){
             spacing={1}
         >
             <SummaryPlayers data={props.data} setData={props.setData}></SummaryPlayers>
-            {renderPlayerCards(props.data.players.list)}
+            {renderPlayerCards(props.data.players)}
        </Grid>
     </Container>
   );

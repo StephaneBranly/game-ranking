@@ -8,7 +8,7 @@ import {
   Button,
 } from "@material-ui/core";
 import PersonAdd from '@material-ui/icons/PersonAdd';
-
+import { uuid } from 'uuidv4';
 
 const useStyles = makeStyles((theme) =>
 createStyles({  
@@ -21,12 +21,15 @@ createStyles({
 export default function SummaryPlayers(props){
   const classes = useStyles(); 
   
+
   const addPlayer = () => {
+
     var randomColor = require('randomcolor'); // import the script
     var color = randomColor();
     let new_data = Object.assign({}, props.data);  // creating copy of state variable jasper
-    new_data.players.list.push(
+    new_data.players.push(
       {   
+        uuid: uuid(),
         username: "New Player",
         last_update: "202108291455",
         color: color,
@@ -46,7 +49,7 @@ export default function SummaryPlayers(props){
             spacing={2}
             className={classes.root}
           >
-            <Grid item><Typography>{props.data.players.list.length} player(s) in this save</Typography></Grid>
+            <Grid item><Typography>{props.data.players.length} player(s)</Typography></Grid>
             <Grid item>
               <Button
                 variant="contained"

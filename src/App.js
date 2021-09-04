@@ -17,20 +17,23 @@ export const theme = createMuiTheme({
 
 const useStyles = makeStyles((theme) =>
   createStyles({
-   
+    App: {
+      paddingBottom: theme.spacing(15)
+    }
   }),
 );
 
 function App() {
   let datatmp = {
-    players: {
-      list: [
-        { username: "BranlySt",
-          last_update: "202108291455",
-          color: "#AAFB00",
-        }
-      ]
-    }
+    players: 
+    [
+      { 
+        uuid: "1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed",
+        username: "BranlySt",
+        last_update: "202108291455",
+        color: "#AAFB00",
+      }
+    ]
   }
 
   const [value, setValue] = React.useState('summary');
@@ -47,6 +50,20 @@ function App() {
     FileSaver.saveAs(blob, "save_game-ranking.json");
   } 
 
+
+  const handlerLoadData = (e) => {
+    e.preventDefault();
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      const data = JSON.parse(e.target.result);
+      console.log(data);
+      setData(data);
+    };
+
+    reader.readAsText(e.target.files[0]);
+  };
+
+
   const handleChangeCurrentPage = (event, newValue) => {
     setValue(newValue);
   };
@@ -55,6 +72,7 @@ function App() {
     currentPage:value,
     data:data,
     handlerSaveData: handlerSaveData,
+    handlerLoadData: handlerLoadData,
     setData: setData,
   }
   let footer_prop={
@@ -64,10 +82,10 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="App">
+      <div className={classes.App}>
         <Header></Header>
         <Pages {...pages_props}></Pages>
-        <Footer className={classes.footer} {...footer_prop}></Footer>
+        <Footer className={classes.Footer} {...footer_prop}></Footer>
       </div>
     </ThemeProvider>
   );

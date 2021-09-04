@@ -28,7 +28,7 @@ export default function Pages(props){
         case 'players':
             return <Players data={props.data} setData={props.setData}></Players>;
         case 'settings':
-            return <Settings handlerSaveData={props.handlerSaveData} setData={props.setData}></Settings>;
+            return <Settings handlerSaveData={props.handlerSaveData} handlerLoadData={props.handlerLoadData}></Settings>;
         default:
             return "autre page";
       }
