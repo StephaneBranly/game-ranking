@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 import Games from '@material-ui/icons/Games';
 import { uuid } from 'uuidv4';
+import { dataType, gameType } from '../../../types/data';
 
 const useStyles = makeStyles((theme) =>
 createStyles({  
@@ -18,22 +19,22 @@ createStyles({
 }),
 );
 
-export default function GamesHeader(props: any){
+export interface GamesHeaderProps{
+  data: dataType,
+  setData: React.Dispatch<React.SetStateAction<dataType>>
+}
+
+export default function GamesHeader(props: GamesHeaderProps){
   const classes = useStyles(); 
   
 
   const addPlayer = () => {
-
-    var randomColor = require('randomcolor'); // import the script
-    var color = randomColor();
-    let new_data = Object.assign({}, props.data);  // creating copy of state variable jasper
-    new_data.games.push(
-      {   
-        uuid: uuid(),
-        username: "New game",
-        last_update: "202108291455",
-        color: color,
-      });    
+    let new_data: dataType = Object.assign({}, props.data);
+    let new_game: gameType = {   
+      uuid: uuid(),
+      gamename: "New game",
+    }
+    new_data.games.push(new_game);    
     props.setData(new_data);
   }
 

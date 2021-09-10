@@ -19,7 +19,12 @@ createStyles({
 }),
 );
 
-export default function Settings(props: any){
+export interface SettingsProps{
+  handlerSaveData: () => void,
+  handlerLoadData: (e: React.ChangeEvent<HTMLInputElement>) => void,
+}
+
+export default function Settings(props: SettingsProps){
     const classes = useStyles(); 
   
     return (
@@ -66,7 +71,7 @@ export default function Settings(props: any){
                 variant="contained"
                 color="primary"
                 startIcon={<GetApp />}
-                onClick={() => props.handlerSaveData()}
+                onClick={props.handlerSaveData}
               >
                 Save data
               </Button>

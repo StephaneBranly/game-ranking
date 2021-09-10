@@ -1,8 +1,9 @@
 import Header from './components/header/Header'
-import Footer from './components/footer/Footer'
-import Pages from './components/pages/Pages'
+import Footer, { FooterProps } from './components/footer/Footer'
+import Pages, { PagesProps } from './components/pages/Pages'
 import React from 'react';
 import { createMuiTheme, ThemeProvider, createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { dataType } from './types/data';
 
 export const theme = createMuiTheme({
   palette: {
@@ -24,7 +25,7 @@ const useStyles = makeStyles((theme) =>
 );
 
 function App() {
-  let datatmp = {
+  let datatmp: dataType = {
     players: [],
     games: []
   }
@@ -61,18 +62,18 @@ function App() {
   };
 
 
-  const handleChangeCurrentPage = (event: EventListener, newValue: string) => {
+  const handleChangeCurrentPage = (event: React.ChangeEvent<{}>, newValue: string) => {
     setValue(newValue);
   };
 
-  let pages_props={
+  let pages_props: PagesProps = {
     currentPage:value,
     data:data,
     handlerSaveData: handlerSaveData,
     handlerLoadData: handlerLoadData,
     setData: setData,
   }
-  let footer_prop={
+  let footer_prop: FooterProps = {
     handleChangeCurrentPage:handleChangeCurrentPage,
     currentPage:value
   }

@@ -8,6 +8,7 @@ import {
 } from "@material-ui/core";
 import PlayersHeader from './PlayersHeader'
 import PlayerCard from './PlayerCard'
+import { dataType, playerType } from '../../../types/data';
 
 const useStyles = makeStyles((theme) =>
 createStyles({  
@@ -15,16 +16,21 @@ createStyles({
 }),
 );
 
-export default function Players(props: any){
+export interface PlayersProps{
+  data: dataType,
+  setData: React.Dispatch<React.SetStateAction<dataType>>
+}
+
+export default function Players(props: PlayersProps){
     const classes = useStyles(); 
   
-    const renderPlayerCards = (players: any[]) => {
-        return (players.map((player: any) => <PlayerCard player={player} changeUserData={changeUserData}></PlayerCard>))
+    const renderPlayerCards = (players: Array<playerType>) => {
+        return (players.map((player: playerType) => <PlayerCard player={player} changePlayerData={changePlayerData}></PlayerCard>))
     };
 
-    const changeUserData = (data: any, uuid: string) => {
-      let new_data = Object.assign({}, props.data);
-      new_data.players.map((el: { uuid: string; }) => (el.uuid === uuid ? Object.assign(el, data) : el))   
+    const changePlayerData = (data: playerType, uuid: string) => {
+      let new_data: dataType = Object.assign({}, props.data);
+      new_data.players.map((el: playerType) => (el.uuid === uuid ? Object.assign(el, data) : el))   
       props.setData(new_data);
     }
 

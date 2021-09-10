@@ -7,6 +7,7 @@ import {
   makeStyles,
   createStyles,
 } from "@material-ui/core";
+import { dataType } from '../../types/data';
 
 
 const useStyles = makeStyles((theme) =>
@@ -17,10 +18,18 @@ createStyles({
 }),
 );
   
-export default function Pages(props: any){
+export interface PagesProps{
+  currentPage: string,
+  data: dataType,
+  setData: React.Dispatch<React.SetStateAction<dataType>>,
+  handlerSaveData: () => void,
+  handlerLoadData: (e: React.ChangeEvent<HTMLInputElement>) => void,
+}
+
+export default function Pages(props: PagesProps){
   const classes = useStyles(); 
   
-  const renderPage = (props: any) => {
+  const renderPage = (props: PagesProps) => {
     switch(props.currentPage) {
         case 'summary':
           return <Summary></Summary>;

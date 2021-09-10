@@ -3,7 +3,6 @@ import {
   makeStyles,
   createStyles,
   Card,
-  Typography,
   Grid,
   IconButton,
   Badge,
@@ -12,8 +11,8 @@ import {
 } from "@material-ui/core";
 import Person from '@material-ui/icons/Person';
 import EmojiEvents from '@material-ui/icons/EmojiEvents';
-import Delete from '@material-ui/icons/Delete';
-import { ChromePicker } from 'react-color';
+import { ChromePicker, ColorResult } from 'react-color';
+import { playerType } from '../../../types/data';
 
 
 const useStyles = makeStyles((theme) =>
@@ -46,22 +45,27 @@ createStyles({
 }),
 );
 
-export default function PlayerCard(props: any){
+export interface PlayerCardProps{
+    player: playerType,
+    changePlayerData: (arg0: playerType, arg1: string) => void,
+}
+
+export default function PlayerCard(props: PlayerCardProps){
   const classes = useStyles(); 
 
   const [colorPickerOpen, setColorPickerOpen] = React.useState(false);
   const [username, setUsername] = React.useState(props.player.username);
 
-  const handleColorChangeComplete = (color: { hex: any; }) => {
-    let new_data = Object.assign({}, props.player); 
+  const handleColorChangeComplete = (color: ColorResult) => {
+    let new_data: playerType = Object.assign({}, props.player); 
     new_data.color = color.hex;
-    props.changeUserData(new_data, props.player.uuid);
+    props.changePlayerData(new_data, props.player.uuid);
   };
 
   const handleChangeUsername = () => {
-    let new_data = Object.assign({}, props.player); 
+    let new_data: playerType = Object.assign({}, props.player); 
     new_data.username = username;
-    props.changeUserData(new_data, props.player.uuid);
+    props.changePlayerData(new_data, props.player.uuid);
   }
 
   return (

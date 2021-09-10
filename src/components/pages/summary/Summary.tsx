@@ -33,7 +33,11 @@ createStyles({
 }),
 );
 
-export default function Summary(props: any){
+export interface SummaryProps{
+
+}
+
+export default function Summary(props: SummaryProps){
   const classes = useStyles(); 
   
   return (

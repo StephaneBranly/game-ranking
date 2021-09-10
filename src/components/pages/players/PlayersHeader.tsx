@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 import PersonAdd from '@material-ui/icons/PersonAdd';
 import { uuid } from 'uuidv4';
+import { dataType } from '../../../types/data';
 
 const useStyles = makeStyles((theme) =>
 createStyles({  
@@ -18,7 +19,12 @@ createStyles({
 }),
 );
 
-export default function PlayersHeader(props: any){
+export interface PlayersHeaderProps{
+  data: dataType,
+  setData: React.Dispatch<React.SetStateAction<dataType>>
+}
+
+export default function PlayersHeader(props: PlayersHeaderProps){
   const classes = useStyles(); 
   
 
@@ -31,7 +37,6 @@ export default function PlayersHeader(props: any){
       {   
         uuid: uuid(),
         username: "New Player",
-        last_update: "202108291455",
         color: color,
       });    
     props.setData(new_data);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import {
   makeStyles,
   createStyles,
@@ -25,8 +25,13 @@ createStyles({
   },
 }),
 );
-  // khfjds
-export default function Footer(props: any){
+
+export interface FooterProps{
+  currentPage: string;
+  handleChangeCurrentPage: (event: React.ChangeEvent<{}>, value: string) => void;
+}
+
+export default function Footer(props: FooterProps){
   const classes = useStyles(); 
   
   const currentPage = props.currentPage;

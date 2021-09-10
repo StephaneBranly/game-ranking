@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 import GamesHeader from './GamesHeader';
 import GameCard from './GameCard';
+import { dataType, gameType } from '../../../types/data';
 
 const useStyles = makeStyles((theme) =>
 createStyles({  
@@ -18,16 +19,21 @@ createStyles({
 }),
 );
 
-export default function Games(props: any){
+export interface GamesProps{
+    data: dataType,
+    setData: React.Dispatch<React.SetStateAction<dataType>>
+}
+
+export default function Games(props: GamesProps){
     const classes = useStyles(); 
     
-    const renderGameCards = (games: any[]) => {
-        return (games.map((game: any) => <GameCard game={game} changeGameData={changeGameData}></GameCard>))
+    const renderGameCards = (games: Array<gameType>) => {
+        return (games.map((game: gameType) => <GameCard game={game} changeGameData={changeGameData}></GameCard>))
     };
 
-    const changeGameData = (data: any, uuid: any) => {
-        let new_data = Object.assign({}, props.data);
-        new_data.games.map((el: { uuid: any; }) => (el.uuid === uuid ? Object.assign(el, data) : el))   
+    const changeGameData = (data: gameType, uuid: string) => {
+        let new_data: dataType = Object.assign({}, props.data) ;
+        new_data.games.map((el: gameType) => (el.uuid === uuid ? Object.assign(el, data) : el))   
         props.setData(new_data);
     }
 

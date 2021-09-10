@@ -7,6 +7,7 @@ import {
   ClickAwayListener,
   InputBase
 } from "@material-ui/core";
+import { gameType } from '../../../types/data';
 
 const useStyles = makeStyles((theme) =>
 createStyles({  
@@ -37,14 +38,18 @@ createStyles({
     }
 }),
 );
+export interface GameCardProps{
+    game: gameType,
+    changeGameData: (arg0: gameType, arg1: string) => void,
+}
 
-export default function GameCard(props: any){
+export default function GameCard(props: GameCardProps){
   const classes = useStyles(); 
 
   const [gamename, setGamename] = React.useState(props.game.gamename);
 
   const handleChangeGamename = () => {
-    let new_data = Object.assign({}, props.game); 
+    let new_data: gameType = Object.assign({}, props.game); 
     new_data.gamename = gamename;
     props.changeGameData(new_data, props.game.uuid);
   }
