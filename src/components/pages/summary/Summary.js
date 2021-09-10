@@ -50,7 +50,7 @@ export default function Summary(props){
             justify="space-evenly"
             alignItems="baseline"
             >
-                <Grid item><Typography>Best player</Typography></Grid><Grid item><Badge><EmojiEvents/></Badge></Grid></Grid></Paper>
+                <Grid item><Typography>Silver player</Typography></Grid><Grid item><Badge><EmojiEvents/></Badge></Grid></Grid></Paper>
             </Grid>
             <Grid item><Paper className={classes.first}><Grid
             container
@@ -58,7 +58,7 @@ export default function Summary(props){
             justify="space-evenly"
             alignItems="baseline"
             >
-                <Grid item><Typography>Best player</Typography></Grid><Grid item><Badge><EmojiEvents/></Badge></Grid></Grid></Paper>
+                <Grid item><Typography>Gold player</Typography></Grid><Grid item><Badge><EmojiEvents/></Badge></Grid></Grid></Paper>
             </Grid>
             <Grid item><Paper className={classes.third}><Grid
             container
@@ -66,7 +66,7 @@ export default function Summary(props){
             justify="space-evenly"
             alignItems="baseline"
             >
-                <Grid item><Typography>Best player</Typography></Grid><Grid item><Badge><EmojiEvents/></Badge></Grid></Grid></Paper>
+                <Grid item><Typography>Bronze player</Typography></Grid><Grid item><Badge><EmojiEvents/></Badge></Grid></Grid></Paper>
             </Grid>
           
         </Grid>

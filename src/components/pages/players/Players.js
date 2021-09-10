@@ -6,7 +6,7 @@ import {
   Grid,
 
 } from "@material-ui/core";
-import SummaryPlayers from './SummaryPlayers'
+import PlayersHeader from './PlayersHeader'
 import PlayerCard from './PlayerCard'
 
 const useStyles = makeStyles((theme) =>
@@ -37,7 +37,7 @@ export default function Players(props){
             alignItems="stretch"
             spacing={1}
         >
-            <SummaryPlayers data={props.data} setData={props.setData}></SummaryPlayers>
+            <PlayersHeader data={props.data} setData={props.setData}></PlayersHeader>
             {renderPlayerCards(props.data.players)}
        </Grid>
     </Container>

@@ -41,6 +41,7 @@ createStyles({
         borderRadius: theme.spacing(1),
         margin: "0px",
         border: "1px solid rgba(0,0,0,0.1)",
+        width: theme.spacing(17)
     }
 }),
 );

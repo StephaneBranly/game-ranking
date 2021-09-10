@@ -25,15 +25,8 @@ const useStyles = makeStyles((theme) =>
 
 function App() {
   let datatmp = {
-    players: 
-    [
-      { 
-        uuid: "1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed",
-        username: "BranlySt",
-        last_update: "202108291455",
-        color: "#AAFB00",
-      }
-    ]
+    players: [],
+    games: []
   }
 
   const [value, setValue] = React.useState('summary');
