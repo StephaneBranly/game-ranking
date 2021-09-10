@@ -4,11 +4,9 @@ import {
   createStyles,
   Container,
   Grid,
-  Card,
-  Button,
 } from "@material-ui/core";
-import Publish from '@material-ui/icons/Publish';
-import GetApp from '@material-ui/icons/GetApp';
+import About from './About';
+import LoadSave, { LoadSaveProps } from './LoadSave';
 
 
 const useStyles = makeStyles((theme) =>
@@ -27,6 +25,11 @@ export interface SettingsProps{
 export default function Settings(props: SettingsProps){
     const classes = useStyles(); 
   
+    const LoadSaveProps: LoadSaveProps = 
+    { 
+      handlerSaveData: props.handlerSaveData,
+      handlerLoadData: props.handlerLoadData,
+    }
     return (
     <Container>
         <Grid
@@ -36,49 +39,8 @@ export default function Settings(props: SettingsProps){
             alignItems="stretch"
             spacing={1}
         >
-            <Grid item>
-            <Card>
-          <Grid
-            container
-            direction="row"
-            justify="space-evenly"
-            alignItems="baseline"
-            spacing={1}
-            className={classes.padding}
-          >
-            <Grid item>
-              <input
-                  style={{ display: "none" }}
-                  accept=".json"
-                  // className={classes.input}
-                  id="contained-button-import"
-                  type="file"
-                  onChange={props.handlerLoadData}
-                />
-                <label htmlFor="contained-button-import">
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    component="span"
-                    startIcon={<Publish />}
-                  >
-                    Load data
-                  </Button>
-                </label>
-            </Grid>
-            <Grid item>
-              <Button
-                variant="contained"
-                color="primary"
-                startIcon={<GetApp />}
-                onClick={props.handlerSaveData}
-              >
-                Save data
-              </Button>
-            </Grid>
-          </Grid>
-       </Card>
-       </Grid>
+          <LoadSave {...LoadSaveProps}></LoadSave>
+          <About></About>
        </Grid>
     </Container>
   );
