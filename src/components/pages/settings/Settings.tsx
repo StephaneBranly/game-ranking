@@ -19,7 +19,7 @@ createStyles({
 }),
 );
 
-export default function Settings(props){
+export default function Settings(props: any){
     const classes = useStyles(); 
   
     return (
@@ -54,7 +54,6 @@ export default function Settings(props){
                   <Button
                     variant="contained"
                     color="primary"
-                    className={classes.button}
                     component="span"
                     startIcon={<Publish />}
                   >
@@ -66,7 +65,6 @@ export default function Settings(props){
               <Button
                 variant="contained"
                 color="primary"
-                className={classes.button}
                 startIcon={<GetApp />}
                 onClick={() => props.handlerSaveData()}
               >

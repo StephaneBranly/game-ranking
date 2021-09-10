@@ -26,7 +26,7 @@ createStyles({
 }),
 );
   // khfjds
-export default function Footer(props){
+export default function Footer(props: any){
   const classes = useStyles(); 
   
   const currentPage = props.currentPage;

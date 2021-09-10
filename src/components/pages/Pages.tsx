@@ -17,10 +17,10 @@ createStyles({
 }),
 );
   
-export default function Pages(props){
+export default function Pages(props: any){
   const classes = useStyles(); 
   
-  const renderPage = (props) => {
+  const renderPage = (props: any) => {
     switch(props.currentPage) {
         case 'summary':
           return <Summary></Summary>;
@@ -31,7 +31,7 @@ export default function Pages(props){
         case 'games':
           return <Games data={props.data} setData={props.setData}></Games>    
         default:
-          return "autre page";
+          return <></>;
       }
   };
 

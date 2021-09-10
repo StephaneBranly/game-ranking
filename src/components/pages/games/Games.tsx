@@ -18,16 +18,16 @@ createStyles({
 }),
 );
 
-export default function Games(props){
+export default function Games(props: any){
     const classes = useStyles(); 
     
-    const renderGameCards = games => {
-        return (games.map((game) => <GameCard game={game} changeGameData={changeGameData}></GameCard>))
+    const renderGameCards = (games: any[]) => {
+        return (games.map((game: any) => <GameCard game={game} changeGameData={changeGameData}></GameCard>))
     };
 
-    const changeGameData = (data, uuid) => {
+    const changeGameData = (data: any, uuid: any) => {
         let new_data = Object.assign({}, props.data);
-        new_data.games.map(el => (el.uuid === uuid ? Object.assign(el, data) : el))   
+        new_data.games.map((el: { uuid: any; }) => (el.uuid === uuid ? Object.assign(el, data) : el))   
         props.setData(new_data);
     }
 

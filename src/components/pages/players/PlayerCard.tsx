@@ -46,13 +46,13 @@ createStyles({
 }),
 );
 
-export default function PlayerCard(props){
+export default function PlayerCard(props: any){
   const classes = useStyles(); 
 
   const [colorPickerOpen, setColorPickerOpen] = React.useState(false);
   const [username, setUsername] = React.useState(props.player.username);
 
-  const handleColorChangeComplete = (color) => {
+  const handleColorChangeComplete = (color: { hex: any; }) => {
     let new_data = Object.assign({}, props.player); 
     new_data.color = color.hex;
     props.changeUserData(new_data, props.player.uuid);
@@ -83,7 +83,7 @@ export default function PlayerCard(props){
                     >
                         <Grid item><IconButton size="small" onClick={()=>{setColorPickerOpen(true)}}><Person style={{color: props.player.color}}/></IconButton></Grid>
                         <Grid item>
-                                <ClickAwayListener onClickAway={() => handleChangeUsername()}><InputBase className={classes.Name} onChange={(e) => setUsername(e.target.value)} label="username" defaultValue={props.player.username}/></ClickAwayListener>
+                                <ClickAwayListener onClickAway={() => handleChangeUsername()}><InputBase className={classes.Name} onChange={(e) => setUsername(e.target.value)} defaultValue={props.player.username}/></ClickAwayListener>
                         </Grid>
                     </Grid>
                 </Grid>

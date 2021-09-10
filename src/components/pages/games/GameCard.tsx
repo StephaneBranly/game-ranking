@@ -38,7 +38,7 @@ createStyles({
 }),
 );
 
-export default function GameCard(props){
+export default function GameCard(props: any){
   const classes = useStyles(); 
 
   const [gamename, setGamename] = React.useState(props.game.gamename);
@@ -67,7 +67,7 @@ export default function GameCard(props){
                         spacing={1}
                     >
                         <Grid item>
-                                <ClickAwayListener onClickAway={() => handleChangeGamename()}><InputBase className={classes.Name} onChange={(e) => setGamename(e.target.value)} label="gamename" defaultValue={props.game.gamename}/></ClickAwayListener>
+                                <ClickAwayListener onClickAway={() => handleChangeGamename()}><InputBase className={classes.Name} onChange={(e) => setGamename(e.target.value)} defaultValue={props.game.gamename}/></ClickAwayListener>
                         </Grid>
                     </Grid>
                 </Grid>

@@ -7,7 +7,7 @@ import {
   Card,
   Button,
 } from "@material-ui/core";
-import PersonAdd from '@material-ui/icons/PersonAdd';
+import Games from '@material-ui/icons/Games';
 import { uuid } from 'uuidv4';
 
 const useStyles = makeStyles((theme) =>
@@ -18,7 +18,7 @@ createStyles({
 }),
 );
 
-export default function PlayersHeader(props){
+export default function GamesHeader(props: any){
   const classes = useStyles(); 
   
 
@@ -27,10 +27,10 @@ export default function PlayersHeader(props){
     var randomColor = require('randomcolor'); // import the script
     var color = randomColor();
     let new_data = Object.assign({}, props.data);  // creating copy of state variable jasper
-    new_data.players.push(
+    new_data.games.push(
       {   
         uuid: uuid(),
-        username: "New Player",
+        username: "New game",
         last_update: "202108291455",
         color: color,
       });    
@@ -49,16 +49,15 @@ export default function PlayersHeader(props){
             spacing={2}
             className={classes.root}
           >
-            <Grid item><Typography>{props.data.players.length} player(s)</Typography></Grid>
+            <Grid item><Typography>{props.data.games.length} game(s)</Typography></Grid>
             <Grid item>
               <Button
                 variant="contained"
                 color="primary"
-                className={classes.button}
-                startIcon={<PersonAdd />}
+                startIcon={<Games />}
                 onClick={() => addPlayer()}
               >
-                Add a new player
+                Add a new game
               </Button>
             </Grid>
           </Grid>

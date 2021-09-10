@@ -15,16 +15,16 @@ createStyles({
 }),
 );
 
-export default function Players(props){
+export default function Players(props: any){
     const classes = useStyles(); 
   
-    const renderPlayerCards = players => {
-        return (players.map((player) => <PlayerCard player={player} changeUserData={changeUserData}></PlayerCard>))
+    const renderPlayerCards = (players: any[]) => {
+        return (players.map((player: any) => <PlayerCard player={player} changeUserData={changeUserData}></PlayerCard>))
     };
 
-    const changeUserData = (data, uuid) => {
+    const changeUserData = (data: any, uuid: string) => {
       let new_data = Object.assign({}, props.data);
-      new_data.players.map(el => (el.uuid === uuid ? Object.assign(el, data) : el))   
+      new_data.players.map((el: { uuid: string; }) => (el.uuid === uuid ? Object.assign(el, data) : el))   
       props.setData(new_data);
     }
 

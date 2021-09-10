@@ -44,20 +44,24 @@ function App() {
   } 
 
 
-  const handlerLoadData = (e) => {
+  const handlerLoadData = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const reader = new FileReader();
-    reader.onload = async (e) => {
-      const data = JSON.parse(e.target.result);
-      console.log(data);
-      setData(data);
+    reader.onload = async (e) => {   
+      if(e.target?.result)
+      {
+        const data = JSON.parse(e.target.result as string);
+        setData(data);  
+      }
     };
-
-    reader.readAsText(e.target.files[0]);
+    if(e.target?.files)
+    {
+      reader.readAsText(e.target.files[0]);
+    }
   };
 
 
-  const handleChangeCurrentPage = (event, newValue) => {
+  const handleChangeCurrentPage = (event: EventListener, newValue: string) => {
     setValue(newValue);
   };
 
@@ -78,7 +82,7 @@ function App() {
       <div className={classes.App}>
         <Header></Header>
         <Pages {...pages_props}></Pages>
-        <Footer className={classes.Footer} {...footer_prop}></Footer>
+        <Footer {...footer_prop}></Footer>
       </div>
     </ThemeProvider>
   );
