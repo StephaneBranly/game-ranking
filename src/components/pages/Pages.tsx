@@ -7,7 +7,7 @@ import {
   makeStyles,
   createStyles,
 } from "@material-ui/core";
-import { dataType } from '../../types/data';
+import { gameType, playerType } from '../../types/data';
 
 
 const useStyles = makeStyles((theme) =>
@@ -20,8 +20,10 @@ createStyles({
   
 export interface PagesProps{
   currentPage: string,
-  data: dataType,
-  setData: React.Dispatch<React.SetStateAction<dataType>>,
+  games: Array<gameType>,
+  setGames: React.Dispatch<React.SetStateAction<Array<gameType>>>
+  players: Array<playerType>,
+  setPlayers:React.Dispatch<React.SetStateAction<Array<playerType>>>
   handlerSaveData: () => void,
   handlerLoadData: (e: React.ChangeEvent<HTMLInputElement>) => void,
 }
@@ -34,11 +36,11 @@ export default function Pages(props: PagesProps){
         case 'summary':
           return <Summary></Summary>;
         case 'players':
-          return <Players data={props.data} setData={props.setData}></Players>;
+          return <Players players={props.players} setPlayers={props.setPlayers}></Players>;
         case 'settings':
           return <Settings handlerSaveData={props.handlerSaveData} handlerLoadData={props.handlerLoadData}></Settings>;
         case 'games':
-          return <Games data={props.data} setData={props.setData}></Games>    
+          return <Games games={props.games} setGames={props.setGames}></Games>    
         default:
           return <></>;
       }

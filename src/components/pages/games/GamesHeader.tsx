@@ -20,8 +20,8 @@ createStyles({
 );
 
 export interface GamesHeaderProps{
-  data: dataType,
-  setData: React.Dispatch<React.SetStateAction<dataType>>
+  games: Array<gameType>,
+  setGames: React.Dispatch<React.SetStateAction<Array<gameType>>>
 }
 
 export default function GamesHeader(props: GamesHeaderProps){
@@ -29,13 +29,12 @@ export default function GamesHeader(props: GamesHeaderProps){
   
 
   const addPlayer = () => {
-    let new_data: dataType = Object.assign({}, props.data);
-    let new_game: gameType = {   
+    let new_game: gameType = 
+    {   
       uuid: uuid(),
       gamename: "New game",
     }
-    new_data.games.push(new_game);    
-    props.setData(new_data);
+    props.setGames(props.games.concat(new_game));
   }
 
 
@@ -50,7 +49,7 @@ export default function GamesHeader(props: GamesHeaderProps){
             spacing={2}
             className={classes.root}
           >
-            <Grid item><Typography>{props.data.games.length} game(s)</Typography></Grid>
+            <Grid item><Typography>{props.games.length} game(s)</Typography></Grid>
             <Grid item>
               <Button
                 variant="contained"

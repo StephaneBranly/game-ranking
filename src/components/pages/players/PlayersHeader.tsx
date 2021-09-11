@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 import PersonAdd from '@material-ui/icons/PersonAdd';
 import { uuid } from 'uuidv4';
-import { dataType } from '../../../types/data';
+import { dataType, playerType } from '../../../types/data';
 
 const useStyles = makeStyles((theme) =>
 createStyles({  
@@ -20,8 +20,8 @@ createStyles({
 );
 
 export interface PlayersHeaderProps{
-  data: dataType,
-  setData: React.Dispatch<React.SetStateAction<dataType>>
+  players: Array<playerType>,
+  setPlayers:React.Dispatch<React.SetStateAction<Array<playerType>>>
 }
 
 export default function PlayersHeader(props: PlayersHeaderProps){
@@ -29,17 +29,15 @@ export default function PlayersHeader(props: PlayersHeaderProps){
   
 
   const addPlayer = () => {
-
     var randomColor = require('randomcolor'); // import the script
     var color = randomColor();
-    let new_data = Object.assign({}, props.data);  // creating copy of state variable jasper
-    new_data.players.push(
-      {   
-        uuid: uuid(),
-        username: "New Player",
-        color: color,
-      });    
-    props.setData(new_data);
+    let new_player: playerType = 
+    {   
+      uuid: uuid(),
+      username: "New Player",
+      color: color,
+    };    
+    props.setPlayers(props.players.concat(new_player));
   }
 
 
@@ -54,7 +52,7 @@ export default function PlayersHeader(props: PlayersHeaderProps){
             spacing={2}
             className={classes.root}
           >
-            <Grid item><Typography>{props.data.players.length} player(s)</Typography></Grid>
+            <Grid item><Typography>{props.players.length} player(s)</Typography></Grid>
             <Grid item>
               <Button
                 variant="contained"

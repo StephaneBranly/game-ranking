@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 import PlayersHeader from './PlayersHeader'
 import PlayerCard from './PlayerCard'
-import { dataType, playerType } from '../../../types/data';
+import { playerType } from '../../../types/data';
 
 const useStyles = makeStyles((theme) =>
 createStyles({  
@@ -17,8 +17,8 @@ createStyles({
 );
 
 export interface PlayersProps{
-  data: dataType,
-  setData: React.Dispatch<React.SetStateAction<dataType>>
+  players: Array<playerType>,
+  setPlayers:React.Dispatch<React.SetStateAction<Array<playerType>>>
 }
 
 export default function Players(props: PlayersProps){
@@ -28,10 +28,10 @@ export default function Players(props: PlayersProps){
         return (players.map((player: playerType) => <PlayerCard player={player} changePlayerData={changePlayerData}></PlayerCard>))
     };
 
-    const changePlayerData = (data: playerType, uuid: string) => {
-      let new_data: dataType = Object.assign({}, props.data);
-      new_data.players.map((el: playerType) => (el.uuid === uuid ? Object.assign(el, data) : el))   
-      props.setData(new_data);
+    const changePlayerData = (player: playerType, uuid: string) => {
+      let new_data: Array<playerType> = props.players;
+      new_data.map((el: playerType) => (el.uuid === uuid ? Object.assign(el, player) : el))   
+      props.setPlayers(new_data);
     }
 
   return (
@@ -43,8 +43,8 @@ export default function Players(props: PlayersProps){
             alignItems="stretch"
             spacing={1}
         >
-            <PlayersHeader data={props.data} setData={props.setData}></PlayersHeader>
-            {renderPlayerCards(props.data.players)}
+            <PlayersHeader players={props.players} setPlayers={props.setPlayers}></PlayersHeader>
+            {renderPlayerCards(props.players)}
        </Grid>
     </Container>
   );

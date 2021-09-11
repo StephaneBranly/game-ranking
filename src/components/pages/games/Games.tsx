@@ -20,8 +20,8 @@ createStyles({
 );
 
 export interface GamesProps{
-    data: dataType,
-    setData: React.Dispatch<React.SetStateAction<dataType>>
+    games: Array<gameType>,
+    setGames: React.Dispatch<React.SetStateAction<Array<gameType>>>
 }
 
 export default function Games(props: GamesProps){
@@ -31,10 +31,10 @@ export default function Games(props: GamesProps){
         return (games.map((game: gameType) => <GameCard game={game} changeGameData={changeGameData}></GameCard>))
     };
 
-    const changeGameData = (data: gameType, uuid: string) => {
-        let new_data: dataType = Object.assign({}, props.data) ;
-        new_data.games.map((el: gameType) => (el.uuid === uuid ? Object.assign(el, data) : el))   
-        props.setData(new_data);
+    const changeGameData = (game: gameType, uuid: string) => {
+        let new_data: Array<gameType> = props.games
+        new_data.map((el: gameType) => (el.uuid === uuid ? Object.assign(el, game) : el))   
+        props.setGames(new_data);
     }
 
     return (
@@ -46,8 +46,8 @@ export default function Games(props: GamesProps){
             alignItems="stretch"
             spacing={1}
         >
-            <GamesHeader data={props.data} setData={props.setData}></GamesHeader>
-            {renderGameCards(props.data.games)}
+            <GamesHeader games={props.games} setGames={props.setGames}></GamesHeader>
+            {renderGameCards(props.games)}
        </Grid>
     </Container>
   );
