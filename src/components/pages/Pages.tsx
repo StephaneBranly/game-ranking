@@ -8,6 +8,7 @@ import {
   createStyles,
 } from "@material-ui/core";
 import { gameType, playerType } from '../../types/data';
+import { severityType } from '../../types/notification';
 
 
 const useStyles = makeStyles((theme) =>
@@ -26,6 +27,7 @@ export interface PagesProps{
   setPlayers:React.Dispatch<React.SetStateAction<Array<playerType>>>
   handlerSaveData: () => void,
   handlerLoadData: (e: React.ChangeEvent<HTMLInputElement>) => void,
+  addNotification: (arg0: string, arg1: severityType) => void,
 }
 
 export default function Pages(props: PagesProps){
@@ -36,7 +38,7 @@ export default function Pages(props: PagesProps){
         case 'summary':
           return <Summary></Summary>;
         case 'players':
-          return <Players players={props.players} setPlayers={props.setPlayers}></Players>;
+          return <Players players={props.players} setPlayers={props.setPlayers} addNotification={props.addNotification}></Players>;
         case 'settings':
           return <Settings handlerSaveData={props.handlerSaveData} handlerLoadData={props.handlerLoadData}></Settings>;
         case 'games':

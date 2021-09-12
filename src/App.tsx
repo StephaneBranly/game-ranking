@@ -95,6 +95,7 @@ function App() {
     setPlayers: setPlayers,
     handlerSaveData: handlerSaveData,
     handlerLoadData: handlerLoadData,
+    addNotification: addNotification,
   }
 
   let footer_prop: FooterProps = {

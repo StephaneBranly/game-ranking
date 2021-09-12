@@ -13,6 +13,7 @@ import Person from '@material-ui/icons/Person';
 import EmojiEvents from '@material-ui/icons/EmojiEvents';
 import { ChromePicker, ColorResult } from 'react-color';
 import { playerType } from '../../../types/data';
+import { severityType } from '../../../types/notification';
 
 
 const useStyles = makeStyles((theme) =>
@@ -48,6 +49,7 @@ createStyles({
 export interface PlayerCardProps{
     player: playerType,
     changePlayerData: (arg0: playerType, arg1: string) => void,
+    addNotification: (arg0: string, arg1: severityType) => void,
 }
 
 export default function PlayerCard(props: PlayerCardProps){
@@ -70,7 +72,7 @@ export default function PlayerCard(props: PlayerCardProps){
 
   return (
     <Grid item spacing={1}>
-        <Card className={classes.Padding}>
+        <Card className={classes.Padding} onClick={() => props.addNotification('click on user','info')}>
             <Grid
                 container
                 direction="row"

@@ -9,6 +9,7 @@ import {
 import PlayersHeader from './PlayersHeader'
 import PlayerCard from './PlayerCard'
 import { playerType } from '../../../types/data';
+import { severityType } from '../../../types/notification';
 
 const useStyles = makeStyles((theme) =>
 createStyles({  
@@ -18,14 +19,15 @@ createStyles({
 
 export interface PlayersProps{
   players: Array<playerType>,
-  setPlayers:React.Dispatch<React.SetStateAction<Array<playerType>>>
+  setPlayers:React.Dispatch<React.SetStateAction<Array<playerType>>>,
+  addNotification: (arg0: string, arg1: severityType) => void,
 }
 
 export default function Players(props: PlayersProps){
     const classes = useStyles(); 
   
     const renderPlayerCards = (players: Array<playerType>) => {
-        return (players.map((player: playerType) => <PlayerCard player={player} changePlayerData={changePlayerData}></PlayerCard>))
+        return (players.map((player: playerType) => <PlayerCard player={player} changePlayerData={changePlayerData} addNotification={props.addNotification}></PlayerCard>))
     };
 
     const changePlayerData = (player: playerType, uuid: string) => {
