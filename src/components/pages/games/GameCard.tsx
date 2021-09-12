@@ -5,7 +5,8 @@ import {
   Card,
   Grid,
   ClickAwayListener,
-  InputBase
+  InputBase,
+  Typography
 } from "@material-ui/core";
 import { gameType } from '../../../types/data';
 
@@ -41,22 +42,16 @@ createStyles({
 export interface GameCardProps{
     game: gameType,
     changeGameData: (arg0: gameType, arg1: string) => void,
+    setCurrentGame: React.Dispatch<React.SetStateAction<gameType|undefined>>
 }
 
 export default function GameCard(props: GameCardProps){
   const classes = useStyles(); 
 
-  const [gamename, setGamename] = React.useState(props.game.gamename);
-
-  const handleChangeGamename = () => {
-    let new_data: gameType = Object.assign({}, props.game); 
-    new_data.gamename = gamename;
-    props.changeGameData(new_data, props.game.uuid);
-  }
 
   return (
     <Grid item spacing={1}>
-        <Card className={classes.Padding}>
+        <Card className={classes.Padding} onClick={() => props.setCurrentGame(props.game)}>
             <Grid
                 container
                 direction="row"
@@ -72,7 +67,7 @@ export default function GameCard(props: GameCardProps){
                         spacing={1}
                     >
                         <Grid item>
-                                <ClickAwayListener onClickAway={() => handleChangeGamename()}><InputBase className={classes.Name} onChange={(e) => setGamename(e.target.value)} defaultValue={props.game.gamename}/></ClickAwayListener>
+                            <Typography>{props.game.gamename}</Typography>
                         </Grid>
                     </Grid>
                 </Grid>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   makeStyles,
   createStyles,
@@ -9,7 +9,8 @@ import {
 } from "@material-ui/core";
 import GamesHeader from './GamesHeader';
 import GameCard from './GameCard';
-import { dataType, gameType } from '../../../types/data';
+import { gameType } from '../../../types/data';
+import GameCompleteCard from './GameCompleteCard';
 
 const useStyles = makeStyles((theme) =>
 createStyles({  
@@ -27,8 +28,10 @@ export interface GamesProps{
 export default function Games(props: GamesProps){
     const classes = useStyles(); 
     
+    const [currentGame, setCurrentGame] = useState(undefined as unknown as gameType|undefined);
+
     const renderGameCards = (games: Array<gameType>) => {
-        return (games.map((game: gameType) => <GameCard game={game} changeGameData={changeGameData}></GameCard>))
+        return (games.map((game: gameType) => <GameCard game={game} changeGameData={changeGameData} setCurrentGame={setCurrentGame}></GameCard>))
     };
 
     const changeGameData = (game: gameType, uuid: string) => {
@@ -38,7 +41,7 @@ export default function Games(props: GamesProps){
     }
 
     return (
-        <Container>
+    <Container>
         <Grid
             container
             direction="column"
@@ -46,8 +49,13 @@ export default function Games(props: GamesProps){
             alignItems="stretch"
             spacing={1}
         >
-            <GamesHeader games={props.games} setGames={props.setGames}></GamesHeader>
-            {renderGameCards(props.games)}
+            { currentGame?
+                <GameCompleteCard game={currentGame} changeGameData={changeGameData} setCurrentGame={setCurrentGame}></GameCompleteCard>
+                :
+                <><GamesHeader games={props.games} setGames={props.setGames}></GamesHeader>
+                {renderGameCards(props.games)}</>
+            }
+            
        </Grid>
     </Container>
   );
