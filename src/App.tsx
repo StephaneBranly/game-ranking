@@ -4,7 +4,8 @@ import Pages, { PagesProps } from './components/pages/Pages'
 import React from 'react';
 import { createMuiTheme, ThemeProvider, createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { dataType, gameType, playerType } from './types/data';
-import Notifications, { NotificationsProps } from './components/pages/notifications/Notifications';
+import Notifications, { NotificationProps } from './components/pages/notifications/Notification';
+import { notificationType, severityType } from './types/notification';
 
 export const theme = createMuiTheme({
   palette: {
@@ -29,7 +30,7 @@ function App() {
   const [page, setPage] = React.useState('summary');
   const [players, setPlayers] = React.useState([]as Array<playerType>);
   const [games, setGames] = React.useState([] as Array<gameType>);
-  const [notifications, setNotifications] = React.useState([] as any);
+  const [notification, setNotification] = React.useState({open: false} as notificationType);
 
   const classes = useStyles(); 
 
@@ -57,7 +58,7 @@ function App() {
           const data = JSON.parse(e.target.result as string);
           setPlayers(data.players);
           setGames(data.games);
-          addNotification("Data correctly loaded");
+          addNotification("Data correctly loaded", "success");
           setPage("summary")
         }
       };
@@ -68,16 +69,18 @@ function App() {
     }
     catch
     {
-      addNotification("Error when loading data");
+      addNotification("Error when loading data", "error");
     }
   };
 
-  const addNotification = (text: string) => {
+  const addNotification = (text: string, severity?: severityType) => {
     const new_notification = 
     {
-      text: text
+      open: true,
+      text: text,
+      severity: severity ? severity : undefined
     }
-    setNotifications(notifications.concat(new_notification))
+    setNotification(new_notification)
   }
 
   const handleChangeCurrentPage = (event: React.ChangeEvent<{}>, new_page: string) => {
@@ -99,9 +102,9 @@ function App() {
     currentPage:page
   }
 
-  let notifications_props: NotificationsProps = {
-    notifications: notifications,
-    setNotifications: setNotifications,
+  let notifications_props: NotificationProps = {
+    notification: notification,
+    setNotification: setNotification,
   }
 
   return (
@@ -111,7 +114,7 @@ function App() {
         <Pages {...pages_props}></Pages>
         <Footer {...footer_prop}></Footer>
       </div>
-      {/* <Notifications {...notifications_props}></Notifications> */}
+      <Notifications {...notifications_props}></Notifications>
     </ThemeProvider>
   );
 }
