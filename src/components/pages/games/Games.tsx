@@ -43,21 +43,20 @@ export default function Games(props: GamesProps){
 
     return (
     <Container>
-        <Grid
-            container
-            direction="column"
-            justify="flex-start"
-            alignItems="stretch"
-            spacing={1}
-        >
-            { currentGame?
-                <GameCompleteCard game={currentGame} changeGameData={changeGameData} setCurrentGame={setCurrentGame} players={props.players}></GameCompleteCard>
-                :
-                <><GamesHeader games={props.games} setGames={props.setGames}></GamesHeader>
-                {renderGameCards(props.games)}</>
-            }
-            
-       </Grid>
+        { currentGame?
+            <GameCompleteCard game={currentGame} changeGameData={changeGameData} setCurrentGame={setCurrentGame} players={props.players}></GameCompleteCard>
+            :
+            <Grid
+                container
+                direction="column"
+                justify="flex-start"
+                alignItems="stretch"
+                spacing={1}
+            >
+                <GamesHeader games={props.games} setGames={props.setGames}></GamesHeader>
+                {renderGameCards(props.games)}
+        </Grid>
+        }
     </Container>
   );
 }

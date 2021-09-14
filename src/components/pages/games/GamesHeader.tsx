@@ -28,7 +28,7 @@ export default function GamesHeader(props: GamesHeaderProps){
   const classes = useStyles(); 
   
 
-  const addPlayer = () => {
+  const addGame = () => {
     let new_game: gameType = 
     {   
       uuid: uuid(),
@@ -55,7 +55,7 @@ export default function GamesHeader(props: GamesHeaderProps){
                 variant="contained"
                 color="primary"
                 startIcon={<Games />}
-                onClick={() => addPlayer()}
+                onClick={() => addGame()}
               >
                 Add a new game
               </Button>

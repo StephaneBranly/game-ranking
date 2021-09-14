@@ -1,7 +1,9 @@
 export type gameType =
 {
     gamename: string,
-    uuid: string
+    uuid: string,
+    players?: Array<string>
+    results?: Array<resultType>
 }
 
 export type playerType =
@@ -15,4 +17,9 @@ export type dataType =
 {
     games: Array<gameType>,
     players: Array<playerType>
+}
+
+export type resultType = 
+{
+    date: string,
 }
