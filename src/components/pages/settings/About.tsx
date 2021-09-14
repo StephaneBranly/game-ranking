@@ -45,13 +45,13 @@ export default function About(props: AboutProps){
                     </Grid>
                     <Grid item>
                         <Container className={classes.subSection}>
-                            <Typography  variant="h5" color="textSecondary">the author</Typography>
+                            <Typography variant="h5" color="textSecondary">the author</Typography>
                             <Typography>Made with love by @stephane_branly.</Typography>
                         </Container>
                     </Grid>
                     <Grid item>
                         <Container className={classes.subSection}>
-                            <Typography  variant="h5" color="textSecondary">the project</Typography>
+                            <Typography variant="h5" color="textSecondary">the project</Typography>
                             <Typography>Project made for personal use first. But feel free to use it.</Typography>
                         </Container>
                     </Grid>

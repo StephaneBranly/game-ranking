@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 import GamesHeader from './GamesHeader';
 import GameCard from './GameCard';
-import { gameType } from '../../../types/data';
+import { gameType, playerType } from '../../../types/data';
 import GameCompleteCard from './GameCompleteCard';
 
 const useStyles = makeStyles((theme) =>
@@ -22,6 +22,7 @@ createStyles({
 
 export interface GamesProps{
     games: Array<gameType>,
+    players: Array<playerType>
     setGames: React.Dispatch<React.SetStateAction<Array<gameType>>>
 }
 
@@ -50,7 +51,7 @@ export default function Games(props: GamesProps){
             spacing={1}
         >
             { currentGame?
-                <GameCompleteCard game={currentGame} changeGameData={changeGameData} setCurrentGame={setCurrentGame}></GameCompleteCard>
+                <GameCompleteCard game={currentGame} changeGameData={changeGameData} setCurrentGame={setCurrentGame} players={props.players}></GameCompleteCard>
                 :
                 <><GamesHeader games={props.games} setGames={props.setGames}></GamesHeader>
                 {renderGameCards(props.games)}</>

@@ -9,10 +9,13 @@ import {
   IconButton,
   Button,
   ButtonGroup,
-  Typography
+  Typography,
+  Avatar,
+  Badge
 } from "@material-ui/core";
-import { gameType } from '../../../types/data';
-import { Delete, Edit, NavigateBefore, PostAdd } from '@material-ui/icons';
+import { gameType, playerType } from '../../../types/data';
+import { Delete, Edit, EmojiEvents, NavigateBefore, PostAdd } from '@material-ui/icons';
+import { AvatarGroup } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) =>
 createStyles({  
@@ -45,6 +48,7 @@ createStyles({
 );
 export interface GameCompleteCardProps{
     game: gameType,
+    players: Array<playerType>,
     changeGameData: (arg0: gameType, arg1: string) => void,
     setCurrentGame: React.Dispatch<React.SetStateAction<gameType|undefined>>
 }
@@ -60,10 +64,33 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
     props.changeGameData(new_data, props.game.uuid);
   }
 
+  const displayPlayersBadges = () => {
+    return (props.players.map((player) => 
+    <Badge
+        overlap="circle"
+        style={{borderColor: "rgba(0,0,0,0)"}}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right',
+        }}
+        badgeContent={<EmojiEvents className={classes.first}/>}
+      >
+        <Avatar alt={player.username} style={{backgroundColor: player.color}}>L</Avatar>
+    </Badge>
+    ));
+  }
+
   return (
     <Grid item spacing={1}>
         <Card className={classes.Padding}>
-            <Grid
+            <Grid 
+                container
+                direction="column"
+                justify="space-between"
+                alignItems="stretch"
+                spacing={1}
+            >
+            <Grid item><Grid
                 container
                 direction="row"
                 justify="space-between"
@@ -73,37 +100,24 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
                     <Grid item><IconButton size="medium" onClick={() => props.setCurrentGame(undefined)}><NavigateBefore/></IconButton></Grid>
                 </Grid>
                 <Grid item>
-                    <Typography color="primary">
-                    {props.game.gamename}
-                    </Typography>
-                </Grid>
-                <Grid item>
                     <ButtonGroup disableElevation variant="contained" color="primary">
                         <Button endIcon={<PostAdd/>}>New result</Button>
                         <Button><Edit/></Button>
                         <Button><Delete/></Button>
                     </ButtonGroup>
                 </Grid>
+            </Grid></Grid>
+            <Grid item>
+                <Typography color="primary" variant="h3" align="center">
+                    {props.game.gamename}
+                </Typography>
             </Grid>
-            <Grid
-                container
-                direction="row"
-                justify="space-between"
-                alignItems="baseline"
-            >
-                <Grid item>
-                    <Grid
-                        container
-                        direction="row"
-                        justify="space-between"
-                        alignItems="baseline"
-                        spacing={1}
-                    >
-                        <Grid item>
-                            <ClickAwayListener onClickAway={() => handleChangeGamename()}><InputBase className={classes.Name} onChange={(e) => setGamename(e.target.value)} defaultValue={props.game.gamename}/></ClickAwayListener>
-                        </Grid>
-                    </Grid>
-                </Grid>
+            <Grid item>
+                <Typography>Players:</Typography>
+                <AvatarGroup max={15}>
+                    {displayPlayersBadges()}
+                </AvatarGroup>
+            </Grid>
             </Grid>
         </Card>
     </Grid>
