@@ -67,6 +67,7 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
   const addResult = () => {
     let newResult: resultType = {
         date: "1",
+        ranks: []
     } 
     let new_data: gameType = Object.assign({}, props.game); 
     if(!new_data.results)

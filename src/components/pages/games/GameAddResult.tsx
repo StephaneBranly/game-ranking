@@ -14,9 +14,11 @@ import {
   ListItemIcon,
   ListItemText,
   Grid,
+  Avatar,
+  Badge,
 } from "@material-ui/core";
-import { gameType, playerType, resultType } from '../../../types/data';
-import { NavigateBefore, NavigateNext, PostAdd } from '@material-ui/icons';
+import { gameType, playerType, resultType, scoreType } from '../../../types/data';
+import { EmojiEvents, NavigateBefore, NavigateNext, PostAdd } from '@material-ui/icons';
 import {
   MuiPickersUtilsProvider,
   DateTimePicker,
@@ -42,6 +44,21 @@ export default function GameAddResult(props: GameAddResultProps){
 
   const [currentStep, setCurrentStep] = React.useState("who");
   const [selectedDate, setSelectedDate] = React.useState(new Date());
+  const [selectedPlayers, setSelectedPlayers] = React.useState([] as Array<scoreType>);
+
+  const playerInResults = (uuidPlayer: string) => {
+    return (selectedPlayers.filter(player => (player.uuid === uuidPlayer)).length !== 0)
+  }
+  const togglePlayer = (uuidPlayer: string) => {
+    if(playerInResults(uuidPlayer))
+      setSelectedPlayers(selectedPlayers.filter(player => player.uuid !== uuidPlayer));
+    else
+      setSelectedPlayers([...selectedPlayers,{uuid: uuidPlayer, rank: 1}]);
+    console.log(selectedPlayers);
+  }
+  const getPlayerProfile = (uuidPlayer: string) => {
+    return (props.players.filter(player => (player.uuid === uuidPlayer))[0])
+  }
 
   const displayCurrentStep = () => {
     if(currentStep === "who")
@@ -49,7 +66,7 @@ export default function GameAddResult(props: GameAddResultProps){
       <DialogContent dividers>
         <Typography>Who was playing?</Typography>
         <List>
-          {renderPlayers(props.players)}
+          {renderCheckboxPlayers(props.players)}
         </List>
       </DialogContent>);
 
@@ -71,23 +88,42 @@ export default function GameAddResult(props: GameAddResultProps){
       return (
         <DialogContent dividers>
           <Typography>Results</Typography>
+          <Grid container spacing={1} direction="column" alignItems="baseline">
+            {renderPlayerRank()}
+          </Grid>
         </DialogContent>
       );
 
     return <Typography>ERROR</Typography>
   }
-  const renderPlayers = (players: Array<playerType>) => {
+  const renderCheckboxPlayers = (players: Array<playerType>) => {
     return players.map((player) => 
-    <ListItem key={player.uuid} dense button onClick={() => {}}>
+    <ListItem key={player.uuid} dense button onClick={() => togglePlayer(player.uuid)}>
       <ListItemIcon>
           <Checkbox
             edge="end"
             tabIndex={-1}
             disableRipple
+            checked={playerInResults(player.uuid)}
+            onClick={() => togglePlayer(player.uuid)}
+            style={{color: player.color}}
         />
         </ListItemIcon>
         <ListItemText id={player.uuid} primary={player.username} />
       </ListItem>)
+  }
+
+  const renderPlayerRank = () => {
+    return selectedPlayers.map((player) => 
+    <Grid item key={player.uuid}>
+      <Grid container
+        direction="row"
+        spacing={1}
+        >
+          <Grid item><Avatar alt={player.uuid} style={{backgroundColor: getPlayerProfile(player.uuid).color}}>L</Avatar></Grid>
+          <Grid item><Typography>{getPlayerProfile(player.uuid).username}</Typography></Grid>
+        </Grid>
+      </Grid>)
   }
 
   const handleDateChange = (date: MaterialUiPickersDate) => {
@@ -106,6 +142,7 @@ export default function GameAddResult(props: GameAddResultProps){
     else if(currentStep === "results")
       setCurrentStep("when");
   }
+
   return (
     <Dialog fullWidth={true} maxWidth="sm" open={props.addResultOpen}>
     <DialogTitle>

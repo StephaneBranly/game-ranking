@@ -19,7 +19,14 @@ export type dataType =
     players: Array<playerType>
 }
 
+export type scoreType = 
+{
+    uuid: string,
+    rank: number
+}
+
 export type resultType = 
 {
     date: string,
+    ranks: Array<scoreType>,
 }
