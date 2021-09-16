@@ -42,7 +42,7 @@ export default function Pages(props: PagesProps){
         case 'settings':
           return <Settings handlerSaveData={props.handlerSaveData} handlerLoadData={props.handlerLoadData}></Settings>;
         case 'games':
-          return <Games games={props.games} setGames={props.setGames} players={props.players}></Games>    
+          return <Games games={props.games} setGames={props.setGames} players={props.players} addNotification={props.addNotification}></Games>    
         default:
           return <></>;
       }

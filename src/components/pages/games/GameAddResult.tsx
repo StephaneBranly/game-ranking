@@ -16,6 +16,7 @@ import { NavigateBefore, NavigateNext, PostAdd } from '@material-ui/icons';
 import GameAddResultWho from './GamesAddResultWho';
 import GameAddResultWhen from './GameAddResultWhen';
 import GameAddResultResults from './GameAddResultResults';
+import { severityType } from '../../../types/notification';
 
 const useStyles = makeStyles((theme) =>
 createStyles({  
@@ -27,7 +28,8 @@ export interface GameAddResultProps{
     players: Array<playerType>,
     changeGameData: (game: gameType, uuid: string) => void,
     addResultOpen: boolean,
-    setAddResultOpen: React.Dispatch<React.SetStateAction<boolean>>
+    setAddResultOpen: React.Dispatch<React.SetStateAction<boolean>>,
+    addNotification: (arg0: string, arg1: severityType) => void,
 }
 
 export default function GameAddResult(props: GameAddResultProps){
@@ -52,7 +54,12 @@ export default function GameAddResult(props: GameAddResultProps){
 
   const nextStep = () => {
     if(currentStep === "who")
-      setCurrentStep("when");
+    {
+      if(selectedPlayers.length < 2)
+        props.addNotification("Please select a least 2 players","error");
+      else
+        setCurrentStep("when");
+    }
     else if(currentStep === "when")
       setCurrentStep("results");
   }

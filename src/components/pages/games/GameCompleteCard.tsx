@@ -15,6 +15,7 @@ import { gameType, playerType, resultType } from '../../../types/data';
 import { Delete, Edit, EmojiEvents, NavigateBefore, PostAdd } from '@material-ui/icons';
 import { AvatarGroup } from '@material-ui/lab';
 import GameAddResult from './GameAddResult';
+import { severityType } from '../../../types/notification';
 
 const useStyles = makeStyles((theme) =>
 createStyles({  
@@ -49,7 +50,8 @@ export interface GameCompleteCardProps{
     game: gameType,
     players: Array<playerType>,
     changeGameData: (game: gameType, uuid: string) => void,
-    setCurrentGame: React.Dispatch<React.SetStateAction<gameType|undefined>>
+    setCurrentGame: React.Dispatch<React.SetStateAction<gameType|undefined>>,
+    addNotification: (arg0: string, arg1: severityType) => void,
 }
 
 export default function GameCompleteCard(props: GameCompleteCardProps){
@@ -130,7 +132,7 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
             </AvatarGroup>
         </Grid>
         </Grid>
-        {addResultOpen ? <GameAddResult game={props.game} players={props.players} addResultOpen={addResultOpen} setAddResultOpen={setAddResultOpen} changeGameData={props.changeGameData}></GameAddResult> : <></>}
+        {addResultOpen ? <GameAddResult game={props.game} players={props.players} addResultOpen={addResultOpen} setAddResultOpen={setAddResultOpen} changeGameData={props.changeGameData} addNotification={props.addNotification}></GameAddResult> : <></>}
     </Card>
   );
 }

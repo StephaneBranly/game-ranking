@@ -11,6 +11,7 @@ import GamesHeader from './GamesHeader';
 import GameCard from './GameCard';
 import { gameType, playerType } from '../../../types/data';
 import GameCompleteCard from './GameCompleteCard';
+import { severityType } from '../../../types/notification';
 
 const useStyles = makeStyles((theme) =>
 createStyles({  
@@ -23,7 +24,8 @@ createStyles({
 export interface GamesProps{
     games: Array<gameType>,
     players: Array<playerType>
-    setGames: React.Dispatch<React.SetStateAction<Array<gameType>>>
+    setGames: React.Dispatch<React.SetStateAction<Array<gameType>>>,
+    addNotification: (arg0: string, arg1: severityType) => void,
 }
 
 export default function Games(props: GamesProps){
@@ -44,7 +46,7 @@ export default function Games(props: GamesProps){
     return (
     <Container>
         { currentGame?
-            <GameCompleteCard game={currentGame} changeGameData={changeGameData} setCurrentGame={setCurrentGame} players={props.players}></GameCompleteCard>
+            <GameCompleteCard game={currentGame} changeGameData={changeGameData} setCurrentGame={setCurrentGame} players={props.players} addNotification={props.addNotification}></GameCompleteCard>
             :
             <Grid
                 container
