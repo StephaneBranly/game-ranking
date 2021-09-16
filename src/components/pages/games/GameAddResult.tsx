@@ -17,6 +17,7 @@ import GameAddResultWho from './GamesAddResultWho';
 import GameAddResultWhen from './GameAddResultWhen';
 import GameAddResultResults from './GameAddResultResults';
 import { severityType } from '../../../types/notification';
+import { getPlayerProfile } from '../../../utils/lib';
 
 const useStyles = makeStyles((theme) =>
 createStyles({  
@@ -58,7 +59,11 @@ export default function GameAddResult(props: GameAddResultProps){
       if(selectedPlayers.length < 2)
         props.addNotification("Please select a least 2 players","error");
       else
+      {
         setCurrentStep("when");
+        const sorted = selectedPlayers.sort((a, b) => getPlayerProfile(props.players,a.uuid).username > getPlayerProfile(props.players,b.uuid).username ? 1 : -1)
+        setSelectedPlayers(sorted);
+      }
     }
     else if(currentStep === "when")
       setCurrentStep("results");

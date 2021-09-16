@@ -16,6 +16,7 @@ import { Delete, Edit, EmojiEvents, NavigateBefore, PostAdd } from '@material-ui
 import { AvatarGroup } from '@material-ui/lab';
 import GameAddResult from './GameAddResult';
 import { severityType } from '../../../types/notification';
+import { getPlayerLabel } from '../../../utils/lib';
 
 const useStyles = makeStyles((theme) =>
 createStyles({  
@@ -89,7 +90,7 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
         }}
         badgeContent={<EmojiEvents className={classes.first}/>}
       >
-        <Avatar alt={player.username} style={{backgroundColor: player.color}}>L</Avatar>
+        <Avatar alt={player.username} style={{backgroundColor: player.color}}>{getPlayerLabel(player)}</Avatar>
     </Badge>
     ));
   }
