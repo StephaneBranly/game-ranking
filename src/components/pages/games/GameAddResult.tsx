@@ -1,7 +1,5 @@
 import React from 'react';
 import {
-  makeStyles,
-  createStyles,
   Typography,
   Button,
   Dialog,
@@ -17,12 +15,6 @@ import { severityType } from '../../../types/notification';
 import { getPlayerProfile } from '../../../utils/lib';
 import { uuid } from 'uuidv4';
 
-
-const useStyles = makeStyles((theme) =>
-createStyles({  
-    
-}),
-);
 export interface GameAddResultProps{
     game: gameType,
     players: Array<playerType>,
@@ -34,7 +26,10 @@ export interface GameAddResultProps{
 }
 
 export default function GameAddResult(props: GameAddResultProps){
-  const classes = useStyles(); 
+  // if(props.players.length===0)
+  //   props.addNotification("You should add players before","warning");
+  // else if(props.players.length===1)
+  //   props.addNotification("You should add more players before","warning");
 
   const [currentStep, setCurrentStep] = React.useState("who");
   const [selectedDate, setSelectedDate] = React.useState(new Date());
@@ -85,6 +80,9 @@ export default function GameAddResult(props: GameAddResultProps){
         validResult=true;
     });
     if(validResult){
+      const sorted = selectedPlayers.sort((a, b) => a.rank > b.rank ? 1 : -1)
+      setSelectedPlayers(sorted);
+      
       const result: resultType = 
       {
         date: selectedDate,
@@ -124,4 +122,8 @@ export default function GameAddResult(props: GameAddResultProps){
     </DialogActions>
   </Dialog>
   );
+}
+
+function useEffect(arg0: () => () => void, arg1: never[]) {
+  throw new Error('Function not implemented.');
 }

@@ -4,18 +4,13 @@ import {
   createStyles,
   Card,
   Grid,
-  IconButton,
-  Button,
-  ButtonGroup,
   Typography,
   Avatar,
   Badge
 } from "@material-ui/core";
-import { gameType, playerType, resultType } from '../../../types/data';
-import { Delete, Edit, EmojiEvents, NavigateBefore, PostAdd } from '@material-ui/icons';
+import { playerType, resultType } from '../../../types/data';
+import { EmojiEvents } from '@material-ui/icons';
 import { AvatarGroup } from '@material-ui/lab';
-import GameAddResult from './GameAddResult';
-import { severityType } from '../../../types/notification';
 import { getPlayerLabel, getPlayerProfile } from '../../../utils/lib';
 
 const useStyles = makeStyles((theme) =>
