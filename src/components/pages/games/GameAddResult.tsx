@@ -76,15 +76,27 @@ export default function GameAddResult(props: GameAddResultProps){
   }
 
   const addResult = () => {
-    const result: resultType = 
-    {
-      date: selectedDate,
-      ranks: selectedPlayers,
-      uuid: uuid(),
+    let rank: number = 0;
+    let validResult: boolean = false;
+    selectedPlayers.forEach(player => {
+      if(rank===0)
+        rank=player.rank;
+      if(rank!==player.rank)
+        validResult=true;
+    });
+    if(validResult){
+      const result: resultType = 
+      {
+        date: selectedDate,
+        ranks: selectedPlayers,
+        uuid: uuid(),
+      }
+      props.addNotification("New result correctly added","success");
+      props.setAddResultOpen(false)
+      props.addResult(result);
     }
-    props.addNotification("New result correctly added","success");
-    props.setAddResultOpen(false)
-    props.addResult(result);
+    else
+      props.addNotification("Results need at least two different rank","error");
   }
 
   return (

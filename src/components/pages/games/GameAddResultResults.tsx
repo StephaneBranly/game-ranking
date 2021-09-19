@@ -32,7 +32,6 @@ export default function GameAddResultResults(props: GameAddResultResultsProps){
     let new_data: Array<scoreType> = props.selectedPlayers;
     new_data.map((el: scoreType) => (el.uuid === uuidPlayer ? el.rank=event.target.value : el))   
     props.setSelectedPlayers(new_data);
-    console.log("change rank");
   };
 
   const renderPossibilities = () =>  {
