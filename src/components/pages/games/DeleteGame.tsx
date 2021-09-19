@@ -40,7 +40,7 @@ export default function DeleteGame(props: DeleteGameProps){
         </DialogContent>
         <DialogActions>
           <Button onClick={() => props.setDeleteGameOpen(false)} autoFocus>Cancel</Button>
-          <Button onClick={() => props.deleteGame()} >
+          <Button onClick={() => props.deleteGame()} variant="outlined" style={{color: "#DD0505", borderColor: "#DD0505"}}>
             Delete
           </Button>
         </DialogActions>

@@ -9,6 +9,9 @@ import { notificationType, severityType } from './types/notification';
 
 export const theme = createMuiTheme({
   palette: {
+    error: {
+      main: "#DD0505",
+    },
     primary: {
       main: "#3f5efb",
     },

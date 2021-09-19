@@ -65,6 +65,7 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
 
   const [gamename, setGamename] = React.useState(props.game.gamename);
   const [addResultOpen, setAddResultOpen] = React.useState(false);
+  const [editMode, setEditMode] = React.useState(false);
   const [deleteGameOpen, setDeleteGameOpen] = React.useState(false);
 
   const handleChangeGamename = () => {
