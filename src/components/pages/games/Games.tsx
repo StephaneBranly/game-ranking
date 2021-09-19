@@ -43,10 +43,17 @@ export default function Games(props: GamesProps){
         props.setGames(new_data);
     }
 
+    const deleteGame = (uuid: string) => {
+        let new_data: Array<gameType> = props.games.filter(item => item.uuid !== uuid);
+        setCurrentGame(undefined);
+        props.setGames(new_data);
+        props.addNotification("Game correctly deleted","success");
+    }
+
     return (
     <Container>
         { currentGame?
-            <GameCompleteCard game={currentGame} changeGameData={changeGameData} setCurrentGame={setCurrentGame} players={props.players} addNotification={props.addNotification}></GameCompleteCard>
+            <GameCompleteCard game={currentGame} changeGameData={changeGameData} setCurrentGame={setCurrentGame} players={props.players} addNotification={props.addNotification} deleteGame={deleteGame}></GameCompleteCard>
             :
             <Grid
                 container

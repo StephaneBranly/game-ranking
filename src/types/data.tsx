@@ -2,7 +2,7 @@ export type gameType =
 {
     gamename: string,
     uuid: string,
-    players?: Array<string>
+    players?: Array<scoreType>
     results?: Array<resultType>
 }
 

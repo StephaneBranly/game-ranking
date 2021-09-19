@@ -16,8 +16,9 @@ import { Delete, Edit, EmojiEvents, NavigateBefore, PostAdd } from '@material-ui
 import { AvatarGroup } from '@material-ui/lab';
 import GameAddResult from './GameAddResult';
 import { severityType } from '../../../types/notification';
-import { getPlayerLabel } from '../../../utils/lib';
+import { getPlayerLabel, getPlayerProfile } from '../../../utils/lib';
 import ResultCard from './ResultCard';
+import DeleteGame from './DeleteGame';
 
 const useStyles = makeStyles((theme) =>
 createStyles({  
@@ -56,6 +57,7 @@ export interface GameCompleteCardProps{
     changeGameData: (game: gameType, uuid: string) => void,
     setCurrentGame: React.Dispatch<React.SetStateAction<gameType|undefined>>,
     addNotification: (arg0: string, arg1: severityType) => void,
+    deleteGame: (uuid: string) => void
 }
 
 export default function GameCompleteCard(props: GameCompleteCardProps){
@@ -63,6 +65,7 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
 
   const [gamename, setGamename] = React.useState(props.game.gamename);
   const [addResultOpen, setAddResultOpen] = React.useState(false);
+  const [deleteGameOpen, setDeleteGameOpen] = React.useState(false);
 
   const handleChangeGamename = () => {
     let new_data: gameType = Object.assign({}, props.game); 
@@ -70,19 +73,42 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
     props.changeGameData(new_data, props.game.uuid);
   }
 
+  const deleteGame = () => {
+    props.addNotification("Game correctly deleted","success");
+    setDeleteGameOpen(false);
+    props.deleteGame(props.game.uuid);
+  }
+
+
   const addResult = (newResult: resultType) => {
     let new_data: gameType = Object.assign({}, props.game); 
     if(!new_data.results)
         new_data.results = [];
     new_data.results.push(newResult);
-    const sorted = new_data.results.sort((a, b) => a.date < b.date ? 1 : -1)
-    new_data.results = sorted;
+    newResult.ranks.forEach(rank => {
+        if(new_data.players)
+        {
+            if(!new_data.players.some(player => player.uuid === rank.uuid))
+                new_data.players?.push({uuid:rank.uuid,rank:0});
+        }
+        else
+            new_data.players=[{uuid:rank.uuid,rank:0}];
+    });
+    const sortedResults = new_data.results.sort((a, b) => a.date < b.date ? 1 : -1)
+    new_data.results = sortedResults;
+
+    if(new_data.players)
+    {
+        const sortedRanks = new_data.players.sort((a, b) => a.rank > b.rank ? 1 : -1)
+        new_data.players = sortedRanks;
+    }
 
     props.changeGameData(new_data, props.game.uuid);
   }
 
   const displayPlayersBadges = () => {
-    return (props.players.map((player) => 
+    if(props.game.players)
+    return (props.game.players.map((player) => 
     <Badge
         overlap="circle"
         style={{borderColor: "rgba(0,0,0,0)"}}
@@ -92,9 +118,10 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
         }}
         badgeContent={<EmojiEvents className={classes.first}/>}
       >
-        <Avatar alt={player.username} style={{backgroundColor: player.color}}>{getPlayerLabel(player)}</Avatar>
+        <Avatar alt={getPlayerProfile(props.players,player.uuid).username} style={{backgroundColor: getPlayerProfile(props.players,player.uuid).color}}>{getPlayerLabel(getPlayerProfile(props.players,player.uuid))}</Avatar>
     </Badge>
     ));
+    return <></>
   }
 
   const displayResults = () => {
@@ -126,7 +153,7 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
                 <ButtonGroup disableElevation variant="contained" color="primary">
                     <Button endIcon={<PostAdd/>}  onClick={() => setAddResultOpen(true)}>New result</Button>
                     <Button><Edit/></Button>
-                    <Button><Delete/></Button>
+                    <Button  onClick={() => setDeleteGameOpen(true)}><Delete/></Button>
                 </ButtonGroup>
             </Grid>
         </Grid></Grid>
@@ -135,12 +162,13 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
                 {props.game.gamename}
             </Typography>
         </Grid>
+        {props.game.players && 
         <Grid item>
             <Typography>Players:</Typography>
             <AvatarGroup max={15}>
                 {displayPlayersBadges()}
             </AvatarGroup>
-        </Grid>
+        </Grid>}
         </Grid>
         {addResultOpen ? <GameAddResult game={props.game} players={props.players} addResultOpen={addResultOpen} setAddResultOpen={setAddResultOpen} changeGameData={props.changeGameData} addNotification={props.addNotification} addResult={addResult}></GameAddResult> : <></>}
     </Card>
@@ -153,6 +181,7 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
     >
         {displayResults()}
     </Grid>
+    {deleteGameOpen && <DeleteGame setDeleteGameOpen={setDeleteGameOpen} deleteGame={deleteGame}></DeleteGame>}
     </>
   );
 }
