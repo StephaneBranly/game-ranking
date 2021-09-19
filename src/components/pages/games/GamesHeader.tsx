@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 import Games from '@material-ui/icons/Games';
 import { uuid } from 'uuidv4';
-import { dataType, gameType } from '../../../types/data';
+import { gameType } from '../../../types/data';
 
 const useStyles = makeStyles((theme) =>
 createStyles({  

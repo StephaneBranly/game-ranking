@@ -67,11 +67,7 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
     props.changeGameData(new_data, props.game.uuid);
   }
 
-  const addResult = () => {
-    let newResult: resultType = {
-        date: "1",
-        ranks: []
-    } 
+  const addResult = (newResult: resultType) => {
     let new_data: gameType = Object.assign({}, props.game); 
     if(!new_data.results)
         new_data.results = [];
@@ -133,7 +129,7 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
             </AvatarGroup>
         </Grid>
         </Grid>
-        {addResultOpen ? <GameAddResult game={props.game} players={props.players} addResultOpen={addResultOpen} setAddResultOpen={setAddResultOpen} changeGameData={props.changeGameData} addNotification={props.addNotification}></GameAddResult> : <></>}
+        {addResultOpen ? <GameAddResult game={props.game} players={props.players} addResultOpen={addResultOpen} setAddResultOpen={setAddResultOpen} changeGameData={props.changeGameData} addNotification={props.addNotification} addResult={addResult}></GameAddResult> : <></>}
     </Card>
   );
 }

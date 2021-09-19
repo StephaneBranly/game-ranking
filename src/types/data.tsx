@@ -27,6 +27,7 @@ export type scoreType =
 
 export type resultType = 
 {
-    date: string,
+    date: Date,
+    uuid: string,
     ranks: Array<scoreType>,
 }

@@ -6,18 +6,17 @@ import {
   Button,
   Dialog,
   DialogActions,
-  DialogContent,
   DialogTitle,
-  Grid,
-  Avatar,
 } from "@material-ui/core";
-import { gameType, playerType, scoreType } from '../../../types/data';
+import { gameType, playerType, scoreType, resultType } from '../../../types/data';
 import { NavigateBefore, NavigateNext, PostAdd } from '@material-ui/icons';
 import GameAddResultWho from './GamesAddResultWho';
 import GameAddResultWhen from './GameAddResultWhen';
 import GameAddResultResults from './GameAddResultResults';
 import { severityType } from '../../../types/notification';
 import { getPlayerProfile } from '../../../utils/lib';
+import { uuid } from 'uuidv4';
+
 
 const useStyles = makeStyles((theme) =>
 createStyles({  
@@ -31,6 +30,7 @@ export interface GameAddResultProps{
     addResultOpen: boolean,
     setAddResultOpen: React.Dispatch<React.SetStateAction<boolean>>,
     addNotification: (arg0: string, arg1: severityType) => void,
+    addResult: (result: resultType) => void,
 }
 
 export default function GameAddResult(props: GameAddResultProps){
@@ -75,6 +75,18 @@ export default function GameAddResult(props: GameAddResultProps){
       setCurrentStep("when");
   }
 
+  const addResult = () => {
+    const result: resultType = 
+    {
+      date: selectedDate,
+      ranks: selectedPlayers,
+      uuid: uuid(),
+    }
+    props.addNotification("New result correctly added","success");
+    props.setAddResultOpen(false)
+    props.addResult(result);
+  }
+
   return (
     <Dialog fullWidth={true} maxWidth="sm" open={props.addResultOpen}>
     <DialogTitle>
@@ -89,7 +101,7 @@ export default function GameAddResult(props: GameAddResultProps){
             Back
         </Button>
         {currentStep === "results" ? 
-            <Button autoFocus onClick={() => props.setAddResultOpen(false)} color="primary" variant="outlined" endIcon={<PostAdd/>}>
+            <Button autoFocus onClick={() => addResult()} color="primary" variant="outlined" endIcon={<PostAdd/>}>
               Send
             </Button> :
             <Button autoFocus onClick={() => nextStep()} color="primary" variant="outlined" endIcon={<NavigateNext/>}>

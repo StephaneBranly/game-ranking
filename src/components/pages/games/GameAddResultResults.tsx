@@ -32,15 +32,22 @@ export default function GameAddResultResults(props: GameAddResultResultsProps){
     let new_data: Array<scoreType> = props.selectedPlayers;
     new_data.map((el: scoreType) => (el.uuid === uuidPlayer ? el.rank=event.target.value : el))   
     props.setSelectedPlayers(new_data);
+    console.log("change rank");
   };
 
-  let possibilities: any = [];
-  for(let i = 1; i<props.selectedPlayers.length+1; i++)
-    possibilities.push(<MenuItem value={i}>{i}</MenuItem>);
+  const renderPossibilities = () =>  {
+    let possibilities: any = [];
+
+    for(let i = 1; i<props.selectedPlayers.length+1; i++)
+    possibilities.push(<MenuItem key={i} value={i}>{i}</MenuItem>);
+
+    return possibilities;
+  }
+ 
 
 
-  const renderPlayerRank = () => {
-    return props.selectedPlayers.map((player) =>
+  const renderPlayerRank = (selectedPlayers: Array<scoreType>) => {
+    return selectedPlayers.map((player) =>
     <ListItem key={player.uuid} dense button>
       <Grid container
         direction="row"
@@ -54,7 +61,7 @@ export default function GameAddResultResults(props: GameAddResultResultsProps){
               value={player.rank}
               onChange={(event) => handleChange(event,player.uuid)}
             >
-              {possibilities}
+              {renderPossibilities()}
           </Select>
         </Grid>
         </Grid>
@@ -65,7 +72,7 @@ export default function GameAddResultResults(props: GameAddResultResultsProps){
     <DialogContent dividers>
         <Typography>Results</Typography>
         <List>
-          {renderPlayerRank()}
+          {renderPlayerRank(props.selectedPlayers)}
         </List>
     </DialogContent>);
 }
