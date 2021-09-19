@@ -42,6 +42,16 @@ export interface ResultCardProps{
 export default function ResultCard(props: ResultCardProps){
   const classes = useStyles(); 
 
+  const getRankBadge = (rank: number) => 
+  {
+    if(rank===1)
+        return <EmojiEvents className={classes.first}/>;
+    else if(rank===2)
+        return <EmojiEvents className={classes.second}/>;
+    else if(rank===3)
+    return <EmojiEvents className={classes.third}/>;
+    return <></>
+  }
   const displayPlayersBadges = () => {
     return (props.result.ranks.map((rank) => 
     <Badge
@@ -51,7 +61,7 @@ export default function ResultCard(props: ResultCardProps){
           vertical: 'bottom',
           horizontal: 'right',
         }}
-        badgeContent={<EmojiEvents className={classes.first}/>}
+        badgeContent={getRankBadge(rank.rank)}
       >
         <Avatar alt={getPlayerProfile(props.players,rank.uuid).username} style={{backgroundColor: getPlayerProfile(props.players,rank.uuid).color}}>{getPlayerLabel(getPlayerProfile(props.players,rank.uuid))}</Avatar>
     </Badge>
@@ -63,16 +73,18 @@ export default function ResultCard(props: ResultCardProps){
         <Card className={classes.Padding}>
             <Grid 
                 container
-                direction="column"
+                direction="row"
                 justify="space-between"
                 alignItems="stretch"
                 spacing={1}
             >
             <Grid item>
-                <Typography>Players:</Typography>
                 <AvatarGroup max={15}>
                     {displayPlayersBadges()}
                 </AvatarGroup>
+            </Grid>
+            <Grid item>
+                <Typography>{props.result.date.toLocaleString()}</Typography>
             </Grid>
             </Grid>
         </Card>
