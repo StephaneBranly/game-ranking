@@ -9,7 +9,8 @@ import {
   ButtonGroup,
   Typography,
   Avatar,
-  Badge
+  Badge,
+  Container
 } from "@material-ui/core";
 import { gameType, playerType, resultType } from '../../../types/data';
 import { Delete, Edit, EmojiEvents, NavigateBefore, PostAdd } from '@material-ui/icons';
@@ -17,6 +18,7 @@ import { AvatarGroup } from '@material-ui/lab';
 import GameAddResult from './GameAddResult';
 import { severityType } from '../../../types/notification';
 import { getPlayerLabel } from '../../../utils/lib';
+import ResultCard from './ResultCard';
 
 const useStyles = makeStyles((theme) =>
 createStyles({  
@@ -91,7 +93,14 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
     ));
   }
 
+  const displayResults = () => {
+    if (props.game.results){
+        return props.game.results.map(result => <ResultCard result={result} players={props.players}></ResultCard>);
+    }
+  }
+
   return (
+    <>
     <Card className={classes.Padding}>
         <Grid 
             container
@@ -131,5 +140,14 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
         </Grid>
         {addResultOpen ? <GameAddResult game={props.game} players={props.players} addResultOpen={addResultOpen} setAddResultOpen={setAddResultOpen} changeGameData={props.changeGameData} addNotification={props.addNotification} addResult={addResult}></GameAddResult> : <></>}
     </Card>
+    <Grid 
+        direction="column"
+        justify="space-between"
+        alignItems="stretch"
+        spacing={1}
+    >
+        {displayResults()}
+    </Grid>
+    </>
   );
 }
