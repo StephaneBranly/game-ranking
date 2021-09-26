@@ -19,6 +19,7 @@ import { severityType } from '../../../types/notification';
 import { getPlayerLabel, getPlayerProfile } from '../../../utils/lib';
 import ResultCard from './ResultCard';
 import DeleteGame from './DeleteGame';
+import EditGame from './EditGame';
 
 const useStyles = makeStyles((theme) =>
 createStyles({  
@@ -63,14 +64,13 @@ export interface GameCompleteCardProps{
 export default function GameCompleteCard(props: GameCompleteCardProps){
   const classes = useStyles(); 
 
-  const [gamename, setGamename] = React.useState(props.game.gamename);
   const [addResultOpen, setAddResultOpen] = React.useState(false);
   const [editMode, setEditMode] = React.useState(false);
   const [deleteGameOpen, setDeleteGameOpen] = React.useState(false);
 
-  const handleChangeGamename = () => {
+  const handleChangeGamename = (newGamename: string) => {
     let new_data: gameType = Object.assign({}, props.game); 
-    new_data.gamename = gamename;
+    new_data.gamename = newGamename;
     props.changeGameData(new_data, props.game.uuid);
   }
 
@@ -153,8 +153,8 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
             <Grid item>
                 <ButtonGroup disableElevation variant="contained" color="primary">
                     <Button endIcon={<PostAdd/>}  onClick={() => setAddResultOpen(true)}>New result</Button>
-                    <Button><Edit/></Button>
-                    <Button  onClick={() => setDeleteGameOpen(true)}><Delete/></Button>
+                    <Button onClick={() => setEditMode(true)}><Edit/></Button>
+                    <Button onClick={() => setDeleteGameOpen(true)}><Delete/></Button>
                 </ButtonGroup>
             </Grid>
         </Grid></Grid>
@@ -183,6 +183,7 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
         {displayResults()}
     </Grid>
     {deleteGameOpen && <DeleteGame setDeleteGameOpen={setDeleteGameOpen} deleteGame={deleteGame}></DeleteGame>}
+    {editMode && <EditGame setEditMode={setEditMode} handleChangeGamename={handleChangeGamename} currentGamename={props.game.gamename}></EditGame>}
     </>
   );
 }
