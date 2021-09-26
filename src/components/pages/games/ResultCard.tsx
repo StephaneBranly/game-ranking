@@ -37,6 +37,7 @@ createStyles({
 export interface ResultCardProps{
     result: resultType,
     players: Array<playerType>,
+    setAddResultOpen: React.Dispatch<React.SetStateAction<{id: string|undefined, open: boolean}>>,
 }
 
 export default function ResultCard(props: ResultCardProps){
@@ -70,7 +71,7 @@ export default function ResultCard(props: ResultCardProps){
 
   return (
     <Grid item>
-        <Card className={classes.Padding}>
+        <Card className={classes.Padding} onClick={()=>props.setAddResultOpen({id: props.result.uuid, open:true})}>
             <Grid 
                 container
                 direction="row"

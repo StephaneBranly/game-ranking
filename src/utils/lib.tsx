@@ -5,5 +5,7 @@ export const getPlayerProfile = (players: Array<playerType>, uuidPlayer: string)
 }
 
 export const getPlayerLabel = (player: playerType) => {
-    return player.username[0].toUpperCase()+player.username[1];
+    if(player.username.length>1)
+        return player.username[0].toUpperCase()+player.username[1];
+    player.username[0].toUpperCase();
 }

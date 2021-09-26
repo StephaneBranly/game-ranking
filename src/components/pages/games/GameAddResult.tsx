@@ -18,11 +18,10 @@ import { uuid } from 'uuidv4';
 export interface GameAddResultProps{
     game: gameType,
     players: Array<playerType>,
-    changeGameData: (game: gameType, uuid: string) => void,
-    addResultOpen: boolean,
-    setAddResultOpen: React.Dispatch<React.SetStateAction<boolean>>,
+    addResultOpen: {id:string|undefined, open:boolean},
+    setAddResultOpen: React.Dispatch<React.SetStateAction<{id: string|undefined, open: boolean}>>,
     addNotification: (arg0: string, arg1: severityType) => void,
-    addResult: (result: resultType) => void,
+    addResult: (result: resultType, id: string | undefined) => void,
 }
 
 export default function GameAddResult(props: GameAddResultProps){
@@ -32,8 +31,8 @@ export default function GameAddResult(props: GameAddResultProps){
   //   props.addNotification("You should add more players before","warning");
 
   const [currentStep, setCurrentStep] = React.useState("who");
-  const [selectedDate, setSelectedDate] = React.useState(new Date());
-  const [selectedPlayers, setSelectedPlayers] = React.useState([] as Array<scoreType>);
+  const [selectedDate, setSelectedDate] = React.useState(props.addResultOpen.id ? props.game.results!.filter(item => item.uuid === props.addResultOpen.id)[0].date : new Date());
+  const [selectedPlayers, setSelectedPlayers] = React.useState(props.addResultOpen.id ? props.game.results!.filter(item => item.uuid === props.addResultOpen.id)[0].ranks : [] as Array<scoreType>);
 
   const displayCurrentStep = () => {
     if(currentStep === "who")
@@ -89,22 +88,24 @@ export default function GameAddResult(props: GameAddResultProps){
         ranks: selectedPlayers,
         uuid: uuid(),
       }
-      props.addNotification("New result correctly added","success");
-      props.setAddResultOpen(false)
-      props.addResult(result);
+      if(props.addResultOpen.id)
+        props.addNotification("Result correctly edited","success");
+      else
+        props.addNotification("New result correctly added","success");
+
+      props.setAddResultOpen({id:undefined, open: false})
+      props.addResult(result,props.addResultOpen.id);
     }
     else
       props.addNotification("Results need at least two different rank","error");
   }
 
   return (
-    <Dialog fullWidth={true} maxWidth="sm" open={props.addResultOpen}>
-    <DialogTitle>
-      New result
-    </DialogTitle>
+    <Dialog fullWidth={true} maxWidth="sm" open={props.addResultOpen.open}>
+    {props.addResultOpen.id ?  <DialogTitle>Edit result</DialogTitle> :  <DialogTitle>New result</DialogTitle>}
     {displayCurrentStep()}
     <DialogActions>
-        <Button onClick={() => props.setAddResultOpen(false)} color="primary" variant="outlined">
+        <Button onClick={() => props.setAddResultOpen({id:undefined, open:false})} color="primary" variant="outlined">
             Cancel
         </Button>
         <Button autoFocus disabled={currentStep === "who"} onClick={() => backStep()} color="primary" variant="outlined" startIcon={<NavigateBefore/>}>
@@ -122,8 +123,4 @@ export default function GameAddResult(props: GameAddResultProps){
     </DialogActions>
   </Dialog>
   );
-}
-
-function useEffect(arg0: () => () => void, arg1: never[]) {
-  throw new Error('Function not implemented.');
 }

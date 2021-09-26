@@ -64,7 +64,7 @@ export interface GameCompleteCardProps{
 export default function GameCompleteCard(props: GameCompleteCardProps){
   const classes = useStyles(); 
 
-  const [addResultOpen, setAddResultOpen] = React.useState(false);
+  const [addResultOpen, setAddResultOpen] = React.useState({id: undefined as string|undefined, open:false});
   const [editMode, setEditMode] = React.useState(false);
   const [deleteGameOpen, setDeleteGameOpen] = React.useState(false);
 
@@ -81,10 +81,12 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
   }
 
 
-  const addResult = (newResult: resultType) => {
-    let new_data: gameType = Object.assign({}, props.game); 
+  const addResult = (newResult: resultType, id: string|undefined) => {
+    let new_data: gameType = Object.assign({}, props.game);
     if(!new_data.results)
         new_data.results = [];
+    else if(id)
+        new_data.results = new_data.results.filter(item => item.uuid !== id);
     new_data.results.push(newResult);
     newResult.ranks.forEach(rank => {
         if(new_data.players)
@@ -127,7 +129,7 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
 
   const displayResults = () => {
     if (props.game.results){
-        return props.game.results.map(result => <ResultCard result={result} players={props.players}></ResultCard>);
+        return props.game.results.map(result => <ResultCard result={result} players={props.players} setAddResultOpen={setAddResultOpen}></ResultCard>);
     }
   }
 
@@ -152,7 +154,7 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
             </Grid>
             <Grid item>
                 <ButtonGroup disableElevation variant="contained" color="primary">
-                    <Button endIcon={<PostAdd/>}  onClick={() => setAddResultOpen(true)}>New result</Button>
+                    <Button endIcon={<PostAdd/>}  onClick={() => setAddResultOpen({id: undefined, open:true})}>New result</Button>
                     <Button onClick={() => setEditMode(true)}><Edit/></Button>
                     <Button onClick={() => setDeleteGameOpen(true)}><Delete/></Button>
                 </ButtonGroup>
@@ -171,7 +173,7 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
             </AvatarGroup>
         </Grid>}
         </Grid>
-        {addResultOpen ? <GameAddResult game={props.game} players={props.players} addResultOpen={addResultOpen} setAddResultOpen={setAddResultOpen} changeGameData={props.changeGameData} addNotification={props.addNotification} addResult={addResult}></GameAddResult> : <></>}
+        {addResultOpen.open ? <GameAddResult game={props.game} players={props.players} addResultOpen={addResultOpen} setAddResultOpen={setAddResultOpen} addNotification={props.addNotification} addResult={addResult}></GameAddResult> : <></>}
     </Card>
     <Grid 
         container
