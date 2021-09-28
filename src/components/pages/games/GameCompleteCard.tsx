@@ -16,7 +16,7 @@ import { Delete, Edit, EmojiEvents, NavigateBefore, PostAdd } from '@material-ui
 import { AvatarGroup } from '@material-ui/lab';
 import GameAddResult from './GameAddResult';
 import { severityType } from '../../../types/notification';
-import { getPlayerLabel, getPlayerProfile } from '../../../utils/lib';
+import { calculateRanking, getPlayerLabel, getPlayerProfile } from '../../../utils/lib';
 import ResultCard from './ResultCard';
 import DeleteGame from './DeleteGame';
 import EditGame from './EditGame';
@@ -97,8 +97,8 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
         else
             new_data.players=[{uuid:rank.uuid,rank:0}];
     });
-    const sortedResults = new_data.results.sort((a, b) => a.date < b.date ? 1 : -1)
-    new_data.results = sortedResults;
+    
+    new_data.rankHistory = calculateRanking(new_data);
 
     if(new_data.players)
     {
