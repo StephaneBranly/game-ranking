@@ -25,11 +25,6 @@ export interface GameAddResultProps{
 }
 
 export default function GameAddResult(props: GameAddResultProps){
-  // if(props.players.length===0)
-  //   props.addNotification("You should add players before","warning");
-  // else if(props.players.length===1)
-  //   props.addNotification("You should add more players before","warning");
-
   const [currentStep, setCurrentStep] = React.useState("who");
   const [selectedDate, setSelectedDate] = React.useState(props.addResultOpen.id ? props.game.results!.filter(item => item.uuid === props.addResultOpen.id)[0].date : new Date());
   const [selectedPlayers, setSelectedPlayers] = React.useState(props.addResultOpen.id ? props.game.results!.filter(item => item.uuid === props.addResultOpen.id)[0].ranks : [] as Array<scoreType>);

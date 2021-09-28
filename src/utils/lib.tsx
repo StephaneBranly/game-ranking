@@ -33,21 +33,22 @@ export const generateNewEntry = (result: resultType, lastEntry: historyEntryType
         resultUuid: result.uuid,
         playersRank: []
     };
-    lastEntry.playersRank.forEach(player => { newEntry.playersRank.push({ playerUuid: player.playerUuid, score: 0, deltaScore: 0})})
+    lastEntry.playersRank.forEach(p => { newEntry.playersRank.push({ playerUuid: p.playerUuid, score: p.score, deltaScore: p.deltaScore})})
     result.ranks.forEach(currentPlayer => {
         const nbSameRank = result.ranks.filter(rankFilter => (currentPlayer.rank === rankFilter.rank)).length
-        const other_players = result.ranks.filter(rankFilter => (currentPlayer.rank !== rankFilter.rank))
+        const otherPlayers = result.ranks.filter(rankFilter => (currentPlayer.rank !== rankFilter.rank))
         const index = getIndexInEntry(currentPlayer.uuid,newEntry)
         const lastScoreCurrentPlayer = lastEntry.playersRank[getIndexInEntry(currentPlayer.uuid,lastEntry)].score
-
-        other_players.forEach(otherPlayer => { 
+        let sumDeltaScore = 0
+        otherPlayers.forEach(otherPlayer => { 
             const lastScoreOtherPlayer = lastEntry.playersRank[getIndexInEntry(otherPlayer.uuid,lastEntry)].score
-            const win = currentPlayer.rank > otherPlayer.rank ? 1 : 0;
+            const win = currentPlayer.rank < otherPlayer.rank ? 1 : 0;
             const expected = elo_expected(lastScoreCurrentPlayer,lastScoreOtherPlayer)
             const newScore = elo(lastScoreCurrentPlayer, expected, win, nbSameRank)
-            newEntry.playersRank[index].score = newScore
-            newEntry.playersRank[index].deltaScore = newScore - lastScoreCurrentPlayer
+            sumDeltaScore += newScore - lastScoreCurrentPlayer
         })
+        newEntry.playersRank[index].score = lastScoreCurrentPlayer + sumDeltaScore
+        newEntry.playersRank[index].deltaScore = sumDeltaScore
     });
     return newEntry
 }

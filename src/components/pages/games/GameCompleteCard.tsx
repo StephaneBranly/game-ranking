@@ -10,6 +10,7 @@ import {
   Typography,
   Avatar,
   Badge,
+  Tooltip,
 } from "@material-ui/core";
 import { gameType, playerType, resultType } from '../../../types/data';
 import { Delete, Edit, EmojiEvents, NavigateBefore, PostAdd } from '@material-ui/icons';
@@ -110,26 +111,31 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
   }
 
   const displayPlayersBadges = () => {
-    if(props.game.players)
-    return (props.game.players.map((player) => 
-    <Badge
-        overlap="circle"
-        style={{borderColor: "rgba(0,0,0,0)"}}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
-        }}
-        badgeContent={<EmojiEvents className={classes.first}/>}
-      >
-        <Avatar alt={getPlayerProfile(props.players,player.uuid).username} style={{backgroundColor: getPlayerProfile(props.players,player.uuid).color}}>{getPlayerLabel(getPlayerProfile(props.players,player.uuid))}</Avatar>
-    </Badge>
+    if(props.game.rankHistory)
+    return (props.game.rankHistory[props.game.rankHistory.length-1].playersRank.sort((a, b) => a.score < b.score ? 1 : -1).map((player) => 
+    <Tooltip title={Math.round(player.score)}>
+        <Badge
+            overlap="circle"
+            style={{borderColor: "rgba(0,0,0,0)"}}
+            anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+            }}
+            badgeContent={<EmojiEvents className={classes.first}/>}
+        >
+            <Avatar alt={getPlayerProfile(props.players,player.playerUuid).username} style={{backgroundColor: getPlayerProfile(props.players,player.playerUuid).color}}>{getPlayerLabel(getPlayerProfile(props.players,player.playerUuid))}</Avatar>
+        </Badge>
+    </Tooltip>
     ));
     return <></>
   }
 
   const displayResults = () => {
     if (props.game.results){
-        return props.game.results.map(result => <ResultCard result={result} players={props.players} setAddResultOpen={setAddResultOpen}></ResultCard>);
+        return props.game.results.map(result => {
+            const playersRank = props.game.rankHistory!.filter((entry) => entry.resultUuid === result.uuid)[0].playersRank
+            return <ResultCard result={result} players={props.players} setAddResultOpen={setAddResultOpen} playersRank={playersRank}></ResultCard>}
+        );
     }
   }
 

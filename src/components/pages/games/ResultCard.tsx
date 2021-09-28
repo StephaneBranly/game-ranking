@@ -6,9 +6,10 @@ import {
   Grid,
   Typography,
   Avatar,
-  Badge
+  Badge,
+  Tooltip
 } from "@material-ui/core";
-import { playerType, resultType } from '../../../types/data';
+import { playerRankHistory, playerType, resultType } from '../../../types/data';
 import { EmojiEvents } from '@material-ui/icons';
 import { AvatarGroup } from '@material-ui/lab';
 import { getPlayerLabel, getPlayerProfile } from '../../../utils/lib';
@@ -38,6 +39,7 @@ export interface ResultCardProps{
     result: resultType,
     players: Array<playerType>,
     setAddResultOpen: React.Dispatch<React.SetStateAction<{id: string|undefined, open: boolean}>>,
+    playersRank: Array<playerRankHistory>
 }
 
 export default function ResultCard(props: ResultCardProps){
@@ -55,17 +57,22 @@ export default function ResultCard(props: ResultCardProps){
   }
   const displayPlayersBadges = () => {
     return (props.result.ranks.map((rank) => 
-    <Badge
-        overlap="circle"
-        style={{borderColor: "rgba(0,0,0,0)"}}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
-        }}
-        badgeContent={getRankBadge(rank.rank)}
-      >
-        <Avatar alt={getPlayerProfile(props.players,rank.uuid).username} style={{backgroundColor: getPlayerProfile(props.players,rank.uuid).color}}>{getPlayerLabel(getPlayerProfile(props.players,rank.uuid))}</Avatar>
-    </Badge>
+    {
+        const playerRank = props.playersRank.filter(player => player.playerUuid === rank.uuid)[0] 
+        const title = `${Math.round(playerRank.score)} (${Math.round(playerRank.deltaScore)})`
+        return <Tooltip title={title}><Badge
+            overlap="circle"
+            style={{borderColor: "rgba(0,0,0,0)"}}
+            anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+            }}
+            badgeContent={getRankBadge(rank.rank)}
+        >
+            <Avatar alt={getPlayerProfile(props.players,rank.uuid).username} style={{backgroundColor: getPlayerProfile(props.players,rank.uuid).color}}>{getPlayerLabel(getPlayerProfile(props.players,rank.uuid))}</Avatar>
+        </Badge>
+        </Tooltip> 
+    }
     ));
   }
 
