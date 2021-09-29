@@ -7,12 +7,11 @@ import {
   Typography,
   Avatar,
   Badge,
-  Tooltip
+  Tooltip,
 } from "@material-ui/core";
 import { playerRankHistory, playerType, resultType } from '../../../types/data';
-import { EmojiEvents } from '@material-ui/icons';
-import { AvatarGroup } from '@material-ui/lab';
 import { getPlayerLabel, getPlayerProfile } from '../../../utils/lib';
+import ScoreChip from '../../scoreChip/ScoreChip';
 
 const useStyles = makeStyles((theme) =>
 createStyles({  
@@ -35,6 +34,7 @@ createStyles({
     },
 }),
 );
+
 export interface ResultCardProps{
     result: resultType,
     players: Array<playerType>,
@@ -45,33 +45,29 @@ export interface ResultCardProps{
 export default function ResultCard(props: ResultCardProps){
   const classes = useStyles(); 
 
-  const getRankBadge = (rank: number) => 
-  {
-    if(rank===1)
-        return <EmojiEvents className={classes.first}/>;
-    else if(rank===2)
-        return <EmojiEvents className={classes.second}/>;
-    else if(rank===3)
-    return <EmojiEvents className={classes.third}/>;
-    return <></>
-  }
+  
   const displayPlayersBadges = () => {
     return (props.result.ranks.map((rank) => 
     {
         const playerRank = props.playersRank.filter(player => player.playerUuid === rank.uuid)[0] 
-        const title = `${Math.round(playerRank.score)} (${Math.round(playerRank.deltaScore)})`
-        return <Tooltip title={title}><Badge
+        const title = `New score: ${Math.round(playerRank.score)}`
+
+        return <Grid item>
+            <Tooltip title={title}>
+            <Badge
             overlap="circle"
             style={{borderColor: "rgba(0,0,0,0)"}}
             anchorOrigin={{
-            vertical: 'bottom',
+            vertical: 'top',
             horizontal: 'right',
             }}
-            badgeContent={getRankBadge(rank.rank)}
-        >
+            badgeContent={<ScoreChip rank={rank.rank} score={playerRank.deltaScore} deltaScore={true}/>}
+            >
+            
             <Avatar alt={getPlayerProfile(props.players,rank.uuid).username} style={{backgroundColor: getPlayerProfile(props.players,rank.uuid).color}}>{getPlayerLabel(getPlayerProfile(props.players,rank.uuid))}</Avatar>
-        </Badge>
-        </Tooltip> 
+            </Badge>
+            </Tooltip>
+        </Grid>
     }
     ));
   }
@@ -87,9 +83,15 @@ export default function ResultCard(props: ResultCardProps){
                 spacing={1}
             >
             <Grid item>
-                <AvatarGroup max={15}>
+                <Grid 
+                    container
+                    direction="row"
+                    justify="space-between"
+                    alignItems="stretch"
+                    spacing={4}
+                >
                     {displayPlayersBadges()}
-                </AvatarGroup>
+                </Grid>
             </Grid>
             <Grid item>
                 <Typography>{props.result.date.toLocaleString()}</Typography>
