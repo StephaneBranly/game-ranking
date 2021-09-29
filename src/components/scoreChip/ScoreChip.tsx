@@ -1,13 +1,15 @@
 import React from 'react';
 import { Chip, createStyles, makeStyles } from "@material-ui/core";
 import { EmojiEvents } from '@material-ui/icons';
+import zIndex from '@material-ui/core/styles/zIndex';
 
 const useStyles = makeStyles((theme) => createStyles({
     root: {
         backgroundColor: "rgba(0,0,0,0.9)",
         marginLeft: theme.spacing(3),
         marginBottom: theme.spacing(1),
-        border: "2px solid #FFFFFF"
+        border: "2px solid #FFFFFF",
+        zIndex: 0
     },
     first: {
         color: "#FFD700",
@@ -40,7 +42,7 @@ export default function ScoreChip(props: ScoreChipProps){
         return <></>
     }
 
-    let text: string = `props.score`, color: string = "#FDFDFD"
+    let text: string = `${Math.round(props.score)}`, color: string = "#FDFDFD"
     if(props.deltaScore){
         text = props.score < 0 ? `${Math.round(props.score)}` : `+${Math.round(props.score)}`
         color= props.score < 0 ? "#FF2020" : "#10FFB0"

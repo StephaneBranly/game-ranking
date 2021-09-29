@@ -57,3 +57,16 @@ export const generateNewEntry = (result: resultType, lastEntry: historyEntryType
 export const getIndexInEntry = (playerUuid: string, entry: historyEntryType): number => {
     return entry.playersRank.findIndex((obj => obj.playerUuid === playerUuid));
 }
+
+export const toChartScore = (scores: Array<historyEntryType>) => {
+    const chartScore: any = []
+    scores.forEach((score) => chartScore.push(entreyToChartScore(score)))
+    console.log(chartScore)
+    return chartScore
+}
+const entreyToChartScore = (score: historyEntryType) => {
+    let obj:any={}
+    obj['resultUuid']=score.resultUuid
+    score.playersRank.forEach(playerRank => obj[playerRank.playerUuid]=Math.round(playerRank.score))
+    return obj
+}

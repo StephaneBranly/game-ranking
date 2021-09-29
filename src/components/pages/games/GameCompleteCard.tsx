@@ -10,17 +10,20 @@ import {
   Typography,
   Avatar,
   Badge,
-  Tooltip,
+//   Tooltip,
 } from "@material-ui/core";
-import { gameType, playerType, resultType } from '../../../types/data';
+import { gameType, playerType, resultType, scoreType } from '../../../types/data';
 import { Delete, Edit, EmojiEvents, NavigateBefore, PostAdd } from '@material-ui/icons';
 import { AvatarGroup } from '@material-ui/lab';
 import GameAddResult from './GameAddResult';
 import { severityType } from '../../../types/notification';
-import { calculateRanking, getPlayerLabel, getPlayerProfile } from '../../../utils/lib';
+import { calculateRanking, getPlayerLabel, getPlayerProfile, toChartScore } from '../../../utils/lib';
 import ResultCard from './ResultCard';
 import DeleteGame from './DeleteGame';
 import EditGame from './EditGame';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import ScoreChip from '../../scoreChip/ScoreChip';
+
 
 const useStyles = makeStyles((theme) =>
 createStyles({  
@@ -111,21 +114,24 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
   }
 
   const displayPlayersBadges = () => {
+    let i=0;
     if(props.game.rankHistory)
-    return (props.game.rankHistory[props.game.rankHistory.length-1].playersRank.sort((a, b) => a.score < b.score ? 1 : -1).map((player) => 
-    <Tooltip title={Math.round(player.score)}>
-        <Badge
+    return (props.game.rankHistory[props.game.rankHistory.length-1].playersRank.sort((a, b) => a.score < b.score ? 1 : -1).map((player) => {
+        i+=1
+    // <Tooltip title={Math.round(player.score)}>
+        return <Grid item><Badge
             overlap="circle"
             style={{borderColor: "rgba(0,0,0,0)"}}
             anchorOrigin={{
-            vertical: 'bottom',
+            vertical: 'top',
             horizontal: 'right',
             }}
-            badgeContent={<EmojiEvents className={classes.first}/>}
+            badgeContent={<ScoreChip rank={i} score={player.score} deltaScore={false}/>}
         >
             <Avatar alt={getPlayerProfile(props.players,player.playerUuid).username} style={{backgroundColor: getPlayerProfile(props.players,player.playerUuid).color}}>{getPlayerLabel(getPlayerProfile(props.players,player.playerUuid))}</Avatar>
-        </Badge>
-    </Tooltip>
+        </Badge></Grid>
+    // </Tooltip>
+    }
     ));
     return <></>
   }
@@ -137,6 +143,12 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
             return <ResultCard result={result} players={props.players} setAddResultOpen={setAddResultOpen} playersRank={playersRank}></ResultCard>}
         );
     }
+  }
+
+  const generateLines = (players: Array<scoreType>) => {
+      return players.map((player) => {
+          return <Line type="monotone" strokeWidth={2} dataKey={player.uuid} stroke={getPlayerProfile(props.players,player.uuid).color} yAxisId={1} />
+        })
   }
 
   return (
@@ -173,11 +185,28 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
         </Grid>
         {props.game.players && 
         <Grid item>
-            <Typography>Players:</Typography>
-            <AvatarGroup max={15}>
+            <Grid 
+                container
+                direction="row"
+                justify="flex-start"
+                spacing={4}
+            >
                 {displayPlayersBadges()}
-            </AvatarGroup>
+            </Grid>
+            {props.game.rankHistory && <LineChart
+            width={1000}
+            height={400}
+            data={toChartScore(props.game.rankHistory)}
+            margin={{ top: 20, right: 20, left: 20, bottom: 20 }}
+            >
+            <XAxis dataKey="resultUuid" />
+            <Tooltip/>
+            <Legend />
+            <CartesianGrid stroke="#f5f5f5" strokeDasharray="3 3"/>
+            {generateLines(props.game.players).flat()}
+        </LineChart>}
         </Grid>}
+       
         </Grid>
         {addResultOpen.open ? <GameAddResult game={props.game} players={props.players} addResultOpen={addResultOpen} setAddResultOpen={setAddResultOpen} addNotification={props.addNotification} addResult={addResult}></GameAddResult> : <></>}
     </Card>
