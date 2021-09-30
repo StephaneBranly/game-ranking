@@ -32,7 +32,7 @@ export default function Settings(props: LoadSaveProps){
           <Grid
             container
             direction="row"
-            justify="space-evenly"
+            justify="flex-end"
             alignItems="baseline"
             spacing={1}
             className={classes.padding}

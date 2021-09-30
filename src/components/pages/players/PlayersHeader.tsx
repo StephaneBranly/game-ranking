@@ -47,7 +47,7 @@ export default function PlayersHeader(props: PlayersHeaderProps){
           <Grid
             container
             direction="row"
-            justify="space-evenly"
+            justify="space-between"
             alignItems="baseline"
             spacing={2}
             className={classes.root}
