@@ -15,7 +15,7 @@ import React, { Component } from "react";
 import { LineChart, XAxis, Legend, CartesianGrid, Tooltip, Line, ResponsiveContainer } from "recharts";
 import { theme } from "../../App";
 import { gameType, historyEntryType, playerType, resultType, scoreType } from "../../types/data";
-import { getPlayerLabel, getPlayerProfile, getResult, toChartScore } from "../../utils/lib";
+import { getPlayerLabel, getPlayerProfile, getResult, stringDate, toChartScore } from "../../utils/lib";
 import ScoreChip from "../scoreChip/ScoreChip";
   
   
@@ -47,7 +47,7 @@ export default function LineChartResult(props: LineChartResultProps){
 
   const renderLegend = () => {
     return (
-      <Grid container direction="row" justify="flex-start"  spacing={5}>
+      <Grid container direction="row" justify="flex-start"  spacing={5} style={{paddingBottom: theme.spacing(2)}}>
         {
           props.game.rankHistory![props.game.rankHistory!.length-1].playersRank.sort((a, b) => a.score < b.score ? 1 : -1).map((player,index) => {
               // <Tooltip title={Math.round(player.score)}>
@@ -67,11 +67,6 @@ export default function LineChartResult(props: LineChartResultProps){
       </Grid>
     );
   }
-
-  const getPlayerScoreFromPayload = (data: any, playerUuid: string) => {
-    return data.filter((entry: { dataKey: string; }) => entry.dataKey === playerUuid)[0]
-  }
-
   const generateLineScorePlayer = (historyEntry: historyEntryType, playerUuid: string, playing: boolean) => {
     const playerRank = historyEntry.playersRank.filter((player) => player.playerUuid === playerUuid)[0]
     const playerInfo = getPlayerProfile(props.players, playerUuid)
@@ -117,7 +112,7 @@ export default function LineChartResult(props: LineChartResultProps){
     if (active && payload && payload.length && label) {
       return (
         <Paper variant="outlined" style={{padding: theme.spacing(1)}}>
-          <Typography>{label ? getResult(props.game.results!,label).date.toString() : "Start"}</Typography>
+          <Typography>{label ? stringDate(getResult(props.game.results!,label).date) : "Start"}</Typography>
           <Grid container direction="column" spacing={1}>{renderPlayersScore(getResult(props.game.results!, label), payload)}</Grid>
         </Paper>
       );

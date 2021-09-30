@@ -74,3 +74,8 @@ const entreyToChartScore = (score: historyEntryType) => {
     score.playersRank.forEach(playerRank => obj[playerRank.playerUuid]=Math.round(playerRank.score))
     return obj
 }
+
+export const stringDate = (date: Date) => {
+    const d = new Date(date)
+    return `${d.getDay()}/${d.getMonth()}/${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}`
+}
