@@ -13,34 +13,21 @@ import {
 //   Tooltip,
 } from "@material-ui/core";
 import { gameType, playerType, resultType, scoreType } from '../../../types/data';
-import { Delete, Edit, EmojiEvents, NavigateBefore, PostAdd } from '@material-ui/icons';
-import { AvatarGroup } from '@material-ui/lab';
+import { Delete, Edit, NavigateBefore, PostAdd } from '@material-ui/icons';
 import GameAddResult from './GameAddResult';
 import { severityType } from '../../../types/notification';
-import { calculateRanking, getPlayerLabel, getPlayerProfile, toChartScore } from '../../../utils/lib';
+import { calculateRanking, getPlayerLabel, getPlayerProfile } from '../../../utils/lib';
 import ResultCard from './ResultCard';
 import DeleteGame from './DeleteGame';
 import EditGame from './EditGame';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import ScoreChip from '../../scoreChip/ScoreChip';
-
+import LineChartResult from '../../lineChartResult/LineChartResult';
 
 const useStyles = makeStyles((theme) =>
 createStyles({  
     Main: {
         padding: theme.spacing(2),
         marginBottom: theme.spacing(1)
-    },
-    
-    first: {
-        color: "#FFD700",
-    },
-    second: {
-        color: "#C0C0C0",
-
-    },
-    third: {
-        color: "#cd7f32",
     },
     ColorPicker: {
         position: "absolute",
@@ -113,29 +100,6 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
     props.changeGameData(new_data, props.game.uuid);
   }
 
-  const displayPlayersBadges = () => {
-    let i=0;
-    if(props.game.rankHistory)
-    return (props.game.rankHistory[props.game.rankHistory.length-1].playersRank.sort((a, b) => a.score < b.score ? 1 : -1).map((player) => {
-        i+=1
-    // <Tooltip title={Math.round(player.score)}>
-        return <Grid item><Badge
-            overlap="circle"
-            style={{borderColor: "rgba(0,0,0,0)"}}
-            anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-            }}
-            badgeContent={<ScoreChip rank={i} score={player.score} deltaScore={false}/>}
-        >
-            <Avatar alt={getPlayerProfile(props.players,player.playerUuid).username} style={{backgroundColor: getPlayerProfile(props.players,player.playerUuid).color}}>{getPlayerLabel(getPlayerProfile(props.players,player.playerUuid))}</Avatar>
-        </Badge></Grid>
-    // </Tooltip>
-    }
-    ));
-    return <></>
-  }
-
   const displayResults = () => {
     if (props.game.results){
         return props.game.results.map(result => {
@@ -143,12 +107,6 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
             return <ResultCard result={result} players={props.players} setAddResultOpen={setAddResultOpen} playersRank={playersRank}></ResultCard>}
         );
     }
-  }
-
-  const generateLines = (players: Array<scoreType>) => {
-      return players.map((player) => {
-          return <Line type="monotone" strokeWidth={2} dataKey={player.uuid} stroke={getPlayerProfile(props.players,player.uuid).color} yAxisId={1} />
-        })
   }
 
   return (
@@ -185,26 +143,7 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
         </Grid>
         {props.game.players && 
         <Grid item>
-            <Grid 
-                container
-                direction="row"
-                justify="flex-start"
-                spacing={4}
-            >
-                {displayPlayersBadges()}
-            </Grid>
-            {props.game.rankHistory && <LineChart
-            width={1000}
-            height={400}
-            data={toChartScore(props.game.rankHistory)}
-            margin={{ top: 20, right: 20, left: 20, bottom: 20 }}
-            >
-            <XAxis dataKey="resultUuid" />
-            <Tooltip/>
-            <Legend />
-            <CartesianGrid stroke="#f5f5f5" strokeDasharray="3 3"/>
-            {generateLines(props.game.players).flat()}
-        </LineChart>}
+            <LineChartResult players={props.players} game={props.game}/>
         </Grid>}
        
         </Grid>
