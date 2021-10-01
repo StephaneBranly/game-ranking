@@ -1,25 +1,13 @@
 import React, { useState } from 'react';
 import {
-  makeStyles,
-  createStyles,
   Container,
   Grid,
-  Card,
-  Button,
 } from "@material-ui/core";
 import GamesHeader from './GamesHeader';
 import GameCard from './GameCard';
 import { gameType, playerType } from '../../../types/data';
 import GameCompleteCard from './GameCompleteCard';
 import { severityType } from '../../../types/notification';
-
-const useStyles = makeStyles((theme) =>
-createStyles({  
-    padding: {
-        padding: theme.spacing(1),
-    }
-}),
-);
 
 export interface GamesProps{
     games: Array<gameType>,
@@ -29,8 +17,6 @@ export interface GamesProps{
 }
 
 export default function Games(props: GamesProps){
-    const classes = useStyles(); 
-    
     const [currentGame, setCurrentGame] = useState(undefined as unknown as gameType|undefined);
 
     const renderGameCards = (games: Array<gameType>) => {

@@ -4,8 +4,6 @@ import {
   createStyles,
   Card,
   Grid,
-  ClickAwayListener,
-  InputBase,
   Typography
 } from "@material-ui/core";
 import { gameType } from '../../../types/data';
