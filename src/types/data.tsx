@@ -1,5 +1,3 @@
-import { TupleType } from "typescript"
-
 export type gameType =
 {
     gamename: string,
