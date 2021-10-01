@@ -10,12 +10,11 @@ import {
     Typography,
     Paper,
   } from "@material-ui/core";
-import { Height, IndeterminateCheckBoxOutlined } from "@material-ui/icons";
 import React, { Component } from "react";
 import { LineChart, XAxis, Legend, CartesianGrid, Tooltip, Line, ResponsiveContainer } from "recharts";
 import { theme } from "../../App";
 import { gameType, historyEntryType, playerType, resultType, scoreType } from "../../types/data";
-import { getPlayerLabel, getPlayerProfile, getResult, stringDate, toChartScore } from "../../utils/lib";
+import { getPlayerLabel, getPlayerProfile, getResult, toChartScore } from "../../utils/lib";
 import ScoreChip from "../scoreChip/ScoreChip";
   
   
@@ -49,7 +48,7 @@ export default function LineChartResult(props: LineChartResultProps){
     return (
       <Grid container direction="row" justify="flex-start"  spacing={5} style={{paddingBottom: theme.spacing(2)}}>
         {
-          props.game.rankHistory![props.game.rankHistory!.length-1].playersRank.sort((a, b) => a.score < b.score ? 1 : -1).map((player,index) => {
+          props.game.rankHistory[props.game.rankHistory.length-1].playersRank.sort((a, b) => a.score < b.score ? 1 : -1).map((player,index) => {
               // <Tooltip title={Math.round(player.score)}>
                   return <Grid item><Badge
                       overlap="circle"
@@ -89,12 +88,12 @@ export default function LineChartResult(props: LineChartResultProps){
   }
 
   const renderPlayersScore = (result: resultType, data: any) => {
-    const historyEntry = props.game.rankHistory!.filter((entry) => entry.resultUuid === result.uuid)[0] as historyEntryType
+    const historyEntry = props.game.rankHistory.filter((entry) => entry.resultUuid === result.uuid)[0] as historyEntryType
 
     const uuidPresentPlayers: Array<string> = []
     const uuidOtherPlayers: Array<string> = []
     result.ranks.forEach(rank => uuidPresentPlayers.push(rank.uuid))
-    props.game.players!.filter((player) => uuidPresentPlayers.indexOf(player.uuid) <= -1).forEach((player) => uuidOtherPlayers.push(player.uuid))
+    props.game.players.filter((player) => uuidPresentPlayers.indexOf(player.uuid) <= -1).forEach((player) => uuidOtherPlayers.push(player.uuid))
     const componentPresentPlayers = uuidPresentPlayers.map((player) => 
     {
       return generateLineScorePlayer(historyEntry, player, true)
@@ -112,8 +111,8 @@ export default function LineChartResult(props: LineChartResultProps){
     if (active && payload && payload.length && label) {
       return (
         <Paper variant="outlined" style={{padding: theme.spacing(1)}}>
-          <Typography>{label ? stringDate(getResult(props.game.results!,label).date) : "Start"}</Typography>
-          <Grid container direction="column" spacing={1}>{renderPlayersScore(getResult(props.game.results!, label), payload)}</Grid>
+          <Typography>{label ? getResult(props.game.results,label).date.toLocaleString() : "Start"}</Typography>
+          <Grid container direction="column" spacing={1}>{renderPlayersScore(getResult(props.game.results, label), payload)}</Grid>
         </Paper>
       );
     }
@@ -122,7 +121,7 @@ export default function LineChartResult(props: LineChartResultProps){
 };
   
   return (
-    props.game.rankHistory && props.game.players ? 
+    props.game.rankHistory.length && props.game.players.length ? 
     <div style={{width:'100%'}}>
     <ResponsiveContainer width="100%" height={400}>
     <LineChart

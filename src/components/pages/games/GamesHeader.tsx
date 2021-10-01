@@ -29,12 +29,15 @@ export default function GamesHeader(props: GamesHeaderProps){
   
 
   const addGame = () => {
-    let new_game: gameType = 
+    let newGame: gameType = 
     {   
       uuid: uuid(),
       gamename: "New game",
+      results: [],
+      players: [],
+      rankHistory: []
     }
-    props.setGames(props.games.concat(new_game));
+    props.setGames(props.games.concat(newGame));
   }
 
 

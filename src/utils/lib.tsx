@@ -1,3 +1,4 @@
+import { dateTimePickerDefaultProps } from "@material-ui/pickers/constants/prop-types";
 import { algorithmType, gameType, historyEntryType, playerType, resultType, scoreType } from "../types/data"
 import { elo, elo_expected } from "./elo";
 
@@ -22,7 +23,7 @@ export const calculateRanking = (game: gameType): Array<historyEntryType> => {
         return [];
     let rankHistory: Array<historyEntryType>  = []
     rankHistory.push({ resultUuid: "", playersRank: []})
-    rankHistory[0].playersRank = game.players!.map(player => { return { playerUuid: player.uuid, score: 1200, deltaScore: 0 }}) 
+    rankHistory[0].playersRank = game.players.map(player => { return { playerUuid: player.uuid, score: 1200, deltaScore: 0 }}) 
     let lastEntry: historyEntryType = rankHistory[0]
     game.results.forEach(result => {
         const newEntry = generateNewEntry(result, lastEntry)
@@ -75,7 +76,34 @@ const entreyToChartScore = (score: historyEntryType) => {
     return obj
 }
 
-export const stringDate = (date: Date) => {
-    const d = new Date(date)
-    return `${d.getDay()}/${d.getMonth()}/${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}`
+export const generateGameFromLoadedData  = (game: { gamename: any; uuid: any; results: resultType[]; }) => {
+  let newData: gameType = {
+    gamename: game.gamename,
+    uuid: game.uuid,
+    players: [],
+    results: game.results,
+    rankHistory: []
+  }
+ 
+  game.results.forEach((result: resultType) => {
+    newData.results.push(result);
+    result.ranks.forEach(rank => {
+    if(newData.players)
+    {
+        if(!newData.players.some(player => player.uuid === rank.uuid))
+        newData.players?.push({uuid:rank.uuid,rank:0});
+    }
+    else
+      newData.players=[{uuid:rank.uuid,rank:0}];
+    });
+  })
+  
+  newData.rankHistory = calculateRanking(newData);
+
+  if(newData.players)
+  {
+      const sortedRanks = newData.players.sort((a, b) => a.rank > b.rank ? 1 : -1)
+      newData.players = sortedRanks;
+  }
+  return newData
 }

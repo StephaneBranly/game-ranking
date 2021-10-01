@@ -26,8 +26,8 @@ export interface GameAddResultProps{
 
 export default function GameAddResult(props: GameAddResultProps){
   const [currentStep, setCurrentStep] = React.useState("who");
-  const [selectedDate, setSelectedDate] = React.useState(props.addResultOpen.id ? props.game.results!.filter(item => item.uuid === props.addResultOpen.id)[0].date : new Date());
-  const [selectedPlayers, setSelectedPlayers] = React.useState(props.addResultOpen.id ? props.game.results!.filter(item => item.uuid === props.addResultOpen.id)[0].ranks : [] as Array<scoreType>);
+  const [selectedDate, setSelectedDate] = React.useState(props.addResultOpen.id ? props.game.results.filter(item => item.uuid === props.addResultOpen.id)[0].date : new Date());
+  const [selectedPlayers, setSelectedPlayers] = React.useState(props.addResultOpen.id ? props.game.results.filter(item => item.uuid === props.addResultOpen.id)[0].ranks : [] as Array<scoreType>);
 
   const displayCurrentStep = () => {
     if(currentStep === "who")

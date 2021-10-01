@@ -2,9 +2,9 @@ export type gameType =
 {
     gamename: string,
     uuid: string,
-    players?: Array<scoreType>
-    results?: Array<resultType>
-    rankHistory?: Array<historyEntryType>
+    players: Array<scoreType>
+    results: Array<resultType>
+    rankHistory: Array<historyEntryType>
 }
 
 export type playerType =

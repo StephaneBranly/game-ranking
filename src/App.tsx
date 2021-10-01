@@ -1,11 +1,14 @@
-import Header from './components/header/Header'
-import Footer, { FooterProps } from './components/footer/Footer'
-import Pages, { PagesProps } from './components/pages/Pages'
-import React from 'react';
-import { createMuiTheme, ThemeProvider, createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import { dataType, gameType, playerType } from './types/data';
-import Notifications, { NotificationProps } from './components/pages/notifications/Notification';
-import { notificationType, severityType } from './types/notification';
+import React from "react"
+import {
+  createMuiTheme, ThemeProvider, createStyles, makeStyles, Theme,
+} from "@material-ui/core/styles"
+import Header from "./components/header/Header"
+import Footer, { FooterProps } from "./components/footer/Footer"
+import Pages, { PagesProps } from "./components/pages/Pages"
+import { dataType, gameType, playerType } from "./types/data"
+import Notifications, { NotificationProps } from "./components/pages/notifications/Notification"
+import { notificationType, severityType } from "./types/notification"
+import { generateGameFromLoadedData } from "./utils/lib"
 
 export const theme = createMuiTheme({
   palette: {
@@ -19,108 +22,99 @@ export const theme = createMuiTheme({
       main: "#d2d2d2",
     },
   },
-});
+})
 
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    App: {
-      paddingBottom: theme.spacing(15)
-    }
-  }),
-);
+const useStyles = makeStyles((theme) => createStyles({
+  App: {
+    paddingBottom: theme.spacing(15),
+  },
+}))
 
 function App() {
-  const [page, setPage] = React.useState('summary');
-  const [players, setPlayers] = React.useState([]as Array<playerType>);
-  const [games, setGames] = React.useState([] as Array<gameType>);
-  const [notification, setNotification] = React.useState({open: false} as notificationType);
+  const [page, setPage] = React.useState("summary")
+  const [players, setPlayers] = React.useState([]as Array<playerType>)
+  const [games, setGames] = React.useState([] as Array<gameType>)
+  const [notification, setNotification] = React.useState({ open: false } as notificationType)
 
-  const classes = useStyles(); 
-
-  
+  const classes = useStyles()
 
   const handlerSaveData = () => {
-    let data: dataType = {
-      players: players,
-      games: games
+    const data = {
+      players,
+      games: games.map(game => { return { uuid: game.uuid, gamename: game.gamename, results: game.results }})
     }
-    var FileSaver = require('file-saver');
-    var json = JSON.stringify(data);
-    var blob = new Blob([json], {type: "application/json"});
-    FileSaver.saveAs(blob, "save_game-ranking.json");
-  } 
+    const FileSaver = require("file-saver")
+    const json = JSON.stringify(data)
+    const blob = new Blob([json], { type: "application/json" })
+    FileSaver.saveAs(blob, "save_game-ranking.json")
+  }
 
   const handlerLoadData = (e: React.ChangeEvent<HTMLInputElement>) => {
-    try
-    {
-      e.preventDefault();
-      const reader = new FileReader();
-      reader.onload = async (e) => {   
-        if(e.target?.result)
-        {
-          const data = JSON.parse(e.target.result as string);
-          setPlayers(data.players);
-          setGames(data.games);
-          addNotification("Data correctly loaded", "success");
+    try {
+      e.preventDefault()
+      const reader = new FileReader()
+      reader.onload = async (e) => {
+        if (e.target?.result) {
+          const data = JSON.parse(e.target.result as string)
+          setPlayers(data.players)
+          const games: Array<gameType> = data.games.map((game: { uuid: any; gamename: any; results: any }) => generateGameFromLoadedData(game))
+          setGames(games)
+          addNotification("Data correctly loaded", "success")
           setPage("summary")
         }
-      };
-      if(e.target?.files)
-      {
-        reader.readAsText(e.target.files[0]);
       }
+      if (e.target?.files) {
+        reader.readAsText(e.target.files[0])
+      }
+    } catch {
+      addNotification("Error when loading data", "error")
     }
-    catch
-    {
-      addNotification("Error when loading data", "error");
-    }
-  };
+  }
 
   const addNotification = (text: string, severity?: severityType) => {
-    const new_notification = 
-    {
+    const new_notification = {
       open: true,
-      text: text,
-      severity: severity ? severity : undefined
+      text,
+      severity: severity || undefined,
     }
     setNotification(new_notification)
   }
 
-  const handleChangeCurrentPage = (event: React.ChangeEvent<{}>, new_page: string) => {
-    setPage(new_page);
-  };
-
-  let pages_props: PagesProps = {
-    currentPage:page,
-    games:games,
-    setGames: setGames,
-    players: players,
-    setPlayers: setPlayers,
-    handlerSaveData: handlerSaveData,
-    handlerLoadData: handlerLoadData,
-    addNotification: addNotification,
+  const handleChangeCurrentPage = (event: React.ChangeEvent<{}>, newPage: string) => {
+    setPage(newPage)
   }
 
-  let footer_prop: FooterProps = {
-    handleChangeCurrentPage:handleChangeCurrentPage,
-    currentPage:page
+  const pagesProps: PagesProps = {
+    currentPage: page,
+    games,
+    setGames,
+    players,
+    setPlayers,
+    handlerSaveData,
+    handlerLoadData,
+    addNotification,
   }
 
-  let notifications_props: NotificationProps = {
-    notification: notification,
-    setNotification: setNotification,
+  const footerProps: FooterProps = {
+    handleChangeCurrentPage,
+    currentPage: page,
+  }
+
+  const notificationsProps: NotificationProps = {
+    notification,
+    setNotification,
   }
 
   return (
     <ThemeProvider theme={theme}>
       <div className={classes.App}>
-        <Header></Header>
-        <Pages {...pages_props}></Pages>
-        <Footer {...footer_prop}></Footer>
+        <Header />
+        <Pages {...pagesProps} />
+        <Footer {...footerProps} />
       </div>
-      <Notifications {...notifications_props}></Notifications>
+      <Notifications {...notificationsProps} />
     </ThemeProvider>
-  );
+  )
 }
 
-export default App;
+export default App

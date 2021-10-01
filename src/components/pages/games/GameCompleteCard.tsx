@@ -103,7 +103,7 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
   const displayResults = () => {
     if (props.game.results){
         return props.game.results.map(result => {
-            const playersRank = props.game.rankHistory!.filter((entry) => entry.resultUuid === result.uuid)[0].playersRank
+            const playersRank = props.game.rankHistory.filter((entry) => entry.resultUuid === result.uuid)[0].playersRank
             return <ResultCard result={result} players={props.players} setAddResultOpen={setAddResultOpen} playersRank={playersRank}></ResultCard>}
         );
     }
