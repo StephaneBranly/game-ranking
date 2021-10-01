@@ -87,7 +87,7 @@ export default function LineChartResult(props: LineChartResultProps){
       const color = playerRank.deltaScore < 0 ? "#FF2020" : "#10FFB0" 
       const deltaScore = playerRank.deltaScore < 0 ? `${Math.round(playerRank.deltaScore)}` : `+${Math.round(playerRank.deltaScore)}`
       return <Grid key={playerInfo.uuid} container item direction="row" justify="space-between" alignContent="center" alignItems="baseline">
-              <Grid item xs={5}><Chip label={playerInfo.username} style={{backgroundColor: playerInfo.color}} /></Grid>
+              <Grid item xs={5}><Chip label={playerInfo.username} style={{backgroundColor: playerInfo.color, color: "#FFFFFF"}} /></Grid>
               <Grid item xs={3}>{Math.round(playerRank.score)}</Grid> 
               <Grid item xs={1} style={{color: color}}>({deltaScore})</Grid>
             </Grid>
