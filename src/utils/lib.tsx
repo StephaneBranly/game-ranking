@@ -38,8 +38,11 @@ export const generateNewEntry = (result: resultType, lastEntry: historyEntryType
         playersRank: []
     };
     lastEntry.playersRank.forEach(p => { newEntry.playersRank.push({ playerUuid: p.playerUuid, score: p.score, deltaScore: p.deltaScore})})
+    let nbRank: any = {}
+    for(let i=0; i<result.ranks.length; i++)
+        nbRank[i+1] = result.ranks.filter(rankFilter => (i+1 === rankFilter.rank)).length
+
     result.ranks.forEach(currentPlayer => {
-        const nbSameRank = result.ranks.filter(rankFilter => (currentPlayer.rank === rankFilter.rank)).length
         const otherPlayers = result.ranks.filter(rankFilter => (currentPlayer.rank !== rankFilter.rank))
         const index = getIndexInEntry(currentPlayer.uuid,newEntry)
         const lastScoreCurrentPlayer = lastEntry.playersRank[getIndexInEntry(currentPlayer.uuid,lastEntry)].score
@@ -48,7 +51,8 @@ export const generateNewEntry = (result: resultType, lastEntry: historyEntryType
             const lastScoreOtherPlayer = lastEntry.playersRank[getIndexInEntry(otherPlayer.uuid,lastEntry)].score
             const win = currentPlayer.rank < otherPlayer.rank ? 1 : 0;
             const expected = elo_expected(lastScoreCurrentPlayer,lastScoreOtherPlayer)
-            const newScore = elo(lastScoreCurrentPlayer, expected, win, nbSameRank)
+            const divFactor = nbRank[currentPlayer.rank] * nbRank[otherPlayer.rank]
+            const newScore = elo(lastScoreCurrentPlayer, expected, win, divFactor)
             sumDeltaScore += newScore - lastScoreCurrentPlayer
         })
         newEntry.playersRank[index].score = lastScoreCurrentPlayer + sumDeltaScore
@@ -65,9 +69,9 @@ export const getIndexInEntry = (playerUuid: string, entry: historyEntryType): nu
 export const toChartScore = (scores: Array<historyEntryType>) => {
     const chartScore: any = []
     scores.forEach((score) => chartScore.push(entreyToChartScore(score)))
-    console.log(chartScore)
     return chartScore
 }
+
 const entreyToChartScore = (score: historyEntryType) => {
     let obj:any={}
     obj['resultUuid']=score.resultUuid
