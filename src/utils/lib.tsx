@@ -1,3 +1,4 @@
+import { randomFill } from "crypto";
 import { gameType, historyEntryType, playerType, resultType, scoreType } from "../types/data"
 import { elo, elo_expected } from "./elo";
 
@@ -123,3 +124,14 @@ export const calculatePresentPlayers = (game: gameType): Array<scoreType> => {
     })
     return players
 } 
+
+export const calculateNbPosition = (games: Array<gameType>, playerUuid: string, position: number) => {
+    let total = 0;
+    games.forEach(game => {
+        game.results.forEach(result => {
+            const resultRank = result.ranks.filter(rank => rank.uuid === playerUuid)
+            if(resultRank.length && resultRank[0].rank === position) total += 1
+        })
+    })
+    return total
+}

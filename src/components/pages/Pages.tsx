@@ -31,14 +31,13 @@ export interface PagesProps{
 }
 
 export default function Pages(props: PagesProps){
-  const classes = useStyles(); 
   
   const renderPage = (props: PagesProps) => {
     switch(props.currentPage) {
         case 'summary':
           return <Summary players={props.players} games={props.games}></Summary>;
         case 'players':
-          return <Players players={props.players} setPlayers={props.setPlayers} addNotification={props.addNotification}></Players>;
+          return <Players players={props.players} games={props.games} setPlayers={props.setPlayers} addNotification={props.addNotification}></Players>;
         case 'settings':
           return <Settings handlerSaveData={props.handlerSaveData} handlerLoadData={props.handlerLoadData}></Settings>;
         case 'games':

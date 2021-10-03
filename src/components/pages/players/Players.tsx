@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   makeStyles,
   createStyles,
@@ -8,26 +8,25 @@ import {
 } from "@material-ui/core";
 import PlayersHeader from './PlayersHeader'
 import PlayerCard from './PlayerCard'
-import { playerType } from '../../../types/data';
+import { gameType, playerType } from '../../../types/data';
 import { severityType } from '../../../types/notification';
-
-const useStyles = makeStyles((theme) =>
-createStyles({  
-
-}),
-);
+import PlayerCompleteCard from './PlayerCompleteCard';
 
 export interface PlayersProps{
   players: Array<playerType>,
+  games: Array<gameType>,
   setPlayers:React.Dispatch<React.SetStateAction<Array<playerType>>>,
   addNotification: (arg0: string, arg1: severityType) => void,
 }
 
 export default function Players(props: PlayersProps){
-    const classes = useStyles(); 
+
+    const [currentPlayer, setCurrentPlayer] = useState(undefined as unknown as playerType | undefined);
+
+
   
     const renderPlayerCards = (players: Array<playerType>) => {
-        return (players.map((player: playerType) => <PlayerCard player={player} changePlayerData={changePlayerData} addNotification={props.addNotification}></PlayerCard>))
+        return (players.map((player: playerType) => <PlayerCard player={player} games={props.games} changePlayerData={changePlayerData} setCurrentPlayer={setCurrentPlayer}></PlayerCard>))
     };
 
     const changePlayerData = (player: playerType, uuid: string) => {
@@ -38,6 +37,8 @@ export default function Players(props: PlayersProps){
 
   return (
     <Container>
+      { currentPlayer ?
+        <PlayerCompleteCard player={currentPlayer} changePlayerData={changePlayerData} addNotification={props.addNotification} setCurrentPlayer={setCurrentPlayer} /> :
         <Grid
             container
             direction="column"
@@ -47,7 +48,7 @@ export default function Players(props: PlayersProps){
         >
             <PlayersHeader players={props.players} setPlayers={props.setPlayers}></PlayersHeader>
             {renderPlayerCards(props.players)}
-       </Grid>
+       </Grid> }
     </Container>
   );
 }

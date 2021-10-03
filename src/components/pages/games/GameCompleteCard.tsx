@@ -8,30 +8,23 @@ import {
   Button,
   ButtonGroup,
   Typography,
-  Avatar,
-  Badge,
 //   Tooltip,
-} from "@material-ui/core";
-import { gameType, playerType, resultType, scoreType } from '../../../types/data';
-import { Delete, Edit, NavigateBefore, PostAdd } from '@material-ui/icons';
-import GameAddResult from './GameAddResult';
-import { severityType } from '../../../types/notification';
-import { calculatePresentPlayers, calculateRanking, getPlayerLabel, getPlayerProfile } from '../../../utils/lib';
-import ResultCard from './ResultCard';
-import DeleteGame from './DeleteGame';
-import EditGame from './EditGame';
-import ScoreChip from '../../scoreChip/ScoreChip';
-import LineChartResult from '../../lineChartResult/LineChartResult';
+} from "@material-ui/core"
+import { gameType, playerType, resultType } from '../../../types/data'
+import { Delete, Edit, NavigateBefore, PostAdd } from '@material-ui/icons'
+import GameAddResult from './GameAddResult'
+import { severityType } from '../../../types/notification'
+import { calculatePresentPlayers, calculateRanking } from '../../../utils/lib'
+import ResultCard from './ResultCard'
+import DeleteGame from './DeleteGame'
+import EditGame from './EditGame'
+import LineChartResult from '../../lineChartResult/LineChartResult'
 
 const useStyles = makeStyles((theme) =>
 createStyles({  
     Main: {
         padding: theme.spacing(2),
         marginBottom: theme.spacing(1)
-    },
-    ColorPicker: {
-        position: "absolute",
-        zIndex: 2
     },
     Name: {
         paddingLeft: theme.spacing(1),
@@ -42,7 +35,7 @@ createStyles({
         width: theme.spacing(17)
     }
 }),
-);
+)
 export interface GameCompleteCardProps{
     game: gameType,
     players: Array<playerType>,
@@ -53,22 +46,22 @@ export interface GameCompleteCardProps{
 }
 
 export default function GameCompleteCard(props: GameCompleteCardProps){
-  const classes = useStyles(); 
+  const classes = useStyles()
 
-  const [addResultOpen, setAddResultOpen] = React.useState({id: undefined as string|undefined, open:false});
-  const [editMode, setEditMode] = React.useState(false);
-  const [deleteGameOpen, setDeleteGameOpen] = React.useState(false);
+  const [addResultOpen, setAddResultOpen] = React.useState({id: undefined as string|undefined, open:false})
+  const [editMode, setEditMode] = React.useState(false)
+  const [deleteGameOpen, setDeleteGameOpen] = React.useState(false)
 
   const handleChangeGamename = (newGamename: string) => {
-    let newData: gameType = Object.assign({}, props.game); 
-    newData.gamename = newGamename;
-    props.changeGameData(newData, props.game.uuid);
+    let newData: gameType = Object.assign({}, props.game)
+    newData.gamename = newGamename
+    props.changeGameData(newData, props.game.uuid)
   }
 
   const deleteGame = () => {
-    props.addNotification("Game correctly deleted","success");
-    setDeleteGameOpen(false);
-    props.deleteGame(props.game.uuid);
+    props.addNotification("Game correctly deleted","success")
+    setDeleteGameOpen(false)
+    props.deleteGame(props.game.uuid)
   }
 
   const deleteResult = (id: string) => {
@@ -77,7 +70,7 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
     newData.players = calculatePresentPlayers(newData)
     newData.rankHistory = calculateRanking(newData)
 
-    props.addNotification("Result correctly deleted","success");
+    props.addNotification("Result correctly deleted","success")
 
     props.changeGameData(newData, props.game.uuid)
   }
@@ -87,7 +80,7 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
     if(!newData.results)
         newData.results = []
     else if(id)
-        newData.results = newData.results.filter(item => item.uuid !== id);
+        newData.results = newData.results.filter(item => item.uuid !== id)
     newData.results.push(newResult)
     newData.players = calculatePresentPlayers(newData)
     newData.rankHistory = calculateRanking(newData)
@@ -162,5 +155,5 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
     {deleteGameOpen && <DeleteGame setDeleteGameOpen={setDeleteGameOpen} deleteGame={deleteGame}></DeleteGame>}
     {editMode && <EditGame setEditMode={setEditMode} handleChangeGamename={handleChangeGamename} currentGamename={props.game.gamename}></EditGame>}
     </>
-  );
+  )
 }
