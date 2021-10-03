@@ -11,9 +11,10 @@ export interface PagesProps{
   setGames: React.Dispatch<React.SetStateAction<Array<gameType>>>
   players: Array<playerType>,
   setPlayers:React.Dispatch<React.SetStateAction<Array<playerType>>>
-  handlerSaveData: () => void,
-  handlerLoadData: (e: React.ChangeEvent<HTMLInputElement>) => void,
+  handlerSaveData: (cookie: boolean) => void,
+  handlerLoadData: (e: React.ChangeEvent<HTMLInputElement> | null) => void,
   addNotification: (arg0: string, arg1: severityType) => void,
+  handlerResetData: (cookie: boolean) => void,
 }
 
 export default function Pages(props: PagesProps){
@@ -23,7 +24,7 @@ export default function Pages(props: PagesProps){
         case 'players':
           return <Players players={props.players} games={props.games} setPlayers={props.setPlayers} addNotification={props.addNotification}></Players>;
         case 'settings':
-          return <Settings handlerSaveData={props.handlerSaveData} handlerLoadData={props.handlerLoadData}></Settings>;
+          return <Settings handlerSaveData={props.handlerSaveData} handlerLoadData={props.handlerLoadData} handlerResetData={props.handlerResetData}></Settings>;
         case 'games':
           return <Games games={props.games} setGames={props.setGames} players={props.players} addNotification={props.addNotification}></Games>    
         default:

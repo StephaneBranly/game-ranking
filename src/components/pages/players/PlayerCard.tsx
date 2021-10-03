@@ -6,8 +6,6 @@ import {
   Grid,
   IconButton,
   Badge,
-  ClickAwayListener,
-  InputBase,
   Typography
 } from "@material-ui/core";
 import Person from '@material-ui/icons/Person';

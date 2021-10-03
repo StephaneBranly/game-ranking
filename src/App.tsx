@@ -9,7 +9,6 @@ import { dataType, gameType, playerType } from "./types/data"
 import Notifications, { NotificationProps } from "./components/pages/notifications/Notification"
 import { notificationType, severityType } from "./types/notification"
 import { generateGameFromLoadedData } from "./utils/lib"
-import Cookies from "js-cookie"
 
 export const theme = createMuiTheme({
   palette: {
@@ -44,36 +43,73 @@ function App() {
       players,
       games: games.map(game => { return { uuid: game.uuid, gamename: game.gamename, results: game.results }})
     }
-    const json = JSON.stringify(data)
-    return json
+    return data
   }
 
-  const handlerSaveData = () => {
-    const FileSaver = require("file-saver")
-    const json = getJsonSavedData()
-    const blob = new Blob([json], { type: "application/json" })
-    FileSaver.saveAs(blob, "save_game-ranking.json")
+  const handlerSaveData = (cookie: boolean) => {
+    const stringifiedData = JSON.stringify(getJsonSavedData())
+
+    if(cookie)
+    {
+      try {
+        localStorage.setItem('data', stringifiedData)
+        addNotification('Data saved as cookies', "success")
+      } catch(e) {
+        addNotification('Error when saving as cookies', "error")
+      }
+    }
+    else {
+      const FileSaver = require("file-saver")
+      const blob = new Blob([stringifiedData], { type: "application/json" })
+      FileSaver.saveAs(blob, "save_game-ranking.json")
+    }
   }
 
-  const handlerLoadData = (e: React.ChangeEvent<HTMLInputElement>) => {
-    try {
-      e.preventDefault()
-      const reader = new FileReader()
-      reader.onload = async (e) => {
-        if (e.target?.result) {
-          const data = JSON.parse(e.target.result as string)
-          setPlayers(data.players)
-          const games: Array<gameType> = data.games.map((game: { uuid: any; gamename: any; results: any }) => generateGameFromLoadedData(game))
-          setGames(games)
-          addNotification("Data correctly loaded", "success")
-          setPage("games")
+  const handlerLoadData = (e: React.ChangeEvent<HTMLInputElement> | null) => {
+    if(e){
+      try {
+        e.preventDefault()
+        const reader = new FileReader()
+        reader.onload = async (e) => {
+          if (e.target?.result) {
+            const data = JSON.parse(e.target.result as string)
+            setPlayers(data.players)
+            const games: Array<gameType> = data.games.map((game: { uuid: any; gamename: any; results: any }) => generateGameFromLoadedData(game))
+            setGames(games)
+            addNotification("Data correctly loaded", "success")
+            setPage("games")
+          }
         }
+        if (e.target?.files) {
+          reader.readAsText(e.target.files[0])
+        }
+      } catch {
+        addNotification("Error when loading data", "error")
       }
-      if (e.target?.files) {
-        reader.readAsText(e.target.files[0])
+    }
+    else{
+      if(localStorage.getItem('data'))
+      {
+        const data = JSON.parse(localStorage.getItem('data')!)
+        setPlayers(data.players)
+        const games: Array<gameType> = data.games.map((game: { uuid: any; gamename: any; results: any }) => generateGameFromLoadedData(game))
+        setGames(games)
+        addNotification("Data correctly loaded", "success")
+        setPage("games")
       }
-    } catch {
-      addNotification("Error when loading data", "error")
+      else 
+        addNotification("Data not found in cookies", "warning")
+    }
+  }
+
+  const handlerResetData = (cookie: boolean) => {
+    if(cookie){
+      localStorage.removeItem('data')
+      addNotification("Cookie correctly removed", "success")
+    } else {
+      setPlayers([])
+      setGames([])
+      addNotification("Current session correctly reinitiliazed", "success")
     }
   }
 
@@ -98,6 +134,7 @@ function App() {
     setPlayers,
     handlerSaveData,
     handlerLoadData,
+    handlerResetData,
     addNotification,
   }
 

@@ -4,21 +4,16 @@ import {
   Grid,
 } from "@material-ui/core";
 import About from './About';
-import LoadSave, { LoadSaveProps } from './LoadSave';
-import CookiesComp from './CookiesComp';
+import SettingsHeader, { SettingsHeaderProps } from './SettingsHeader';
 
 
 export interface SettingsProps{
-  handlerSaveData: () => void,
-  handlerLoadData: (e: React.ChangeEvent<HTMLInputElement>) => void,
+  handlerResetData: (cookie: boolean) => void,
+  handlerSaveData: (cookie: boolean) => void,
+  handlerLoadData: (e: React.ChangeEvent<HTMLInputElement> | null) => void,
 }
 
 export default function Settings(props: SettingsProps){  
-    const LoadSaveProps: LoadSaveProps = 
-    { 
-      handlerSaveData: props.handlerSaveData,
-      handlerLoadData: props.handlerLoadData,
-    }
     return (
     <Container>
         <Grid
@@ -28,8 +23,7 @@ export default function Settings(props: SettingsProps){
             alignItems="stretch"
             spacing={1}
         >
-          <LoadSave {...LoadSaveProps}/>
-          <CookiesComp/>
+          <SettingsHeader {...props}/>
           <About/>
        </Grid>
     </Container>
