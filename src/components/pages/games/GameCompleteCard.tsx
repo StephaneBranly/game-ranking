@@ -16,7 +16,7 @@ import { gameType, playerType, resultType, scoreType } from '../../../types/data
 import { Delete, Edit, NavigateBefore, PostAdd } from '@material-ui/icons';
 import GameAddResult from './GameAddResult';
 import { severityType } from '../../../types/notification';
-import { calculateRanking, getPlayerLabel, getPlayerProfile } from '../../../utils/lib';
+import { calculatePresentPlayers, calculateRanking, getPlayerLabel, getPlayerProfile } from '../../../utils/lib';
 import ResultCard from './ResultCard';
 import DeleteGame from './DeleteGame';
 import EditGame from './EditGame';
@@ -79,15 +79,7 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
     else if(id)
         new_data.results = new_data.results.filter(item => item.uuid !== id);
     new_data.results.push(newResult);
-    newResult.ranks.forEach(rank => {
-        if(new_data.players)
-        {
-            if(!new_data.players.some(player => player.uuid === rank.uuid))
-                new_data.players?.push({uuid:rank.uuid,rank:0});
-        }
-        else
-            new_data.players=[{uuid:rank.uuid,rank:0}];
-    });
+    new_data.players = calculatePresentPlayers(new_data)
     
     new_data.rankHistory = calculateRanking(new_data);
 

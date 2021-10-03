@@ -1,4 +1,4 @@
-import { gameType, historyEntryType, playerType, resultType } from "../types/data"
+import { gameType, historyEntryType, playerType, resultType, scoreType } from "../types/data"
 import { elo, elo_expected } from "./elo";
 
 export const getPlayerProfile = (players: Array<playerType>, uuidPlayer: string): playerType => {
@@ -112,3 +112,14 @@ export const generateGameFromLoadedData  = (game: { gamename: any; uuid: any; re
   }
   return newData
 }
+
+export const calculatePresentPlayers = (game: gameType): Array<scoreType> => {
+    const players: Array<scoreType> = []
+    game.results.forEach(result => {
+        result.ranks.forEach(rank => {
+        if(!players.some(player => player.uuid === rank.uuid))
+            players.push({uuid:rank.uuid,rank:0});
+        })
+    })
+    return players
+} 
