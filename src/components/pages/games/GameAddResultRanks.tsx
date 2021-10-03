@@ -19,13 +19,13 @@ createStyles({
     
 }),
 );
-export interface GameAddResultResultsProps{
+export interface GameAddResultRanksProps{
     players: Array<playerType>
     selectedPlayers: Array<scoreType>,
     setSelectedPlayers: React.Dispatch<React.SetStateAction<Array<scoreType>>>
 }
 
-export default function GameAddResultResults(props: GameAddResultResultsProps){
+export default function GameAddResultRanks(props: GameAddResultRanksProps){
   const classes = useStyles(); 
   
   const handleChange = (event: any,uuidPlayer: string) => {
@@ -69,7 +69,7 @@ export default function GameAddResultResults(props: GameAddResultResultsProps){
 
   return (
     <DialogContent dividers>
-        <Typography>Results</Typography>
+        <Typography>Ranks</Typography>
         <List>
           {renderPlayerRank(props.selectedPlayers)}
         </List>

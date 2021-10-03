@@ -60,9 +60,9 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
   const [deleteGameOpen, setDeleteGameOpen] = React.useState(false);
 
   const handleChangeGamename = (newGamename: string) => {
-    let new_data: gameType = Object.assign({}, props.game); 
-    new_data.gamename = newGamename;
-    props.changeGameData(new_data, props.game.uuid);
+    let newData: gameType = Object.assign({}, props.game); 
+    newData.gamename = newGamename;
+    props.changeGameData(newData, props.game.uuid);
   }
 
   const deleteGame = () => {
@@ -71,25 +71,34 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
     props.deleteGame(props.game.uuid);
   }
 
+  const deleteResult = (id: string) => {
+    let newData: gameType = Object.assign({}, props.game)
+    newData.results = newData.results.filter(result => result.uuid !== id)
+    newData.players = calculatePresentPlayers(newData)
+    newData.rankHistory = calculateRanking(newData)
+
+    props.addNotification("Result correctly deleted","success");
+
+    props.changeGameData(newData, props.game.uuid)
+  }
 
   const addResult = (newResult: resultType, id: string|undefined) => {
-    let new_data: gameType = Object.assign({}, props.game);
-    if(!new_data.results)
-        new_data.results = [];
+    let newData: gameType = Object.assign({}, props.game)
+    if(!newData.results)
+        newData.results = []
     else if(id)
-        new_data.results = new_data.results.filter(item => item.uuid !== id);
-    new_data.results.push(newResult);
-    new_data.players = calculatePresentPlayers(new_data)
-    
-    new_data.rankHistory = calculateRanking(new_data);
+        newData.results = newData.results.filter(item => item.uuid !== id);
+    newData.results.push(newResult)
+    newData.players = calculatePresentPlayers(newData)
+    newData.rankHistory = calculateRanking(newData)
 
-    if(new_data.players)
+    if(newData.players)
     {
-        const sortedRanks = new_data.players.sort((a, b) => a.rank > b.rank ? 1 : -1)
-        new_data.players = sortedRanks;
+        const sortedRanks = newData.players.sort((a, b) => a.rank > b.rank ? 1 : -1)
+        newData.players = sortedRanks
     }
 
-    props.changeGameData(new_data, props.game.uuid);
+    props.changeGameData(newData, props.game.uuid)
   }
 
   const displayResults = () => {
@@ -139,7 +148,7 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
         </Grid>}
        
         </Grid>
-        {addResultOpen.open ? <GameAddResult game={props.game} players={props.players} addResultOpen={addResultOpen} setAddResultOpen={setAddResultOpen} addNotification={props.addNotification} addResult={addResult}></GameAddResult> : <></>}
+        {addResultOpen.open ? <GameAddResult game={props.game} players={props.players} addResultOpen={addResultOpen} setAddResultOpen={setAddResultOpen} addNotification={props.addNotification} addResult={addResult} deleteResult={deleteResult}></GameAddResult> : <></>}
     </Card>
     <Grid 
         container

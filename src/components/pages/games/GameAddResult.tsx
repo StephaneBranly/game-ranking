@@ -5,15 +5,17 @@ import {
   Dialog,
   DialogActions,
   DialogTitle,
+  ButtonGroup,
 } from "@material-ui/core";
 import { gameType, playerType, scoreType, resultType } from '../../../types/data';
 import { NavigateBefore, NavigateNext, PostAdd } from '@material-ui/icons';
 import GameAddResultWho from './GamesAddResultWho';
 import GameAddResultWhen from './GameAddResultWhen';
-import GameAddResultResults from './GameAddResultResults';
+import GameAddResultRanks from './GameAddResultRanks';
 import { severityType } from '../../../types/notification';
 import { getPlayerProfile } from '../../../utils/lib';
 import { uuid } from 'uuidv4';
+import DeleteResult from './DeleteResult';
 
 export interface GameAddResultProps{
     game: gameType,
@@ -22,12 +24,14 @@ export interface GameAddResultProps{
     setAddResultOpen: React.Dispatch<React.SetStateAction<{id: string|undefined, open: boolean}>>,
     addNotification: (arg0: string, arg1: severityType) => void,
     addResult: (result: resultType, id: string | undefined) => void,
+    deleteResult: (uuid: string) => void,
 }
 
 export default function GameAddResult(props: GameAddResultProps){
   const [currentStep, setCurrentStep] = React.useState("who");
   const [selectedDate, setSelectedDate] = React.useState(props.addResultOpen.id ? props.game.results.filter(item => item.uuid === props.addResultOpen.id)[0].date : new Date());
   const [selectedPlayers, setSelectedPlayers] = React.useState(props.addResultOpen.id ? props.game.results.filter(item => item.uuid === props.addResultOpen.id)[0].ranks : [] as Array<scoreType>);
+  const [deleteResultOpen, setDeleteResultOpen] = React.useState(false);
 
   const displayCurrentStep = () => {
     if(currentStep === "who")
@@ -36,8 +40,8 @@ export default function GameAddResult(props: GameAddResultProps){
     if(currentStep === "when")
       return (<GameAddResultWhen setSelectedDate={setSelectedDate} selectedDate={selectedDate}/>);
 
-    if(currentStep === "results")
-      return (<GameAddResultResults players={props.players} setSelectedPlayers={setSelectedPlayers} selectedPlayers={selectedPlayers}/>);
+    if(currentStep === "ranks")
+      return (<GameAddResultRanks players={props.players} setSelectedPlayers={setSelectedPlayers} selectedPlayers={selectedPlayers}/>);
 
     return <Typography>ERROR</Typography>
   }
@@ -55,12 +59,12 @@ export default function GameAddResult(props: GameAddResultProps){
       }
     }
     else if(currentStep === "when")
-      setCurrentStep("results");
+      setCurrentStep("ranks");
   }
   const backStep = () => {
     if(currentStep === "when")
       setCurrentStep("who");
-    else if(currentStep === "results")
+    else if(currentStep === "ranks")
       setCurrentStep("when");
   }
 
@@ -95,27 +99,37 @@ export default function GameAddResult(props: GameAddResultProps){
       props.addNotification("Results need at least two different rank","error");
   }
 
+  const deleteResult = () => {
+    setDeleteResultOpen(false)
+    props.setAddResultOpen({id:undefined, open:false})
+    props.deleteResult(props.addResultOpen.id!)
+  }
+
   return (
-    <Dialog fullWidth={true} maxWidth="sm" open={props.addResultOpen.open}>
+    <><Dialog fullWidth={true} maxWidth="sm" open={props.addResultOpen.open}>
     {props.addResultOpen.id ?  <DialogTitle>Edit result</DialogTitle> :  <DialogTitle>New result</DialogTitle>}
     {displayCurrentStep()}
     <DialogActions>
-        <Button onClick={() => props.setAddResultOpen({id:undefined, open:false})} color="primary" variant="outlined">
+      <ButtonGroup disableElevation variant="contained" color="primary">
+        {props.addResultOpen.id && <Button onClick={() => setDeleteResultOpen(true)}>Delete</Button>}
+        <Button onClick={() => props.setAddResultOpen({id:undefined, open:false})} >
             Cancel
         </Button>
-        <Button autoFocus disabled={currentStep === "who"} onClick={() => backStep()} color="primary" variant="outlined" startIcon={<NavigateBefore/>}>
-            Back
+        <Button autoFocus disabled={currentStep === "who"} onClick={() => backStep()}>
+          <NavigateBefore/>
         </Button>
-        {currentStep === "results" ? 
-            <Button autoFocus onClick={() => addResult()} color="primary" variant="outlined" endIcon={<PostAdd/>}>
+        {currentStep === "ranks" ? 
+            <Button autoFocus onClick={() => addResult()} endIcon={<PostAdd/>}>
               Send
             </Button> :
-            <Button autoFocus onClick={() => nextStep()} color="primary" variant="outlined" endIcon={<NavigateNext/>}>
-              Next
+            <Button autoFocus onClick={() => nextStep()}>
+              <NavigateNext/>
             </Button>
         }
-       
+       </ButtonGroup>
     </DialogActions>
   </Dialog>
+        {deleteResultOpen && <DeleteResult setDeleteResultOpen={setDeleteResultOpen} deleteResult={deleteResult}/>}
+  </>
   );
 }
