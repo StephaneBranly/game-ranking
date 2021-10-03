@@ -9,6 +9,7 @@ import { dataType, gameType, playerType } from "./types/data"
 import Notifications, { NotificationProps } from "./components/pages/notifications/Notification"
 import { notificationType, severityType } from "./types/notification"
 import { generateGameFromLoadedData } from "./utils/lib"
+import Cookies from "js-cookie"
 
 export const theme = createMuiTheme({
   palette: {
@@ -31,20 +32,25 @@ const useStyles = makeStyles((theme) => createStyles({
 }))
 
 function App() {
-  const [page, setPage] = React.useState("summary")
+  const [page, setPage] = React.useState("games")
   const [players, setPlayers] = React.useState([]as Array<playerType>)
   const [games, setGames] = React.useState([] as Array<gameType>)
   const [notification, setNotification] = React.useState({ open: false } as notificationType)
 
   const classes = useStyles()
 
-  const handlerSaveData = () => {
+  const getJsonSavedData = () => {
     const data = {
       players,
       games: games.map(game => { return { uuid: game.uuid, gamename: game.gamename, results: game.results }})
     }
-    const FileSaver = require("file-saver")
     const json = JSON.stringify(data)
+    return json
+  }
+
+  const handlerSaveData = () => {
+    const FileSaver = require("file-saver")
+    const json = getJsonSavedData()
     const blob = new Blob([json], { type: "application/json" })
     FileSaver.saveAs(blob, "save_game-ranking.json")
   }
@@ -60,7 +66,7 @@ function App() {
           const games: Array<gameType> = data.games.map((game: { uuid: any; gamename: any; results: any }) => generateGameFromLoadedData(game))
           setGames(games)
           addNotification("Data correctly loaded", "success")
-          setPage("summary")
+          setPage("games")
         }
       }
       if (e.target?.files) {

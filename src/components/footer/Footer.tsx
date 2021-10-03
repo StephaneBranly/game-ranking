@@ -38,7 +38,6 @@ export default function Footer(props: FooterProps){
   const currentPage = props.currentPage;
   return (
     <BottomNavigation value={currentPage} onChange={props.handleChangeCurrentPage} className={classes.root}>
-      <BottomNavigationAction label="Summary" value="summary" icon={currentPage === "summary" ? <Timeline /> : <TimelineOutlined />} />
       <BottomNavigationAction label="Games" value="games" icon={currentPage === "games" ? <EmojiEvents /> : <EmojiEventsOutlined />} />
       <BottomNavigationAction label="Players" value="players" icon={currentPage === "players" ? <Group /> : <GroupOutlined />} />
       <BottomNavigationAction label="Settings" value="settings" icon={currentPage === "settings" ? <Settings /> : <SettingsOutlined />} />

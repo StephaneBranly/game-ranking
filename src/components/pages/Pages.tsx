@@ -1,24 +1,10 @@
 import React from 'react';
-import Summary from "./summary/Summary"
 import Players from "./players/Players"
 import Settings from "./settings/Settings"
 import Games from "./games/Games"
-import {
-  makeStyles,
-  createStyles,
-} from "@material-ui/core";
 import { gameType, playerType } from '../../types/data';
 import { severityType } from '../../types/notification';
 
-
-const useStyles = makeStyles((theme) =>
-createStyles({
-  root: {
-   
-  },
-}),
-);
-  
 export interface PagesProps{
   currentPage: string,
   games: Array<gameType>,
@@ -34,8 +20,6 @@ export default function Pages(props: PagesProps){
   
   const renderPage = (props: PagesProps) => {
     switch(props.currentPage) {
-        case 'summary':
-          return <Summary players={props.players} games={props.games}></Summary>;
         case 'players':
           return <Players players={props.players} games={props.games} setPlayers={props.setPlayers} addNotification={props.addNotification}></Players>;
         case 'settings':
