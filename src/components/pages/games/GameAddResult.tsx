@@ -8,7 +8,7 @@ import {
   ButtonGroup,
 } from "@material-ui/core";
 import { gameType, playerType, scoreType, resultType } from '../../../types/data';
-import { NavigateBefore, NavigateNext, PostAdd } from '@material-ui/icons';
+import { Delete, NavigateBefore, NavigateNext, PostAdd } from '@material-ui/icons';
 import GameAddResultWho from './GamesAddResultWho';
 import GameAddResultWhen from './GameAddResultWhen';
 import GameAddResultRanks from './GameAddResultRanks';
@@ -111,10 +111,10 @@ export default function GameAddResult(props: GameAddResultProps){
     {displayCurrentStep()}
     <DialogActions>
       <ButtonGroup disableElevation variant="contained" color="primary">
-        {props.addResultOpen.id && <Button onClick={() => setDeleteResultOpen(true)}>Delete</Button>}
         <Button onClick={() => props.setAddResultOpen({id:undefined, open:false})} >
             Cancel
         </Button>
+        {props.addResultOpen.id && <Button onClick={() => setDeleteResultOpen(true)}><Delete/></Button>}
         <Button autoFocus disabled={currentStep === "who"} onClick={() => backStep()}>
           <NavigateBefore/>
         </Button>
