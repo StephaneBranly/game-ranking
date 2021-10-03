@@ -1,20 +1,20 @@
 {
   "files": {
     "main.css": "/game-ranking/static/css/main.57caa3cb.chunk.css",
-    "main.js": "/game-ranking/static/js/main.3e7a1cac.chunk.js",
-    "main.js.map": "/game-ranking/static/js/main.3e7a1cac.chunk.js.map",
+    "main.js": "/game-ranking/static/js/main.17c25ce7.chunk.js",
+    "main.js.map": "/game-ranking/static/js/main.17c25ce7.chunk.js.map",
     "runtime-main.js": "/game-ranking/static/js/runtime-main.25aaddb5.js",
     "runtime-main.js.map": "/game-ranking/static/js/runtime-main.25aaddb5.js.map",
-    "static/js/2.8cf7b34a.chunk.js": "/game-ranking/static/js/2.8cf7b34a.chunk.js",
-    "static/js/2.8cf7b34a.chunk.js.map": "/game-ranking/static/js/2.8cf7b34a.chunk.js.map",
+    "static/js/2.7d0318e1.chunk.js": "/game-ranking/static/js/2.7d0318e1.chunk.js",
+    "static/js/2.7d0318e1.chunk.js.map": "/game-ranking/static/js/2.7d0318e1.chunk.js.map",
     "index.html": "/game-ranking/index.html",
     "static/css/main.57caa3cb.chunk.css.map": "/game-ranking/static/css/main.57caa3cb.chunk.css.map",
-    "static/js/2.8cf7b34a.chunk.js.LICENSE.txt": "/game-ranking/static/js/2.8cf7b34a.chunk.js.LICENSE.txt"
+    "static/js/2.7d0318e1.chunk.js.LICENSE.txt": "/game-ranking/static/js/2.7d0318e1.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.25aaddb5.js",
-    "static/js/2.8cf7b34a.chunk.js",
+    "static/js/2.7d0318e1.chunk.js",
     "static/css/main.57caa3cb.chunk.css",
-    "static/js/main.3e7a1cac.chunk.js"
+    "static/js/main.17c25ce7.chunk.js"
   ]
 }
