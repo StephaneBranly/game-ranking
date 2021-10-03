@@ -49,6 +49,7 @@ export default function SettingsHeader(props: SettingsHeaderProps){
             spacing={1}
             className={classes.padding}
           >
+            <Grid item>
               <Menu
                 onClose={handleClose}
                 open={openDataMenu !== null}
@@ -132,6 +133,7 @@ export default function SettingsHeader(props: SettingsHeaderProps){
                 Data
               </Button>
             </ButtonGroup>
+            </Grid>
           </Grid>
        </Card>
        </Grid>
