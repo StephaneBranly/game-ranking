@@ -36,7 +36,7 @@ export default function Pages(props: PagesProps){
   const renderPage = (props: PagesProps) => {
     switch(props.currentPage) {
         case 'summary':
-          return <Summary></Summary>;
+          return <Summary players={props.players} games={props.games}></Summary>;
         case 'players':
           return <Players players={props.players} setPlayers={props.setPlayers} addNotification={props.addNotification}></Players>;
         case 'settings':

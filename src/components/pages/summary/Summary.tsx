@@ -7,8 +7,11 @@ import {
   Typography,
   Paper,
 Grid,
+Card,
 } from "@material-ui/core";
 import EmojiEvents from '@material-ui/icons/EmojiEvents';
+import LineChartResult from '../../lineChartResult/LineChartResult';
+import { gameType, playerType } from '../../../types/data';
 
 const useStyles = makeStyles((theme) =>
 createStyles({
@@ -34,45 +37,58 @@ createStyles({
 );
 
 export interface SummaryProps{
-
+    players: Array<playerType>,
+    games: Array<gameType>
 }
 
 export default function Summary(props: SummaryProps){
   const classes = useStyles(); 
   
+  const renderLineChart = () => {
+      return props.games.map(game => <Grid item><Card><LineChartResult players={props.players} game={game}/></Card></Grid>)
+  }
   return (
     <Container>
         <Grid
             container
-            direction="row"
+            direction="column"
             justify="space-evenly"
             alignItems="stretch"
         >
-            <Grid item><Paper className={classes.second}><Grid
-            container
-            direction="row"
-            justify="space-evenly"
-            alignItems="baseline"
+            <Grid
+                container
+                item
+                direction="row"
+                justify="space-evenly"
+                alignItems="stretch"
             >
-                <Grid item><Typography>Silver player</Typography></Grid><Grid item><Badge><EmojiEvents/></Badge></Grid></Grid></Paper>
+                <Grid item><Paper className={classes.second}><Grid
+                container
+                direction="row"
+                justify="space-evenly"
+                alignItems="baseline"
+                >
+                    <Grid item><Typography>Silver player</Typography></Grid><Grid item><Badge><EmojiEvents/></Badge></Grid></Grid></Paper>
+                </Grid>
+                <Grid item><Paper className={classes.first}><Grid
+                container
+                direction="row"
+                justify="space-evenly"
+                alignItems="baseline"
+                >
+                    <Grid item><Typography>Gold player</Typography></Grid><Grid item><Badge><EmojiEvents/></Badge></Grid></Grid></Paper>
+                </Grid>
+                <Grid item><Paper className={classes.third}><Grid
+                container
+                direction="row"
+                justify="space-evenly"
+                alignItems="baseline"
+                >
+                    <Grid item><Typography>Bronze player</Typography></Grid><Grid item><Badge><EmojiEvents/></Badge></Grid></Grid></Paper>
+                </Grid>
+            
             </Grid>
-            <Grid item><Paper className={classes.first}><Grid
-            container
-            direction="row"
-            justify="space-evenly"
-            alignItems="baseline"
-            >
-                <Grid item><Typography>Gold player</Typography></Grid><Grid item><Badge><EmojiEvents/></Badge></Grid></Grid></Paper>
-            </Grid>
-            <Grid item><Paper className={classes.third}><Grid
-            container
-            direction="row"
-            justify="space-evenly"
-            alignItems="baseline"
-            >
-                <Grid item><Typography>Bronze player</Typography></Grid><Grid item><Badge><EmojiEvents/></Badge></Grid></Grid></Paper>
-            </Grid>
-          
+            {renderLineChart()}
         </Grid>
     </Container>
   );
