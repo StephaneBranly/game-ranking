@@ -78,7 +78,8 @@ export default function PlayerCard(props: PlayerCardProps){
                 </Grid>
                 <Grid item>
                     <Grid
-                        container
+                        container 
+                        item
                         direction="row"
                         justify="space-between"
                         alignItems="baseline"
