@@ -7,6 +7,7 @@ import {
   Card,
   Typography,
   Link,
+  useMediaQuery,
 } from "@material-ui/core"
 import MathJax from 'react-mathjax'
 
@@ -35,7 +36,7 @@ export default function About(props: AboutProps){
     const eloLegend = `E (expected), R (rank), K (factor = 32), S (score : 1=win, 0=loss)`
     const eloExpectedTeam = `E_{P,o} = \\frac{1}{1+10^{(R_{o} - R_{P}) / 400}}`
     const eloNewScoreTeam = `R'_{P} = R_{P} + \\sum_{i}{K(S_{A} - E_{P,i}) / (nbPlayersSameTeam(P) * nbPlayersSameTeam(i))},\\ i \\in opponents(P)`
-
+    const matches = useMediaQuery('(min-width:600px)');
     return (
         <Grid item>
             <Card>
@@ -63,19 +64,21 @@ export default function About(props: AboutProps){
                         </Container>
                     </Grid>
                     <Grid item>
-                        <MathJax.Provider>
-                            <Container className={classes.subSection}>
-                                <Typography variant="h5" color="textSecondary">the algorithm</Typography>
-                                <Typography>Currently, the <Link href="https://en.wikipedia.org/wiki/Elo_rating_system" target="_blank">ELO</Link> algorithm is used :</Typography>
-                                <Typography><MathJax.Node formula={eloExpected} /></Typography>
-                                <Typography><MathJax.Node formula={eloNewScore} /></Typography>
-                                <Typography><MathJax.Node formula={eloLegend} /></Typography>
-                                <Typography>It is adapted to work with more than 2 players and more than 2 teams.</Typography>
-                                <Typography><MathJax.Node formula={eloExpectedTeam} /></Typography>
-                                <Typography><MathJax.Node formula={eloNewScoreTeam} /></Typography>
-                                <Typography>If the project grows, new algorithms can be added and parameterized on the interface.</Typography>
-                            </Container>
-                        </MathJax.Provider>
+                        <Container className={classes.subSection}>
+                            <MathJax.Provider>
+
+                            <Typography variant="h5" color="textSecondary">the algorithm</Typography>
+                            <Typography>Currently, the <Link href="https://en.wikipedia.org/wiki/Elo_rating_system" target="_blank">ELO</Link> algorithm is used.</Typography>
+                            {matches && <><MathJax.Node formula={eloExpected} />
+                            <MathJax.Node formula={eloNewScore} />
+                            <MathJax.Node formula={eloLegend} /></>}
+                            <Typography>It is adapted to work with more than 2 players and more than 2 teams.</Typography>
+                            {matches && <><MathJax.Node formula={eloExpectedTeam} />
+                            <MathJax.Node formula={eloNewScoreTeam} /></>}
+                            <Typography>If the project grows, new algorithms can be added and parameterized on the interface.</Typography>
+                            </MathJax.Provider>
+
+                        </Container>
                     </Grid>
                 </Grid>
             </Card>
