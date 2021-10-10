@@ -5,6 +5,7 @@ import {
     Badge,
     Typography,
     Paper,
+    Tooltip as Tooltip1
   } from "@material-ui/core";
 import { useState } from "react";
 import { LineChart, XAxis, Legend, CartesianGrid, Tooltip, Line, ResponsiveContainer, YAxis } from "recharts";
@@ -62,8 +63,8 @@ export default function LineChartResult(props: LineChartResultProps){
       <Grid container direction="row" justify="flex-start"  spacing={5} style={{paddingBottom: theme.spacing(2)}}>
         {
           props.game.rankHistory[props.game.rankHistory.length-1].playersRank.sort((a, b) => a.score < b.score ? 1 : -1).map((player,index) => {
-              // <Tooltip title={Math.round(player.score)}>
-                  return <Grid item key={index} onMouseEnter={() => handleMouseEnter(player.playerUuid)} onMouseLeave={() => handleMouseLeave()}><Badge
+            const playerProfile = getPlayerProfile(props.players,player.playerUuid)
+                  return <Grid item key={index} onMouseEnter={() => handleMouseEnter(player.playerUuid)} onMouseLeave={() => handleMouseLeave()}><Tooltip1 title={playerProfile.username}><Badge
                       overlap="circle"
                       style={{borderColor: "rgba(0,0,0,0)"}}
                       anchorOrigin={{
@@ -72,8 +73,8 @@ export default function LineChartResult(props: LineChartResultProps){
                       }}
                       badgeContent={<ScoreChip rank={index+1} score={player.score} deltaScore={false}/>}
                   >
-                      <Avatar alt={getPlayerProfile(props.players,player.playerUuid).username} style={{backgroundColor: getPlayerProfile(props.players,player.playerUuid).color}}>{getPlayerLabel(getPlayerProfile(props.players,player.playerUuid))}</Avatar>
-                  </Badge></Grid>
+                      <Avatar alt={playerProfile.username} style={{backgroundColor: playerProfile.color}}>{getPlayerLabel(playerProfile)}</Avatar>
+                  </Badge></Tooltip1></Grid>
             })
         }
       </Grid>

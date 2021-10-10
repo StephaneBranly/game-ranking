@@ -50,7 +50,7 @@ export default function ResultCard(props: ResultCardProps){
     return (props.result.ranks.map((rank) => 
     {
         const playerRank = props.playersRank.filter(player => player.playerUuid === rank.uuid)[0] 
-        const title = `New score: ${Math.round(playerRank.score)}`
+        const title = `${getPlayerProfile(props.players, rank.uuid).username} - New score: ${Math.round(playerRank.score)}`
 
         return <Grid item>
             <Tooltip title={title}>
