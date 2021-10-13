@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import {
-  makeStyles,
-  createStyles,
   Container,
   Grid,
 
@@ -21,7 +19,7 @@ export interface PlayersProps{
 
 export default function Players(props: PlayersProps){
 
-    const [currentPlayer, setCurrentPlayer] = useState(undefined as unknown as playerType | undefined);
+    const [currentPlayer, setCurrentPlayer] = useState({player:undefined, edit:false} as unknown as {player:playerType | undefined, edit: boolean});
 
 
   
@@ -37,8 +35,8 @@ export default function Players(props: PlayersProps){
 
   return (
     <Container>
-      { currentPlayer ?
-        <PlayerCompleteCard player={currentPlayer} changePlayerData={changePlayerData} addNotification={props.addNotification} setCurrentPlayer={setCurrentPlayer} /> :
+      { currentPlayer.player ?
+        <PlayerCompleteCard player={currentPlayer.player} edit={currentPlayer.edit} changePlayerData={changePlayerData} addNotification={props.addNotification} setCurrentPlayer={setCurrentPlayer} /> :
         <Grid
             container
             direction="column"
@@ -46,7 +44,7 @@ export default function Players(props: PlayersProps){
             alignItems="stretch"
             spacing={1}
         >
-            <PlayersHeader players={props.players} setPlayers={props.setPlayers}></PlayersHeader>
+            <PlayersHeader players={props.players} setPlayers={props.setPlayers} setCurrentPlayer={setCurrentPlayer}></PlayersHeader>
             {renderPlayerCards(props.players)}
        </Grid> }
     </Container>

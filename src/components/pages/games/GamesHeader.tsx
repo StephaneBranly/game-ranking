@@ -21,7 +21,9 @@ createStyles({
 
 export interface GamesHeaderProps{
   games: Array<gameType>,
-  setGames: React.Dispatch<React.SetStateAction<Array<gameType>>>
+  setGames: React.Dispatch<React.SetStateAction<Array<gameType>>>,
+  setCurrentGame: React.Dispatch<React.SetStateAction<{game: gameType|undefined, edit: boolean}>>
+
 }
 
 export default function GamesHeader(props: GamesHeaderProps){
@@ -38,6 +40,7 @@ export default function GamesHeader(props: GamesHeaderProps){
       rankHistory: []
     }
     props.setGames(props.games.concat(newGame));
+    props.setCurrentGame({game: newGame, edit: true})
   }
 
 

@@ -1,7 +1,5 @@
 import React from 'react';
 import {
-  makeStyles,
-  createStyles,
   Typography,
   DialogContent,
   Avatar,
@@ -14,11 +12,6 @@ import {
 import { playerType, scoreType } from '../../../types/data';
 import { getPlayerProfile, getPlayerLabel } from '../../../utils/lib';
 
-const useStyles = makeStyles((theme) =>
-createStyles({  
-    
-}),
-);
 export interface GameAddResultRanksProps{
     players: Array<playerType>
     selectedPlayers: Array<scoreType>,
@@ -26,12 +19,11 @@ export interface GameAddResultRanksProps{
 }
 
 export default function GameAddResultRanks(props: GameAddResultRanksProps){
-  const classes = useStyles(); 
-  
   const handleChange = (event: any,uuidPlayer: string) => {
-    let new_data: Array<scoreType> = props.selectedPlayers;
-    new_data.map((el: scoreType) => (el.uuid === uuidPlayer ? el.rank=event.target.value : el))   
-    props.setSelectedPlayers(new_data);
+    let newData: Array<scoreType> = props.selectedPlayers;
+    newData.map((el: scoreType) => (el.uuid === uuidPlayer ? el.rank=event.target.value : el))   
+    console.log('value changed')
+    props.setSelectedPlayers(newData);
   };
 
   const renderPossibilities = () =>  {
@@ -43,9 +35,7 @@ export default function GameAddResultRanks(props: GameAddResultRanksProps){
     return possibilities;
   }
  
-
-
-  const renderPlayerRank = (selectedPlayers: Array<scoreType>) => {
+  const renderPlayerRank = (selectedPlayers: scoreType[]) => {
     return selectedPlayers.map((player) =>
     <ListItem key={player.uuid} dense button>
       <Grid container
@@ -57,6 +47,7 @@ export default function GameAddResultRanks(props: GameAddResultRanksProps){
           <Grid item><Avatar alt={player.uuid} style={{backgroundColor: getPlayerProfile(props.players, player.uuid).color}}>{getPlayerLabel(getPlayerProfile(props.players, player.uuid))}</Avatar></Grid>
           <Grid item><Typography>{getPlayerProfile(props.players, player.uuid).username}</Typography></Grid>
           <Grid item><Select
+              id={player.uuid}
               value={player.rank}
               onChange={(event) => handleChange(event,player.uuid)}
             >

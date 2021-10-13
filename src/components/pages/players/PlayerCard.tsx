@@ -48,13 +48,13 @@ export interface PlayerCardProps{
     player: playerType,
     games: Array<gameType>,
     changePlayerData: (arg0: playerType, arg1: string) => void,
-    setCurrentPlayer: React.Dispatch<React.SetStateAction<playerType|undefined>>,
+    setCurrentPlayer: React.Dispatch<React.SetStateAction<{player:playerType | undefined, edit: boolean}>>,
 }
 
 export default function PlayerCard(props: PlayerCardProps){
   const classes = useStyles(); 
   return (
-    <Grid item spacing={1} onClick={() => props.setCurrentPlayer(props.player)}>
+    <Grid item spacing={1} onClick={() => props.setCurrentPlayer({player:props.player, edit:false})}>
         <Card className={classes.Padding}>
             <Grid
                 container

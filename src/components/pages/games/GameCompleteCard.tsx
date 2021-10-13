@@ -40,16 +40,17 @@ export interface GameCompleteCardProps{
     game: gameType,
     players: Array<playerType>,
     changeGameData: (game: gameType, uuid: string) => void,
-    setCurrentGame: React.Dispatch<React.SetStateAction<gameType|undefined>>,
+    setCurrentGame: React.Dispatch<React.SetStateAction<{game: gameType|undefined, edit: boolean}>>,
     addNotification: (arg0: string, arg1: severityType) => void,
-    deleteGame: (uuid: string) => void
+    deleteGame: (uuid: string) => void,
+    edit: boolean
 }
 
 export default function GameCompleteCard(props: GameCompleteCardProps){
   const classes = useStyles()
 
   const [addResultOpen, setAddResultOpen] = React.useState({id: undefined as string|undefined, open:false})
-  const [editMode, setEditMode] = React.useState(false)
+  const [editMode, setEditMode] = React.useState(props.edit)
   const [deleteGameOpen, setDeleteGameOpen] = React.useState(false)
 
   const handleChangeGamename = (newGamename: string) => {
@@ -103,6 +104,13 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
     }
   }
 
+  const handlerAddResult = () => {
+    if(props.players.length<2)
+        props.addNotification("You must add at least 2 players before", "error")
+    else
+        setAddResultOpen({id: undefined, open:true})
+  }
+
   return (
     <>
     <Card className={classes.Main}>
@@ -120,11 +128,11 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
             alignItems="baseline"
         >
             <Grid item>
-                <Grid item><IconButton size="medium" onClick={() => props.setCurrentGame(undefined)}><NavigateBefore/></IconButton></Grid>
+                <Grid item><IconButton size="medium" onClick={() => props.setCurrentGame({game: undefined, edit: false})}><NavigateBefore/></IconButton></Grid>
             </Grid>
             <Grid item>
                 <ButtonGroup disableElevation variant="contained" color="primary">
-                    <Button endIcon={<PostAdd/>}  onClick={() => setAddResultOpen({id: undefined, open:true})}>New result</Button>
+                    <Button endIcon={<PostAdd/>}  onClick={() => handlerAddResult()}>New result</Button>
                     <Button onClick={() => setEditMode(true)}><Edit/></Button>
                     <Button onClick={() => setDeleteGameOpen(true)}><Delete/></Button>
                 </ButtonGroup>

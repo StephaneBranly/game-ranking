@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 import PersonAdd from '@material-ui/icons/PersonAdd';
 import { uuid } from 'uuidv4';
-import { dataType, playerType } from '../../../types/data';
+import { playerType } from '../../../types/data';
 
 const useStyles = makeStyles((theme) =>
 createStyles({  
@@ -22,6 +22,7 @@ createStyles({
 export interface PlayersHeaderProps{
   players: Array<playerType>,
   setPlayers:React.Dispatch<React.SetStateAction<Array<playerType>>>
+  setCurrentPlayer: React.Dispatch<React.SetStateAction<{player:playerType | undefined, edit: boolean}>>,
 }
 
 export default function PlayersHeader(props: PlayersHeaderProps){
@@ -31,13 +32,14 @@ export default function PlayersHeader(props: PlayersHeaderProps){
   const addPlayer = () => {
     var randomColor = require('randomcolor'); // import the script
     var color = randomColor();
-    let new_player: playerType = 
+    let newPlayer: playerType = 
     {   
       uuid: uuid(),
       username: "New Player",
       color: color,
     };    
-    props.setPlayers(props.players.concat(new_player));
+    props.setPlayers(props.players.concat(newPlayer));
+    props.setCurrentPlayer({player:newPlayer, edit:true})
   }
 
 

@@ -38,14 +38,15 @@ createStyles({
 export interface PlayerCompleteCardProps{
     player: playerType,
     changePlayerData: (player: playerType, uuid: string) => void,
-    setCurrentPlayer: React.Dispatch<React.SetStateAction<playerType|undefined>>,
+    setCurrentPlayer: React.Dispatch<React.SetStateAction<{player:playerType | undefined, edit: boolean}>>,
     addNotification: (arg0: string, arg1: severityType) => void,
+    edit: boolean
 }
 
 export default function PlayerCompleteCard(props: PlayerCompleteCardProps){
   const classes = useStyles(); 
 
-  const [editMode, setEditMode] = React.useState(false);
+  const [editMode, setEditMode] = React.useState(props.edit);
  
   const handleChangePlayer = (player: playerType) => {
     props.changePlayerData(player, player.uuid)
@@ -68,7 +69,7 @@ export default function PlayerCompleteCard(props: PlayerCompleteCardProps){
             alignItems="baseline"
         >
             <Grid item>
-                <Grid item><IconButton size="medium" onClick={() => props.setCurrentPlayer(undefined)}><NavigateBefore/></IconButton></Grid>
+                <Grid item><IconButton size="medium" onClick={() => props.setCurrentPlayer({player:undefined,edit:false})}><NavigateBefore/></IconButton></Grid>
             </Grid>
             <Grid item>
                 <ButtonGroup disableElevation variant="contained" color="primary">

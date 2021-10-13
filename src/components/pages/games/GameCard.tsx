@@ -40,7 +40,7 @@ createStyles({
 export interface GameCardProps{
     game: gameType,
     changeGameData: (arg0: gameType, arg1: string) => void,
-    setCurrentGame: React.Dispatch<React.SetStateAction<gameType|undefined>>
+    setCurrentGame: React.Dispatch<React.SetStateAction<{game: gameType|undefined, edit: boolean}>>
 }
 
 export default function GameCard(props: GameCardProps){
@@ -49,7 +49,7 @@ export default function GameCard(props: GameCardProps){
 
   return (
     <Grid item spacing={1}>
-        <Card className={classes.Padding} onClick={() => props.setCurrentGame(props.game)}>
+        <Card className={classes.Padding} onClick={() => props.setCurrentGame({game: props.game, edit: false})}>
             <Grid
                 container
                 direction="row"

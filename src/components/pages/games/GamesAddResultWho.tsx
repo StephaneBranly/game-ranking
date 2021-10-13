@@ -1,7 +1,5 @@
 import React from 'react';
 import {
-  makeStyles,
-  createStyles,
   Typography,
   DialogContent,
   Checkbox,
@@ -12,11 +10,6 @@ import {
 } from "@material-ui/core";
 import { playerType, scoreType } from '../../../types/data';
 
-const useStyles = makeStyles((theme) =>
-createStyles({  
-    
-}),
-);
 export interface GameAddResultWhoProps{
     players: Array<playerType>,
     selectedPlayers: Array<scoreType>,
@@ -24,11 +17,11 @@ export interface GameAddResultWhoProps{
 }
 
 export default function GameAddResultWho(props: GameAddResultWhoProps){
-  const classes = useStyles(); 
 
   const playerInResults = (uuidPlayer: string) => {
     return (props.selectedPlayers.filter(player => (player.uuid === uuidPlayer)).length !== 0)
   }
+
   const togglePlayer = (uuidPlayer: string) => {
     if(playerInResults(uuidPlayer))
       props.setSelectedPlayers(props.selectedPlayers.filter(player => player.uuid !== uuidPlayer));
