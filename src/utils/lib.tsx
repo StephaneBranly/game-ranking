@@ -52,8 +52,8 @@ export const generateNewEntry = (result: resultType, lastEntry: historyEntryType
             const lastScoreOtherPlayer = lastEntry.playersRank[getIndexInEntry(otherPlayer.uuid,lastEntry)].score
             const win = currentPlayer.rank < otherPlayer.rank ? 1 : 0;
             const expected = elo_expected(lastScoreCurrentPlayer,lastScoreOtherPlayer)
-            const divFactor = nbRank[currentPlayer.rank] * nbRank[otherPlayer.rank]
-            const newScore = elo(lastScoreCurrentPlayer, expected, win, divFactor)
+            // const divFactor = nbRank[currentPlayer.rank] * nbRank[otherPlayer.rank]
+            const newScore = elo(lastScoreCurrentPlayer, expected, win)
             sumDeltaScore += newScore - lastScoreCurrentPlayer
         })
         newEntry.playersRank[index].score = lastScoreCurrentPlayer + sumDeltaScore

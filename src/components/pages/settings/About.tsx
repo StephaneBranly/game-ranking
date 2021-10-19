@@ -35,7 +35,7 @@ export default function About(props: AboutProps){
     const eloNewScore = `R'_{A} = R_{A} + K(S_{A} - E_{A}), R'_{B} = R_{B} + K(S_{B} - E_{B})`
     const eloLegend = `E (expected), R (rank), K (factor = 32), S (score : 1=win, 0=loss)`
     const eloExpectedTeam = `E_{P,o} = \\frac{1}{1+10^{(R_{o} - R_{P}) / 400}}`
-    const eloNewScoreTeam = `R'_{P} = R_{P} + \\sum_{i}{K(S_{A} - E_{P,i}) / (nbPlayersSameTeam(P) * nbPlayersSameTeam(i))},\\ i \\in opponents(P)`
+    const eloNewScoreTeam = `R'_{P} = R_{P} + \\sum_{i}{K(S_{A} - E_{P,i})},\\ i \\in opponents(P)`
     const matches = useMediaQuery('(min-width:600px)');
     return (
         <Grid item>
