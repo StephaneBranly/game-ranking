@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/game-ranking/static/css/main.57caa3cb.chunk.css",
-    "main.js": "/game-ranking/static/js/main.0886896b.chunk.js",
-    "main.js.map": "/game-ranking/static/js/main.0886896b.chunk.js.map",
+    "main.js": "/game-ranking/static/js/main.ceb36c53.chunk.js",
+    "main.js.map": "/game-ranking/static/js/main.ceb36c53.chunk.js.map",
     "runtime-main.js": "/game-ranking/static/js/runtime-main.25aaddb5.js",
     "runtime-main.js.map": "/game-ranking/static/js/runtime-main.25aaddb5.js.map",
     "static/js/2.ef971f07.chunk.js": "/game-ranking/static/js/2.ef971f07.chunk.js",
@@ -15,6 +15,6 @@
     "static/js/runtime-main.25aaddb5.js",
     "static/js/2.ef971f07.chunk.js",
     "static/css/main.57caa3cb.chunk.css",
-    "static/js/main.0886896b.chunk.js"
+    "static/js/main.ceb36c53.chunk.js"
   ]
 }
