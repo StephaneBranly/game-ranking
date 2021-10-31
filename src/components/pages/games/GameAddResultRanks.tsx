@@ -22,15 +22,17 @@ export default function GameAddResultRanks(props: GameAddResultRanksProps){
   const handleChange = (event: any,uuidPlayer: string) => {
     let newData: Array<scoreType> = props.selectedPlayers;
     newData.map((el: scoreType) => (el.uuid === uuidPlayer ? el.rank=event.target.value : el))   
-    console.log('value changed')
     props.setSelectedPlayers(newData);
   };
 
-  const renderPossibilities = () =>  {
+  const renderPossibilities = (player: scoreType) =>  {
     let possibilities: any = [];
 
     for(let i = 1; i<props.selectedPlayers.length+1; i++)
-    possibilities.push(<MenuItem key={i} value={i}>{i}</MenuItem>);
+    {
+      const selected = player.rank ? player.rank === i : i === 1
+      possibilities.push(<MenuItem selected={selected} key={i} value={i}>{i}</MenuItem>);
+    }
 
     return possibilities;
   }
@@ -48,10 +50,10 @@ export default function GameAddResultRanks(props: GameAddResultRanksProps){
           <Grid item><Typography>{getPlayerProfile(props.players, player.uuid).username}</Typography></Grid>
           <Grid item><Select
               id={player.uuid}
-              value={player.rank}
+              defaultValue={player.rank}
               onChange={(event) => handleChange(event,player.uuid)}
             >
-              {renderPossibilities()}
+              {renderPossibilities(player)}
           </Select>
         </Grid>
         </Grid>
