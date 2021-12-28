@@ -19,8 +19,6 @@ export interface LineChartResultProps {
   game: gameType,
 }
 
-
-
 export default function LineChartResult(props: LineChartResultProps){
   const stateLineDesign = (players: Array<scoreType>, uuid: string) => {
     let opacity: Record<string, number> = {}
@@ -147,7 +145,7 @@ export default function LineChartResult(props: LineChartResultProps){
       <YAxis yAxisId={1} domain={['dataMin - 50', 'dataMax + 50']}/>
       <Tooltip content={renderTooltip} />
       <Legend verticalAlign="top" content={renderLegend}/>
-      <CartesianGrid stroke="#f5f5f5" strokeDasharray="3 3"/>
+      <CartesianGrid stroke="#d5d5d5" strokeDasharray="3 3"/>
       {generateLines(props.game.players).flat()}
     </LineChart></ResponsiveContainer></div> : <></>
   );  

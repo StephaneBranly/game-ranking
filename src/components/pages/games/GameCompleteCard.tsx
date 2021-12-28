@@ -8,7 +8,6 @@ import {
   Button,
   ButtonGroup,
   Typography,
-//   Tooltip,
 } from "@material-ui/core"
 import { gameType, playerType, resultType } from '../../../types/data'
 import { Delete, Edit, NavigateBefore, PostAdd } from '@material-ui/icons'
@@ -19,6 +18,7 @@ import ResultCard from './ResultCard'
 import DeleteGame from './DeleteGame'
 import EditGame from './EditGame'
 import LineChartResult from '../../lineChartResult/LineChartResult'
+import BarChartResult from '../../barChartResult/BarChartResult';
 
 const useStyles = makeStyles((theme) =>
 createStyles({  
@@ -149,7 +149,9 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
         <Grid item>
             <LineChartResult players={props.players} game={props.game}/>
         </Grid>}
-       
+        {/* <Grid item>
+            <BarChartResult players={props.players} game={props.game}/>
+        </Grid> */}
         </Grid>
         {addResultOpen.open ? <GameAddResult game={props.game} players={props.players} addResultOpen={addResultOpen} setAddResultOpen={setAddResultOpen} addNotification={props.addNotification} addResult={addResult} deleteResult={deleteResult}></GameAddResult> : <></>}
     </Card>
