@@ -4,9 +4,12 @@ import {
   createStyles,
   Card,
   Grid,
-  Typography
+  Typography,
+  Avatar
 } from "@material-ui/core";
-import { gameType } from '../../../types/data';
+import { gameType, playerType } from '../../../types/data';
+import { AvatarGroup } from '@material-ui/lab';
+import { getPlayerLabel, getPlayerProfile } from '../../../utils/lib';
 
 const useStyles = makeStyles((theme) =>
 createStyles({  
@@ -39,6 +42,7 @@ createStyles({
 );
 export interface GameCardProps{
     game: gameType,
+    players: playerType[],
     changeGameData: (arg0: gameType, arg1: string) => void,
     setCurrentGame: React.Dispatch<React.SetStateAction<{game: gameType|undefined, edit: boolean}>>
 }
@@ -46,8 +50,18 @@ export interface GameCardProps{
 export default function GameCard(props: GameCardProps){
   const classes = useStyles(); 
 
+    const renderPlayers = () => {
+        return (<AvatarGroup max={4}>
+                {
+                    props.game.rankHistory[props.game.rankHistory.length-1].playersRank.sort((a, b) => a.score < b.score ? 1 : -1).map((player,index) => {
+                        const playerProfile = getPlayerProfile(props.players,player.playerUuid)
+                        return <Avatar alt={playerProfile.username} style={{backgroundColor: playerProfile.color}}>{getPlayerLabel(playerProfile)}</Avatar>
+                    })
+                }
+              </AvatarGroup>)
+    }
 
-  return (
+    return (
     <Grid item spacing={1}>
         <Card className={classes.Padding} onClick={() => props.setCurrentGame({game: props.game, edit: false})}>
             <Grid
@@ -55,6 +69,7 @@ export default function GameCard(props: GameCardProps){
                 direction="row"
                 justify="space-between"
                 alignItems="baseline"
+                alignContent="space-between"
             >
                 <Grid item>
                     <Grid
@@ -69,9 +84,20 @@ export default function GameCard(props: GameCardProps){
                         </Grid>
                     </Grid>
                 </Grid>
+                <Grid item>
+                    <Grid
+                        container
+                        direction="row"
+                        justify="space-between"
+                        alignItems="baseline"
+                        spacing={1}
+                    >
+                        <Grid item><Typography>{`${props.game.results.length} results | `}</Typography></Grid>
+                        <Grid item>{renderPlayers()}</Grid>
+                    </Grid>
+                </Grid>
             </Grid>
         </Card>
     </Grid>
-    
   );
 }

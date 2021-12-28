@@ -20,7 +20,7 @@ export default function Games(props: GamesProps){
     const [currentGame, setCurrentGame] = useState({game: undefined, edit: false} as unknown as {game: gameType|undefined, edit: boolean});
 
     const renderGameCards = (games: Array<gameType>) => {
-        return (games.map((game: gameType) => <GameCard game={game} changeGameData={changeGameData} setCurrentGame={setCurrentGame}></GameCard>))
+        return (games.map((game: gameType) => <GameCard game={game} changeGameData={changeGameData} setCurrentGame={setCurrentGame} players={props.players} ></GameCard>))
     };
 
     const changeGameData = (game: gameType, uuid: string) => {
