@@ -24,7 +24,9 @@ const useStyles = makeStyles((theme) =>
 createStyles({  
     Main: {
         padding: theme.spacing(2),
-        marginBottom: theme.spacing(1)
+        marginBottom: theme.spacing(1),
+        overflow: 'visible',
+        zIndex: 150
     },
     Name: {
         paddingLeft: theme.spacing(1),
