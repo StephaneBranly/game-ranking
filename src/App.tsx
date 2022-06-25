@@ -41,7 +41,7 @@ function App() {
   const getJsonSavedData = () => {
     const data = {
       players,
-      games: games.map(game => { return { uuid: game.uuid, gamename: game.gamename, results: game.results }})
+      games: games.map(game => { return { uuid: game.uuid, gamename: game.gamename, results: game.results, algorithmSettings: game.algorithmSettings }})
     }
     return data
   }
