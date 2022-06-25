@@ -1,6 +1,5 @@
-import { randomFill } from "crypto";
-import { gameType, historyEntryType, playerType, resultType, scoreType } from "../types/data"
-import { elo, elo_expected } from "./elo";
+import { gameType, historyEntryType, playerType, resultType, scoreType,algorithmSettings } from "../types/data"
+import { elo, elo_expected, elo_get_k_factor } from "./elo";
 
 export const getPlayerProfile = (players: Array<playerType>, uuidPlayer: string): playerType => {
     return (players.filter(player => (player.uuid === uuidPlayer))[0])
@@ -25,15 +24,16 @@ export const calculateRanking = (game: gameType): Array<historyEntryType> => {
     rankHistory.push({ resultUuid: "", playersRank: []})
     rankHistory[0].playersRank = game.players.map(player => { return { playerUuid: player.uuid, score: 1200, deltaScore: 0 }}) 
     let lastEntry: historyEntryType = rankHistory[0]
+    const playedCpt = {}
     game.results.sort((a,b) => a.date >= b.date ? 1 : -1).forEach(result => {
-        const newEntry = generateNewEntry(result, lastEntry)
+        const newEntry = generateNewEntry(result, lastEntry, playedCpt, game.algorithmSettings)
         rankHistory.push(newEntry);
         lastEntry = newEntry
     });
     return rankHistory;
 }
 
-export const generateNewEntry = (result: resultType, lastEntry: historyEntryType) => {
+export const generateNewEntry = (result: resultType, lastEntry: historyEntryType, playedCpt: Record<string, number>, algorithmSettings: algorithmSettings) => {
     let newEntry: historyEntryType = {
         resultUuid: result.uuid,
         playersRank: []
@@ -44,20 +44,25 @@ export const generateNewEntry = (result: resultType, lastEntry: historyEntryType
         nbRank[i+1] = result.ranks.filter(rankFilter => (i+1 === rankFilter.rank)).length
 
     result.ranks.forEach(currentPlayer => {
+        if (!playedCpt[currentPlayer.uuid])
+            playedCpt[currentPlayer.uuid] = 0
         const otherPlayers = result.ranks.filter(rankFilter => (currentPlayer.rank !== rankFilter.rank))
         const index = getIndexInEntry(currentPlayer.uuid,newEntry)
         const lastScoreCurrentPlayer = lastEntry.playersRank[getIndexInEntry(currentPlayer.uuid,lastEntry)].score
         let sumDeltaScore = 0
+        const { k_first, n_first, k } = algorithmSettings.params
+        const k_factor = elo_get_k_factor(k_first, n_first, k, playedCpt[currentPlayer.uuid])
         otherPlayers.forEach(otherPlayer => { 
             const lastScoreOtherPlayer = lastEntry.playersRank[getIndexInEntry(otherPlayer.uuid,lastEntry)].score
             const win = currentPlayer.rank < otherPlayer.rank ? 1 : 0;
-            const expected = elo_expected(lastScoreCurrentPlayer,lastScoreOtherPlayer)
+            const expected = elo_expected(lastScoreCurrentPlayer, lastScoreOtherPlayer)
             // const divFactor = nbRank[currentPlayer.rank] * nbRank[otherPlayer.rank]
-            const newScore = elo(lastScoreCurrentPlayer, expected, win)
+            const newScore = elo(lastScoreCurrentPlayer, expected, win, k_factor)
             sumDeltaScore += newScore - lastScoreCurrentPlayer
         })
         newEntry.playersRank[index].score = lastScoreCurrentPlayer + sumDeltaScore
         newEntry.playersRank[index].deltaScore = sumDeltaScore
+        playedCpt[currentPlayer.uuid] += 1
     });
     return newEntry
 }
@@ -80,15 +85,27 @@ const entreyToChartScore = (score: historyEntryType) => {
     return obj
 }
 
-export const generateGameFromLoadedData  = (game: { gamename: any; uuid: any; results: resultType[]; }) => {
+export const generateGameFromLoadedData  = (game: { gamename: any; uuid: any; results: resultType[]; algorithmSettings: any }) => {
   let newData: gameType = {
     gamename: game.gamename,
     uuid: game.uuid,
     players: [],
     results: [],
-    rankHistory: []
+    rankHistory: [],
+    algorithmSettings: game.algorithmSettings
   }
  
+  if (!newData.algorithmSettings) {
+    newData.algorithmSettings = {
+        algo: 'elo',
+        params: {
+            k_first: 40,
+            n_first: 5,
+            k: 25,
+        }
+    }
+  }
+
   game.results.forEach((result: resultType) => {
     const newResult: resultType = result
     newResult.date = new Date(newResult.date)

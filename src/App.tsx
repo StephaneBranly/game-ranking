@@ -74,7 +74,7 @@ function App() {
           if (e.target?.result) {
             const data = JSON.parse(e.target.result as string)
             setPlayers(data.players)
-            const games: Array<gameType> = data.games.map((game: { uuid: any; gamename: any; results: any }) => generateGameFromLoadedData(game))
+            const games: Array<gameType> = data.games.map((game: { uuid: any; gamename: any; results: any, algorithmSettings: any }) => generateGameFromLoadedData(game))
             setGames(games)
             addNotification("Data correctly loaded", "success")
             setPage("games")
@@ -92,7 +92,7 @@ function App() {
       {
         const data = JSON.parse(localStorage.getItem('data')!)
         setPlayers(data.players)
-        const games: Array<gameType> = data.games.map((game: { uuid: any; gamename: any; results: any }) => generateGameFromLoadedData(game))
+        const games: Array<gameType> = data.games.map((game: { uuid: any; gamename: any; results: any, algorithmSettings: any  }) => generateGameFromLoadedData(game))
         setGames(games)
         addNotification("Data correctly loaded", "success")
         setPage("games")

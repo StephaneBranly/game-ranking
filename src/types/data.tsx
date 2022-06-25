@@ -5,6 +5,7 @@ export type gameType =
     players: Array<scoreType>
     results: Array<resultType>
     rankHistory: Array<historyEntryType>
+    algorithmSettings: algorithmSettings
 }
 
 export type playerType =
@@ -33,7 +34,16 @@ export type resultType =
     ranks: Array<scoreType>,
 }
 
-export type algorithmType = "elo";
+export type eloAlgorithm = {
+    algo: 'elo',
+    params: {
+        k_first: number,
+        n_first: number,
+        k: number
+    }
+}
+
+export type algorithmSettings = eloAlgorithm
 
 export type historyEntryType = {
     resultUuid: string,

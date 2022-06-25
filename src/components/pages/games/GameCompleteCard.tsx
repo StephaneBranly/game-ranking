@@ -55,9 +55,16 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
   const [editMode, setEditMode] = React.useState(props.edit)
   const [deleteGameOpen, setDeleteGameOpen] = React.useState(false)
 
-  const handleChangeGamename = (newGamename: string) => {
-    let newData: gameType = Object.assign({}, props.game)
-    newData.gamename = newGamename
+  const handleChangeGame = (newGame: gameType) => {
+    let newData: gameType = Object.assign({}, newGame)
+    newData.rankHistory = calculateRanking(newData)
+
+    if(newData.players)
+    {
+        const sortedRanks = newData.players.sort((a, b) => a.rank > b.rank ? 1 : -1)
+        newData.players = sortedRanks
+    }
+
     props.changeGameData(newData, props.game.uuid)
   }
 
@@ -165,7 +172,7 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
         {displayResults()}
     </Grid>
     {deleteGameOpen && <DeleteGame setDeleteGameOpen={setDeleteGameOpen} deleteGame={deleteGame}></DeleteGame>}
-    {editMode && <EditGame setEditMode={setEditMode} handleChangeGamename={handleChangeGamename} currentGamename={props.game.gamename}></EditGame>}
+    {editMode && <EditGame setEditMode={setEditMode} handleChangeGame={handleChangeGame} currentGame={props.game}></EditGame>}
     </>
   )
 }

@@ -37,7 +37,15 @@ export default function GamesHeader(props: GamesHeaderProps){
       gamename: "New game",
       results: [],
       players: [],
-      rankHistory: []
+      rankHistory: [],
+      algorithmSettings: {
+        algo: 'elo',
+        params: {
+          k_first: 40,
+          n_first: 5,
+          k: 25,
+        }
+      }
     }
     props.setGames(props.games.concat(newGame));
     props.setCurrentGame({game: newGame, edit: true})
