@@ -1,0 +1,12 @@
+.game-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.game-card-stats {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 20px;
+}

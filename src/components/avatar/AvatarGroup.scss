@@ -1,0 +1,15 @@
+.avatar-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    vertical-align: middle;
+    box-sizing: border-box;
+
+    .avatar {
+        margin-left: -10px;
+        border: 1px solid #fff;
+        transition: border-color 0.2s ease-in-out;
+    }
+}

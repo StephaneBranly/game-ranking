@@ -1,7 +1,7 @@
 import "./Button.scss";
 
 export interface ButtonProps{
-    text: string,
+    text?: string,
     onClick: () => void,
     disabled?: boolean,
     color?: "primary" | "secondary" | "default",

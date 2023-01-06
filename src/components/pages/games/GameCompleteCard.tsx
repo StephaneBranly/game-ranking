@@ -1,14 +1,7 @@
 import React from 'react';
-import {
-  makeStyles,
-  createStyles,
-  Card,
-  Grid,
-  IconButton,
-  Button,
-  ButtonGroup,
-  Typography,
-} from "@material-ui/core"
+
+import "./GameCompleteCard.scss"
+
 import { gameType, playerType, resultType } from '../../../types/data'
 import { Delete, Edit, NavigateBefore, PostAdd } from '@material-ui/icons'
 import GameAddResult from './GameAddResult'
@@ -18,26 +11,12 @@ import ResultCard from './ResultCard'
 import DeleteGame from './DeleteGame'
 import EditGame from './EditGame'
 import LineChartResult from '../../lineChartResult/LineChartResult'
-import BarChartResult from '../../barChartResult/BarChartResult';
+import Card from '../../card/Card';
+import Button from '../../button/Button';
+import ButtonGroup from '../../button/ButtonGroup';
+import IconButton from '../../iconButton/IconButton';
+// import BarChartResult from '../../barChartResult/BarChartResult';
 
-const useStyles = makeStyles((theme) =>
-createStyles({  
-    Main: {
-        padding: theme.spacing(2),
-        marginBottom: theme.spacing(1),
-        overflow: 'visible',
-        zIndex: 150
-    },
-    Name: {
-        paddingLeft: theme.spacing(1),
-        paddingRight: theme.spacing(1),
-        borderRadius: theme.spacing(1),
-        margin: "0px",
-        border: "1px solid rgba(0,0,0,0.1)",
-        width: theme.spacing(17)
-    }
-}),
-)
 export interface GameCompleteCardProps{
     game: gameType,
     players: Array<playerType>,
@@ -49,8 +28,6 @@ export interface GameCompleteCardProps{
 }
 
 export default function GameCompleteCard(props: GameCompleteCardProps){
-  const classes = useStyles()
-
   const [addResultOpen, setAddResultOpen] = React.useState({id: undefined as string|undefined, open:false})
   const [editMode, setEditMode] = React.useState(props.edit)
   const [deleteGameOpen, setDeleteGameOpen] = React.useState(false)
@@ -122,55 +99,29 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
 
   return (
     <>
-    <Card className={classes.Main}>
-        <Grid 
-            container
-            direction="column"
-            justify="space-between"
-            alignItems="stretch"
-            spacing={1}
-        >
-        <Grid item><Grid
-            container
-            direction="row"
-            justify="space-between"
-            alignItems="baseline"
-        >
-            <Grid item>
-                <Grid item><IconButton size="medium" onClick={() => props.setCurrentGame({game: undefined, edit: false})}><NavigateBefore/></IconButton></Grid>
-            </Grid>
-            <Grid item>
-                <ButtonGroup disableElevation variant="contained" color="primary">
-                    <Button endIcon={<PostAdd/>}  onClick={() => handlerAddResult()}>New result</Button>
-                    <Button onClick={() => setEditMode(true)}><Edit/></Button>
-                    <Button onClick={() => setDeleteGameOpen(true)}><Delete/></Button>
+        <Card>
+            <div className='game-complete-card-header'>
+                <IconButton onClick={() => props.setCurrentGame({game: undefined, edit: false})} icon={<NavigateBefore/>}/>
+                <ButtonGroup>
+                    <Button endIcon={<PostAdd/>}  onClick={() => handlerAddResult()} text='New result'/>
+                    <Button onClick={() => setEditMode(true)} endIcon={<Edit/>}/>
+                    <Button onClick={() => setDeleteGameOpen(true)} endIcon={<Delete/>} />
                 </ButtonGroup>
-            </Grid>
-        </Grid></Grid>
-        <Grid item>
-            <Typography color="primary" variant="h3" align="center">
+            </div>
+        <div className='game-complete-card-title'>
                 {props.game.gamename}
-            </Typography>
-        </Grid>
+        </div>
         {props.game.players && 
-        <Grid item>
-            <LineChartResult players={props.players} game={props.game}/>
-        </Grid>}
+            <div className='game-complete-card-stats'><LineChartResult players={props.players} game={props.game}/></div>
+        }
         {/* <Grid item>
             <BarChartResult players={props.players} game={props.game}/>
         </Grid> */}
-        </Grid>
         {addResultOpen.open ? <GameAddResult game={props.game} players={props.players} addResultOpen={addResultOpen} setAddResultOpen={setAddResultOpen} addNotification={props.addNotification} addResult={addResult} deleteResult={deleteResult}></GameAddResult> : <></>}
     </Card>
-    <Grid 
-        container
-        direction="column"
-        justify="space-between"
-        alignItems="stretch"
-        spacing={1}
-    >
+    <div className='game-complete-card-results'>
         {displayResults()}
-    </Grid>
+    </div>
     {deleteGameOpen && <DeleteGame setDeleteGameOpen={setDeleteGameOpen} deleteGame={deleteGame}></DeleteGame>}
     {editMode && <EditGame setEditMode={setEditMode} handleChangeGame={handleChangeGame} currentGame={props.game}></EditGame>}
     </>

@@ -20,5 +20,5 @@ code {
   align-items: center;
   justify-content: stretch;
   align-content: stretch;
-  height: 100vh;
+  padding-bottom: 100px;
 }

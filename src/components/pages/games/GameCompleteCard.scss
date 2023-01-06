@@ -1,0 +1,26 @@
+.game-complete-card-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+
+.game-complete-card-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #000;
+}
+
+.game-complete-card-stats {
+    width: 100%;
+}
+
+.game-complete-card-results {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+    margin: 20px 0;
+}
