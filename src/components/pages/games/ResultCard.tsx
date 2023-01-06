@@ -2,16 +2,12 @@ import React from 'react';
 
 import "./ResultCard.scss"
 
-import {
-  Avatar,
-  Badge,
-  Tooltip,
-} from "@material-ui/core";
-
 import { playerRankHistory, playerType, resultType } from '../../../types/data';
 import { getPlayerLabel, getPlayerProfile } from '../../../utils/lib';
 import ScoreChip from '../../scoreChip/ScoreChip';
 import Card from '../../card/Card';
+import Tooltip from '../../tooltip/Tooltip';
+import Avatar from '../../avatar/Avatar';
 
 export interface ResultCardProps{
     result: resultType,
@@ -28,8 +24,8 @@ export default function ResultCard(props: ResultCardProps){
         const title = `${getPlayerProfile(props.players, rank.uuid).username} - New score: ${Math.round(playerRank.score)}`
 
         return <div>
-            <Tooltip title={title}>
-            <Badge
+            <Tooltip content={title}>
+            {/* <Badge
                 overlap="circle"
                 style={{borderColor: "rgba(0,0,0,0)"}}
                 anchorOrigin={{
@@ -37,9 +33,9 @@ export default function ResultCard(props: ResultCardProps){
                 horizontal: 'right',
                 }}
                 badgeContent={<ScoreChip rank={rank.rank} score={playerRank.deltaScore} deltaScore={true}/>}
-            >
-            <Avatar alt={getPlayerProfile(props.players,rank.uuid).username} style={{backgroundColor: getPlayerProfile(props.players,rank.uuid).color}}>{getPlayerLabel(getPlayerProfile(props.players,rank.uuid))}</Avatar>
-            </Badge>
+            > */}
+            <Avatar label={getPlayerLabel(getPlayerProfile(props.players,rank.uuid))} />
+            {/* </Badge> */}
             </Tooltip>
         </div>
     }
@@ -48,7 +44,7 @@ export default function ResultCard(props: ResultCardProps){
 
   return (
     <Card className='result-card' onClick={()=>props.setAddResultOpen({id: props.result.uuid, open:true})}>
-        <div>{displayPlayersBadges()}</div>
+        <div className='result-card-players'>{displayPlayersBadges()}</div>
         <p>{props.result.date.toLocaleString()}</p>
     </Card>
   );
