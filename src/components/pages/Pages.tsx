@@ -1,3 +1,4 @@
+import "./Pages.scss";
 import React from 'react';
 import Players from "./players/Players"
 import Settings from "./settings/Settings"
@@ -33,6 +34,8 @@ export default function Pages(props: PagesProps){
   };
 
   return (
-    renderPage(props)
+    <div className="pages">
+      {renderPage(props)}
+    </div>
   );
 }

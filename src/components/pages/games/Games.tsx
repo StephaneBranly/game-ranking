@@ -1,3 +1,5 @@
+import "./Games.scss"
+
 import React, { useState } from 'react';
 import {
   Container,
@@ -37,21 +39,17 @@ export default function Games(props: GamesProps){
     }
 
     return (
-    <Container>
+    <div className='games'>
         { currentGame.game?
             <GameCompleteCard game={currentGame.game} edit={currentGame.edit} changeGameData={changeGameData} setCurrentGame={setCurrentGame} players={props.players} addNotification={props.addNotification} deleteGame={deleteGame}></GameCompleteCard>
             :
-            <Grid
-                container
-                direction="column"
-                justify="flex-start"
-                alignItems="stretch"
-                spacing={1}
+            <div
+                className='game-list'
             >
                 <GamesHeader games={props.games} setGames={props.setGames} setCurrentGame={setCurrentGame}></GamesHeader>
                 {renderGameCards(props.games)}
-        </Grid>
+        </div>
         }
-    </Container>
+    </div>
   );
 }

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Chip, createStyles, makeStyles } from "@material-ui/core";
 import { EmojiEvents } from '@material-ui/icons';
-import zIndex from '@material-ui/core/styles/zIndex';
 
 const useStyles = makeStyles((theme) => createStyles({
     root: {

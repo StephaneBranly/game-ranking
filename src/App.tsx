@@ -24,19 +24,11 @@ export const theme = createMuiTheme({
   },
 })
 
-const useStyles = makeStyles((theme) => createStyles({
-  App: {
-    paddingBottom: theme.spacing(15),
-  },
-}))
-
 function App() {
   const [page, setPage] = React.useState("games")
   const [players, setPlayers] = React.useState([]as Array<playerType>)
   const [games, setGames] = React.useState([] as Array<gameType>)
   const [notification, setNotification] = React.useState({ open: false } as notificationType)
-
-  const classes = useStyles()
 
   const getJsonSavedData = () => {
     const data = {
@@ -149,14 +141,12 @@ function App() {
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <div className={classes.App}>
-        <Header />
-        <Pages {...pagesProps} />
-        <Footer {...footerProps} />
-      </div>
+    <div className="app">
+      <Header />
+      <Pages {...pagesProps} />
+      <Footer {...footerProps} />
       <Notifications {...notificationsProps} />
-    </ThemeProvider>
+    </div>
   )
 }
 

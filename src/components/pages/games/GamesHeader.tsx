@@ -1,23 +1,12 @@
 import React from 'react';
-import {
-  makeStyles,
-  createStyles,
-  Grid,
-  Typography,
-  Card,
-  Button,
-} from "@material-ui/core";
+
 import Games from '@material-ui/icons/Games';
 import { uuid } from 'uuidv4';
 import { gameType } from '../../../types/data';
+import Card from '../../card/Card';
+import Button from '../../button/Button';
 
-const useStyles = makeStyles((theme) =>
-createStyles({  
-  root: {
-    padding: theme.spacing(1),
-  },
-}),
-);
+import './GamesHeader.scss'
 
 export interface GamesHeaderProps{
   games: Array<gameType>,
@@ -27,9 +16,6 @@ export interface GamesHeaderProps{
 }
 
 export default function GamesHeader(props: GamesHeaderProps){
-  const classes = useStyles(); 
-  
-
   const addGame = () => {
     let newGame: gameType = 
     {   
@@ -53,29 +39,15 @@ export default function GamesHeader(props: GamesHeaderProps){
 
 
   return (
-    <Grid item>
-        <Card>
-          <Grid
-            container
-            direction="row"
-            justify="space-between"
-            alignItems="baseline"
-            spacing={2}
-            className={classes.root}
-          >
-            <Grid item><Typography>{props.games.length} game(s)</Typography></Grid>
-            <Grid item>
-              <Button
-                variant="contained"
-                color="primary"
-                startIcon={<Games />}
-                onClick={() => addGame()}
-              >
-                Add a new game
-              </Button>
-            </Grid>
-          </Grid>
-       </Card>
-    </Grid>
+    <Card className='games-header'>
+        <p>{props.games.length} games</p>
+          <Button
+            variant="contained"
+            color="primary"
+            startIcon={<Games />}
+            onClick={() => addGame()}
+            text="Add a new game"
+          />
+    </Card>
   );
 }

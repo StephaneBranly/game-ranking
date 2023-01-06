@@ -2,11 +2,13 @@ import React from 'react';
 import {
   makeStyles,
   createStyles,
-  Card,
   Grid,
   Typography,
   Avatar
 } from "@material-ui/core";
+
+import Card from '../../card/Card';
+
 import { gameType, playerType } from '../../../types/data';
 import { AvatarGroup } from '@material-ui/lab';
 import { getPlayerLabel, getPlayerProfile } from '../../../utils/lib';
@@ -62,42 +64,40 @@ export default function GameCard(props: GameCardProps){
     }
 
     return (
-    <Grid item spacing={1}>
-        <Card className={classes.Padding} onClick={() => props.setCurrentGame({game: props.game, edit: false})}>
-            <Grid
-                container
-                direction="row"
-                justify="space-between"
-                alignItems="baseline"
-                alignContent="space-between"
-            >
-                <Grid item>
-                    <Grid
-                        container
-                        direction="row"
-                        justify="space-between"
-                        alignItems="baseline"
-                        spacing={1}
-                    >
-                        <Grid item>
-                            <Typography>{props.game.gamename}</Typography>
-                        </Grid>
-                    </Grid>
-                </Grid>
-                <Grid item>
-                    <Grid
-                        container
-                        direction="row"
-                        justify="space-between"
-                        alignItems="baseline"
-                        spacing={1}
-                    >
-                        <Grid item><Typography>{`${props.game.results.length} results | `}</Typography></Grid>
-                        <Grid item>{renderPlayers()}</Grid>
+    <Card onClick={() => props.setCurrentGame({game: props.game, edit: false})}>
+        <Grid
+            container
+            direction="row"
+            justify="space-between"
+            alignItems="baseline"
+            alignContent="space-between"
+        >
+            <Grid item>
+                <Grid
+                    container
+                    direction="row"
+                    justify="space-between"
+                    alignItems="baseline"
+                    spacing={1}
+                >
+                    <Grid item>
+                        <Typography>{props.game.gamename}</Typography>
                     </Grid>
                 </Grid>
             </Grid>
-        </Card>
-    </Grid>
+            <Grid item>
+                <Grid
+                    container
+                    direction="row"
+                    justify="space-between"
+                    alignItems="baseline"
+                    spacing={1}
+                >
+                    <Grid item><Typography>{`${props.game.results.length} results | `}</Typography></Grid>
+                    <Grid item>{renderPlayers()}</Grid>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Card>
   );
 }
