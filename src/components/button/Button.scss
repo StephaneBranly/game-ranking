@@ -1,8 +1,8 @@
 .button {
-    background-color: #fff;
+    background-color: #0000003e;
+    border-radius: 10px;
+    color: white;
     border: 1px solid #000;
-    border-radius: 4px;
-    color: #000;
     cursor: pointer;
     display: inline-block;
     font-size: 1rem;
@@ -20,10 +20,13 @@
     flex-direction: row;
     align-items: center;
 
+    transition: all 0.2s ease-in-out;
+
     &:hover {
-        background-color: #000;
+        background-color: #a7a7a724;
         color: #fff;
     }
+    
     &:disabled {
         background-color: #ccc;
         color: #000;
