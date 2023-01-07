@@ -1,7 +1,5 @@
 import React from 'react';
 import {
-  Typography,
-  DialogContent,
   Checkbox,
   List,
   ListItem,
@@ -47,10 +45,10 @@ export default function GameAddResultWho(props: GameAddResultWhoProps){
   }
 
   return (
-    <DialogContent dividers>
-      <Typography>Who was playing?</Typography>
+    <div>
+      <p>Who was playing?</p>
       <List>
         {renderCheckboxPlayers(props.players)}
       </List>
-    </DialogContent>);
+    </div>);
 }

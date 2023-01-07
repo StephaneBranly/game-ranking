@@ -16,7 +16,7 @@ export interface ResultCardProps{
     playersRank: Array<playerRankHistory>
 }
 
-export default function ResultCard(props: ResultCardProps){
+const ResultCard = (props: ResultCardProps) => {
   const displayPlayersBadges = () => {
     return (props.result.ranks.map((rank) => 
     {
@@ -49,3 +49,5 @@ export default function ResultCard(props: ResultCardProps){
     </Card>
   );
 }
+
+export default ResultCard

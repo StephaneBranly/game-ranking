@@ -8,9 +8,10 @@
     box-sizing: border-box;
     border: 1px solid black;
     border-radius: 5px;
-    
+    overflow: hidden;
     .button {
         border: 0px;
+        border-radius: 0px;
         transition: border-color 0.2s ease-in-out;
     }
 }

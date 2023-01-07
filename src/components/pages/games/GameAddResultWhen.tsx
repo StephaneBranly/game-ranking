@@ -18,7 +18,7 @@ export default function GameAddResultWhen(props: GameAddResultWhenProps){
   };
 
   return (
-    <DialogContent dividers>
+    <div>
         <Typography>When?</Typography>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <DateTimePicker
@@ -28,5 +28,5 @@ export default function GameAddResultWhen(props: GameAddResultWhenProps){
             format="dd/MM/yyyy HH:mm"
             />
         </MuiPickersUtilsProvider>
-    </DialogContent>);
+    </div>);
 }

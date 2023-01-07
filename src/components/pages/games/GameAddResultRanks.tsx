@@ -61,10 +61,10 @@ export default function GameAddResultRanks(props: GameAddResultRanksProps){
   }
 
   return (
-    <DialogContent dividers>
+    <div>
         <Typography>Ranks</Typography>
         <List>
           {renderPlayerRank(props.selectedPlayers)}
         </List>
-    </DialogContent>);
+    </div>);
 }

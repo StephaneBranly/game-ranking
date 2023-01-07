@@ -24,4 +24,9 @@
         background-color: #000;
         color: #fff;
     }
+    &:disabled {
+        background-color: #ccc;
+        color: #000;
+        cursor: not-allowed;
+    }
 }

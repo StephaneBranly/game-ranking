@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  Typography,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogTitle,
-  ButtonGroup,
-} from "@material-ui/core";
+
 import { gameType, playerType, scoreType, resultType } from '../../../types/data';
 import { Delete, NavigateBefore, NavigateNext, PostAdd } from '@material-ui/icons';
 import GameAddResultWho from './GamesAddResultWho';
@@ -16,6 +9,9 @@ import { severityType } from '../../../types/notification';
 import { getPlayerProfile } from '../../../utils/lib';
 import { uuid } from 'uuidv4';
 import DeleteResult from './DeleteResult';
+import Dialog from '../../dialog/Dialog';
+import Button from '../../button/Button';
+import ButtonGroup from '../../button/ButtonGroup';
 
 export interface GameAddResultProps{
     game: gameType,
@@ -43,7 +39,7 @@ export default function GameAddResult(props: GameAddResultProps){
     if(currentStep === "ranks")
       return (<GameAddResultRanks players={props.players} setSelectedPlayers={setSelectedPlayers} selectedPlayers={selectedPlayers}/>);
 
-    return <Typography>ERROR</Typography>
+    return <p>ERROR</p>
   }
 
   const nextStep = () => {
@@ -105,31 +101,26 @@ export default function GameAddResult(props: GameAddResultProps){
     props.deleteResult(props.addResultOpen.id!)
   }
 
+  const renderActions = () => {
+    return (<ButtonGroup>
+      <Button onClick={() => props.setAddResultOpen({id:undefined, open:false})} text="Cancel" />
+      {props.addResultOpen.id && <Button onClick={() => setDeleteResultOpen(true)} startIcon={<Delete/>} />}
+      <Button  disabled={currentStep === "who"} onClick={() => backStep()} startIcon={<NavigateBefore/>} /> 
+      {/* autoFocus */}
+  
+      {currentStep === "ranks" ? 
+          <Button onClick={() => addResult()} endIcon={<PostAdd/>} text="Send" />
+          :
+          <Button onClick={() => nextStep()} startIcon={<NavigateNext/>} /> 
+      }
+     </ButtonGroup>)
+  }
+  
+  const title = props.addResultOpen.id ? "Edit result" : "Add result";
+
   return (
-    <><Dialog fullWidth={true} maxWidth="sm" open={props.addResultOpen.open}>
-    {props.addResultOpen.id ?  <DialogTitle>Edit result</DialogTitle> :  <DialogTitle>New result</DialogTitle>}
-    {displayCurrentStep()}
-    <DialogActions>
-      <ButtonGroup disableElevation variant="contained" color="primary">
-        <Button onClick={() => props.setAddResultOpen({id:undefined, open:false})} >
-            Cancel
-        </Button>
-        {props.addResultOpen.id && <Button onClick={() => setDeleteResultOpen(true)}><Delete/></Button>}
-        <Button autoFocus disabled={currentStep === "who"} onClick={() => backStep()}>
-          <NavigateBefore/>
-        </Button>
-        {currentStep === "ranks" ? 
-            <Button autoFocus onClick={() => addResult()} endIcon={<PostAdd/>}>
-              Send
-            </Button> :
-            <Button autoFocus onClick={() => nextStep()}>
-              <NavigateNext/>
-            </Button>
-        }
-       </ButtonGroup>
-    </DialogActions>
-  </Dialog>
-        {deleteResultOpen && <DeleteResult setDeleteResultOpen={setDeleteResultOpen} deleteResult={deleteResult}/>}
+    <><Dialog open={props.addResultOpen.open} title={title} content={displayCurrentStep()} actions={renderActions()} onClose={() => props.setAddResultOpen({id:undefined, open:false})} />
+      {deleteResultOpen && <DeleteResult setDeleteResultOpen={setDeleteResultOpen} deleteResult={deleteResult}/>}
   </>
   );
 }

@@ -10,6 +10,7 @@ export interface ButtonProps{
     endIcon?: JSX.Element,
     className?: string,
     type?: "button" | "submit" | "reset" | undefined,
+    style?: React.CSSProperties
 }
 
 export default function Button(props: ButtonProps){
@@ -19,6 +20,7 @@ export default function Button(props: ButtonProps){
             onClick={() => props.onClick()}
             disabled={props.disabled}
             type={props.type}
+            style={props.style}
         >
             {props.startIcon}
             {props.text}
