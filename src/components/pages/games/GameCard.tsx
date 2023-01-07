@@ -22,7 +22,7 @@ const GameCard = (props: GameCardProps) => {
                 {
                     props.game.rankHistory[props.game.rankHistory.length-1].playersRank.sort((a, b) => a.score < b.score ? 1 : -1).map((player,index) => {
                         const playerProfile = getPlayerProfile(props.players,player.playerUuid)
-                        return <Avatar label={getPlayerLabel(playerProfile)}/>
+                        return <Avatar label={getPlayerLabel(playerProfile)} color={playerProfile.color} key={index}/>
                     })
                 }
               </AvatarGroup>)

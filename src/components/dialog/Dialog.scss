@@ -43,12 +43,16 @@
         .dialog-title {
             font-size: 20px;
             font-weight: 500;
+            padding: 0;
+            margin: 0;
         }
         .dialog-close {
             cursor: pointer;
             font-size: 20px;
             font-weight: 500;
         }
+        padding-bottom: 10px;
+        border-bottom: 1px solid #ccc;
     }
 
     .dialog-body {
@@ -56,6 +60,8 @@
         overflow-y: scroll;
     }
     .dialog-actions {
+        border-top: 1px solid #ccc;
+        padding-top: 10px;
         display: flex;
         justify-content: flex-end;
         margin-top: 20px;

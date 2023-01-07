@@ -34,7 +34,7 @@ const ResultCard = (props: ResultCardProps) => {
                 }}
                 badgeContent={<ScoreChip rank={rank.rank} score={playerRank.deltaScore} deltaScore={true}/>}
             > */}
-            <Avatar label={getPlayerLabel(getPlayerProfile(props.players,rank.uuid))} />
+            <Avatar label={getPlayerLabel(getPlayerProfile(props.players,rank.uuid))} color={getPlayerProfile(props.players,rank.uuid).color}/>
             {/* </Badge> */}
             </Tooltip>
         </div>

@@ -16,7 +16,7 @@ const Dialog = (props: DialogProps) => {
             <div className="dialog-content">
                 <div className="dialog-header">
                     <IconButton onClick={props.onClose} icon={<Close />}/>
-                    <h3>{props.title}</h3>
+                    <h3 className="dialog-title">{props.title}</h3>
                 </div>
                 <div className="dialog-body">
                     {props.content}
