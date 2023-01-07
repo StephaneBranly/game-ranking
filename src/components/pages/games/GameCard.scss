@@ -1,12 +1,71 @@
 .game-card {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
+    min-height: 150px;
+    min-width: 150px;
+    max-height: 150px;
+    max-width: 150px;
+    background-color: #0000003e;
+    border-radius: 20px;
+    border: 2px solid #ffffff00;
+    color: white;
+
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    
+    &.active {
+        border-color: rgba(255, 255, 255, 0.817);
+        min-height: 200px;
+        min-width: 200px;
+        max-height: 200px;
+        max-width: 200px;
+    }
+
+    &:hover {
+        animation: shine 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+}
+
+.game-card-outside-name-container {
+    position: relative;
+    opacity: 0;
+
+    transition: opacity 0.2s ease-in-out;
+
+    &.active {
+        opacity: 1;
+
+    }
+}
+
+.game-card-outside-name {
+    position: absolute;
+    top: 165px;
+    left: 10px;
+    font-size: 30px;
+    color: white;
+    width: 100vw;
+    text-align: left;
 }
 
 .game-card-stats {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     gap: 20px;
+    padding: 10px 20px;
+}
+
+@keyframes shine {
+    0% {
+        background-color: #0000003e;
+    }
+    50% {
+        background-color: #a7a7a724;
+    }
+    100% {
+        background-color: #0000003e;
+    }
 }

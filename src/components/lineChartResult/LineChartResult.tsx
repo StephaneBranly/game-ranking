@@ -9,7 +9,6 @@ import {
   } from "@material-ui/core";
 import { useState } from "react";
 import { LineChart, XAxis, Legend, CartesianGrid, Tooltip, Line, ResponsiveContainer, YAxis } from "recharts";
-import { theme } from "../../App";
 import { gameType, historyEntryType, playerType, resultType, scoreType } from "../../types/data";
 import { getPlayerLabel, getPlayerProfile, getResult, toChartScore } from "../../utils/lib";
 import ScoreChip from "../scoreChip/ScoreChip";
@@ -58,7 +57,7 @@ export default function LineChartResult(props: LineChartResultProps){
 
   const renderLegend = () => {
     return (
-      <Grid container direction="row" justify="flex-start"  spacing={5} style={{paddingBottom: theme.spacing(2)}}>
+      <Grid container direction="row" justify="flex-start"  spacing={5}>
         {
           props.game.rankHistory[props.game.rankHistory.length-1].playersRank.sort((a, b) => a.score < b.score ? 1 : -1).map((player,index) => {
             const playerProfile = getPlayerProfile(props.players,player.playerUuid)
@@ -122,7 +121,7 @@ export default function LineChartResult(props: LineChartResultProps){
     const { active, payload, label} = propsTooltip
     if (active && payload && payload.length && label) {
       return (
-        <Paper variant="outlined" style={{ paddingTop: theme.spacing(2), paddingBottom: theme.spacing(2),paddingLeft: theme.spacing(2),paddingRight: theme.spacing(4)}}>
+        <Paper variant="outlined">
           <Typography>{label ? getResult(props.game.results,label).date.toLocaleString() : "Start"}</Typography>
           <Grid container direction="column" spacing={1}>{renderPlayersScore(getResult(props.game.results, label), payload)}</Grid>
         </Paper>

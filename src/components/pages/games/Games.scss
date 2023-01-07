@@ -1,5 +1,11 @@
-.game-list {
+.games {
     display: flex;
+    padding:0 80vw 0 50px ;
     gap: 10px;
-    flex-direction: column;
+    justify-content: flex-start;
+    flex-direction: row;
+    overflow-x: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;
+    height: fit-content;
 }

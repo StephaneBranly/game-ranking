@@ -1,11 +1,7 @@
 import "./Games.scss"
 
 import React, { useState } from 'react';
-import {
-  Container,
-  Grid,
-} from "@material-ui/core";
-import GamesHeader from './GamesHeader';
+import GamesAdd from './GamesAdd';
 import GameCard from './GameCard';
 import { gameType, playerType } from '../../../types/data';
 import GameCompleteCard from './GameCompleteCard';
@@ -22,7 +18,7 @@ export default function Games(props: GamesProps){
     const [currentGame, setCurrentGame] = useState({game: undefined, edit: false} as unknown as {game: gameType|undefined, edit: boolean});
 
     const renderGameCards = (games: Array<gameType>) => {
-        return (games.map((game: gameType) => <GameCard game={game} changeGameData={changeGameData} setCurrentGame={setCurrentGame} players={props.players} ></GameCard>))
+        return (games.map((game: gameType) => <GameCard game={game} changeGameData={changeGameData} setCurrentGame={setCurrentGame} players={props.players} active={currentGame.game===game} />))
     };
 
     const changeGameData = (game: gameType, uuid: string) => {
@@ -38,18 +34,23 @@ export default function Games(props: GamesProps){
         props.addNotification("Game correctly deleted","success");
     }
 
+    // // on scoll on games, i want the element the most at the left of the screen to be set as active
+    // const handleScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
+    //     console.log(e.currentTarget.scrollLeft);
+    //     console.log(e.currentTarget.scrollWidth);
+    //     console.log(e.currentTarget.clientWidth);
+    //     console.log(e.currentTarget.scrollLeft / (e.currentTarget.scrollWidth - e.currentTarget.clientWidth));
+    // }
+
+
     return (
-    <div className='games'>
-        { currentGame.game?
-            <GameCompleteCard game={currentGame.game} edit={currentGame.edit} changeGameData={changeGameData} setCurrentGame={setCurrentGame} players={props.players} addNotification={props.addNotification} deleteGame={deleteGame}></GameCompleteCard>
-            :
-            <div
-                className='game-list'
-            >
-                <GamesHeader games={props.games} setGames={props.setGames} setCurrentGame={setCurrentGame}></GamesHeader>
-                {renderGameCards(props.games)}
+        <div className='games'>
+            <GamesAdd games={props.games} setGames={props.setGames} setCurrentGame={setCurrentGame} />
+            {renderGameCards(props.games)}
         </div>
-        }
-    </div>
-  );
+    );
 }
+
+// { currentGame.game?
+// <GameCompleteCard game={currentGame.game} edit={currentGame.edit} changeGameData={changeGameData} setCurrentGame={setCurrentGame} players={props.players} addNotification={props.addNotification} deleteGame={deleteGame}></GameCompleteCard>
+// :

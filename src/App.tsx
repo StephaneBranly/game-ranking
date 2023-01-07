@@ -1,7 +1,7 @@
-import React from "react"
-import {
-  createMuiTheme, ThemeProvider, createStyles, makeStyles, Theme,
-} from "@material-ui/core/styles"
+import React, { useEffect } from "react"
+
+import "./App.scss"
+
 import Header from "./components/header/Header"
 import Footer, { FooterProps } from "./components/footer/Footer"
 import Pages, { PagesProps } from "./components/pages/Pages"
@@ -10,26 +10,13 @@ import Notifications, { NotificationProps } from "./components/pages/notificatio
 import { notificationType, severityType } from "./types/notification"
 import { generateGameFromLoadedData } from "./utils/lib"
 
-export const theme = createMuiTheme({
-  palette: {
-    error: {
-      main: "#DD0505",
-    },
-    primary: {
-      main: "#3f5efb",
-    },
-    secondary: {
-      main: "#d2d2d2",
-    },
-  },
-})
-
 function App() {
   const [page, setPage] = React.useState("games")
   const [players, setPlayers] = React.useState([]as Array<playerType>)
   const [games, setGames] = React.useState([] as Array<gameType>)
   const [notification, setNotification] = React.useState({ open: false } as notificationType)
 
+  
   const getJsonSavedData = () => {
     const data = {
       players,
@@ -37,6 +24,10 @@ function App() {
     }
     return data
   }
+
+  useEffect(() => {
+    handlerLoadData(null)
+  }, [])
 
   const handlerSaveData = (cookie: boolean) => {
     const stringifiedData = JSON.stringify(getJsonSavedData())
@@ -144,7 +135,6 @@ function App() {
     <div className="app">
       <Header />
       <Pages {...pagesProps} />
-      <Footer {...footerProps} />
       <Notifications {...notificationsProps} />
     </div>
   )

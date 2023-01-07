@@ -1,5 +1,4 @@
 import { BarChart, Bar, ResponsiveContainer, XAxis, YAxis, CartesianGrid } from 'recharts';
-import { theme } from '../../App';
 import { playerType, gameType } from '../../types/data';
 
 export interface BarChartResultProps {
@@ -31,7 +30,7 @@ export default function BarChartResult(props: BarChartResultProps) {
         <BarChart data={dataMapping()} margin={{ top: 20, right: 20, left: 20, bottom: 20 }}>
           <XAxis dataKey="name" />
           <YAxis />
-          <Bar dataKey="amt" fill={theme.palette.primary.main} />
+          <Bar dataKey="amt" />
         </BarChart>
       </ResponsiveContainer>
       </div>

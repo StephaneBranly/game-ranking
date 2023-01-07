@@ -14,6 +14,7 @@ export interface GameCardProps{
     players: playerType[],
     changeGameData: (arg0: gameType, arg1: string) => void,
     setCurrentGame: React.Dispatch<React.SetStateAction<{game: gameType|undefined, edit: boolean}>>
+    active: boolean
 }
 
 const GameCard = (props: GameCardProps) => {
@@ -29,13 +30,18 @@ const GameCard = (props: GameCardProps) => {
     }
 
     return (
-    <Card className='game-card' onClick={() => props.setCurrentGame({game: props.game, edit: false})}>
-        <p>{props.game.gamename}</p>
-        <div className='game-card-stats'>
-                <p>{props.game.results.length} results</p>
+    <>
+        <div className={`game-card ${props.active?'active':''}`} onClick={() => props.setCurrentGame({game: props.game, edit: false})}>
+            <p>{props.game.gamename}</p>
+            <div className='game-card-stats'>
+                {/* <p>{props.game.results.length} results</p> */}
                 {renderPlayers()}
+            </div>
         </div>
-    </Card>
+        <div className={`game-card-outside-name-container ${props.active?'active':''}`}>
+            <div className='game-card-outside-name'>{props.game.gamename}</div>
+        </div>
+    </>
   );
 }
 
