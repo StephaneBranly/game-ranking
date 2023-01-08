@@ -39,8 +39,6 @@ export default function SettingsHeader(props: SettingsHeaderProps){
     }
 
     return (
-        <Grid item>
-            <Card>
           <Grid
             container
             direction="row"
@@ -135,7 +133,5 @@ export default function SettingsHeader(props: SettingsHeaderProps){
             </ButtonGroup>
             </Grid>
           </Grid>
-       </Card>
-       </Grid>
   );
 }

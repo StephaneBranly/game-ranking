@@ -34,22 +34,13 @@ export default function Games(props: GamesProps){
         props.addNotification("Game correctly deleted","success");
     }
 
-    // // on scoll on games, i want the element the most at the left of the screen to be set as active
-    // const handleScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
-    //     console.log(e.currentTarget.scrollLeft);
-    //     console.log(e.currentTarget.scrollWidth);
-    //     console.log(e.currentTarget.clientWidth);
-    //     console.log(e.currentTarget.scrollLeft / (e.currentTarget.scrollWidth - e.currentTarget.clientWidth));
-    // }
-
-
     return (
-        <>
+        <div className="games-container">
             <div className='games'>
                 <GamesAdd games={props.games} setGames={props.setGames} setCurrentGame={setCurrentGame} />
                 {renderGameCards(props.games)}
             </div>
             {currentGame.game && <GameCompleteCard game={currentGame.game} edit={false} changeGameData={changeGameData} setCurrentGame={setCurrentGame} players={props.players} deleteGame={deleteGame} addNotification={props.addNotification}></GameCompleteCard>}
-        </>
+        </div>
     );
 }

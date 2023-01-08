@@ -1,6 +1,10 @@
 .linechart-result-legend {
     display: flex;
     flex-direction: row;
+    align-items: center;
     gap: 50px;
     height: 100px;
+    overflow-x: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;
 }

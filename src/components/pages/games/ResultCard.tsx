@@ -23,7 +23,7 @@ const ResultCard = (props: ResultCardProps) => {
         const playerRank = props.playersRank.filter(player => player.playerUuid === rank.uuid)[0] 
         const title = `${getPlayerProfile(props.players, rank.uuid).username} - New score: ${Math.round(playerRank.score)}`
 
-        return <div>
+        return <div className='result-card-player'>
             <Tooltip content={title}>
             {/* <Badge
                 overlap="circle"
@@ -34,9 +34,11 @@ const ResultCard = (props: ResultCardProps) => {
                 }}
                 badgeContent={<ScoreChip rank={rank.rank} score={playerRank.deltaScore} deltaScore={true}/>}
             > */}
-            <Avatar label={getPlayerLabel(getPlayerProfile(props.players,rank.uuid))} color={getPlayerProfile(props.players,rank.uuid).color}/>
-            {/* </Badge> */}
+              <Avatar label={getPlayerLabel(getPlayerProfile(props.players,rank.uuid))} color={getPlayerProfile(props.players,rank.uuid).color}/>
+              {/* </Badge> */}
             </Tooltip>
+            <div className='result-card-rank'>#{rank.rank}</div>
+
         </div>
     }
     ));

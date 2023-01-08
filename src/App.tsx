@@ -9,6 +9,9 @@ import { dataType, gameType, playerType } from "./types/data"
 import Notification, { NotificationProps } from "./components/pages/notification/Notification"
 import { notificationType, severityType } from "./types/notification"
 import { generateGameFromLoadedData } from "./utils/lib"
+import Games from "./components/pages/games/Games"
+import Settings, { SettingsProps } from "./components/pages/settings/Settings"
+import Dialog from "./components/dialog/Dialog"
 
 function App() {
   const [page, setPage] = React.useState("games")
@@ -16,7 +19,8 @@ function App() {
   const [games, setGames] = React.useState([] as Array<gameType>)
   const [notification, setNotification] = React.useState({ open: false } as notificationType)
 
-  
+  const [settingsOpen, setSettingsOpen] = React.useState(false)
+
   const getJsonSavedData = () => {
     const data = {
       players,
@@ -131,11 +135,18 @@ function App() {
     setNotification,
   }
 
+  const settingsProps: SettingsProps = {
+    handlerSaveData,
+    handlerLoadData,
+    handlerResetData,
+  }
+
   return (
     <div className="app">
-      <Header />
-      <Pages {...pagesProps} />
+      <Header setSettingsOpen={setSettingsOpen} />
+      <Games games={games} setGames={setGames} players={players} addNotification={addNotification}></Games>    
       <Notification {...notificationProps} />
+      <Dialog open={settingsOpen} title={'Settings'} content={<Settings {...settingsProps} />} actions={<></>} onClose={() => setSettingsOpen(false)} />
     </div>
   )
 }

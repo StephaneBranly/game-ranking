@@ -10,3 +10,11 @@
     height: 220px;
     box-sizing: border-box;
 }
+
+.games-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: stretch;
+    flex-direction: column;
+    width: 100vw;
+}
