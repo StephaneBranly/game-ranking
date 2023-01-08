@@ -45,7 +45,6 @@ const GameCard = (props: GameCardProps) => {
             {!props.active && <>
                 <p>{props.game.gamename}</p>
                 <div className='game-card-stats'>
-                    {/* <p>{props.game.results.length} results</p> */}
                     {renderPlayers()}
                 </div>
             </>}

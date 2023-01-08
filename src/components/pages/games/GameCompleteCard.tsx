@@ -101,6 +101,17 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
     <>
         <div className='game-complete-card-container'>
             <div className='game-complete-card'>
+                <div className='game-complete-card-header'>
+                    <div className='game-complete-card-general-stats'>
+                        <div>{props.game.results.length} results</div>
+                        <div>{props.game.algorithmSettings.algo}</div>
+                    </div>
+                    <div className='game-complete-card-general-actions'>
+                        <Button endIcon={<PostAdd/>}  onClick={() => handlerAddResult()} text='New result'/>
+                        <Button onClick={() => setEditMode(true)} endIcon={<Edit/>}/>
+                        <Button onClick={() => setDeleteGameOpen(true)} endIcon={<Delete/>} />
+                    </div>
+                </div>
                 {props.game.players && 
                     <div className='game-complete-card-stats'><LineChartResult players={props.players} game={props.game}/></div>
                 }
@@ -108,13 +119,7 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
                     <BarChartResult players={props.players} game={props.game}/>
                 </Grid> */}
                 {addResultOpen.open ? <GameAddResult game={props.game} players={props.players} addResultOpen={addResultOpen} setAddResultOpen={setAddResultOpen} addNotification={props.addNotification} addResult={addResult} deleteResult={deleteResult}></GameAddResult> : <></>}
-                <div className='game-complete-card-actions'>
-                    <ButtonGroup>
-                        <Button endIcon={<PostAdd/>}  onClick={() => handlerAddResult()} text='New result'/>
-                        <Button onClick={() => setEditMode(true)} endIcon={<Edit/>}/>
-                        <Button onClick={() => setDeleteGameOpen(true)} endIcon={<Delete/>} />
-                    </ButtonGroup>
-                </div>
+                
             </div>
         </div>
         <div className='game-complete-card-results'>

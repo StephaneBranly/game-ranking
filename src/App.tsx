@@ -6,7 +6,7 @@ import Header from "./components/header/Header"
 import Footer, { FooterProps } from "./components/footer/Footer"
 import Pages, { PagesProps } from "./components/pages/Pages"
 import { dataType, gameType, playerType } from "./types/data"
-import Notifications, { NotificationProps } from "./components/pages/notifications/Notification"
+import Notification, { NotificationProps } from "./components/pages/notification/Notification"
 import { notificationType, severityType } from "./types/notification"
 import { generateGameFromLoadedData } from "./utils/lib"
 
@@ -126,7 +126,7 @@ function App() {
     currentPage: page,
   }
 
-  const notificationsProps: NotificationProps = {
+  const notificationProps: NotificationProps = {
     notification,
     setNotification,
   }
@@ -135,7 +135,7 @@ function App() {
     <div className="app">
       <Header />
       <Pages {...pagesProps} />
-      <Notifications {...notificationsProps} />
+      <Notification {...notificationProps} />
     </div>
   )
 }

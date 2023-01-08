@@ -13,13 +13,27 @@
     width: 80vw;
 }
 
-.game-complete-card-actions {
+.game-complete-card-header {
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
+    justify-content: space-between;
+    align-items: stretch;
     gap: 20px;
     width: 100%;
+}
+
+.game-complete-card-general-stats, .game-complete-card-general-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    color: white;
+
+    & > .button {
+        border: 0px;
+        background-color: rgba(0,0,0,0);
+    }
 }
 
 .game-complete-card-title {
