@@ -32,14 +32,14 @@ export default function GamesAdd(props: GamesAddProps){
         }
       }
     }
-    props.setGames(props.games.concat(newGame));
+    props.setGames([newGame].concat(props.games));
     props.setCurrentGame({game: newGame, edit: true})
   }
 
 
   return (
     <div className='game-card add-game' onClick={() => addGame()}>
-      <Games />
+      <Games className='add-game-icon' />
     </div>
   );
 }

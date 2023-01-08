@@ -1,8 +1,16 @@
 .add-game {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: center !important;
     align-items: center;
     align-content: center;
     margin-right: 10px;
+    &:hover > .add-game-icon {
+        transform: scale(4) rotate(180deg)
+    }
+}
+
+.add-game-icon {
+    transition: transform 0.3s ease !important;
+    transform: scale(2.7);
 }

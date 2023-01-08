@@ -20,6 +20,8 @@ export interface GameCardProps{
 
 const GameCard = (props: GameCardProps) => {
     const renderPlayers = () => {
+        if (props.game.rankHistory.length === 0)
+            return <div></div>
         return (<AvatarGroup max={3}>
                 {
                     props.game.rankHistory[props.game.rankHistory.length-1].playersRank.sort((a, b) => a.score < b.score ? 1 : -1).map((player,index) => {

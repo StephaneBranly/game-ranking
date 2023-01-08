@@ -49,7 +49,7 @@ export default function Games(props: GamesProps){
                 <GamesAdd games={props.games} setGames={props.setGames} setCurrentGame={setCurrentGame} />
                 {renderGameCards(props.games)}
             </div>
-            {currentGame.game && <GameCompleteCard game={currentGame.game} edit={false} changeGameData={changeGameData} setCurrentGame={setCurrentGame} players={props.players} deleteGame={() => { } } addNotification={props.addNotification}></GameCompleteCard>}
+            {currentGame.game && <GameCompleteCard game={currentGame.game} edit={false} changeGameData={changeGameData} setCurrentGame={setCurrentGame} players={props.players} deleteGame={deleteGame} addNotification={props.addNotification}></GameCompleteCard>}
         </>
     );
 }
