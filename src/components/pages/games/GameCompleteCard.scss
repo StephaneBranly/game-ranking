@@ -1,7 +1,22 @@
-.game-complete-card-header {
+.game-complete-card-container {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+}
+.game-complete-card {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 80vw;
+}
+
+.game-complete-card-actions {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     gap: 20px;
     width: 100%;
@@ -15,12 +30,21 @@
 
 .game-complete-card-stats {
     width: 100%;
+    background-color: #0000003e;
+    border-radius: 20px;
+    overflow: hidden;
 }
 
 .game-complete-card-results {
     display: flex;
-    flex-direction: column;
-
-    gap: 10px;
+    flex-direction: row;
     margin: 20px 0;
+    overflow-x: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;
+    width: 100vw;
+    height: fit-content;
+    padding:0 80vw 0 10vw;
+    gap: 10px;
+    box-sizing: border-box;
 }

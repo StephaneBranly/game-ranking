@@ -7,5 +7,6 @@
     overflow-x: scroll;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;
-    height: fit-content;
+    height: 220px;
+    box-sizing: border-box;
 }

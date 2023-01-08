@@ -99,29 +99,27 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
 
   return (
     <>
-        <Card>
-            <div className='game-complete-card-header'>
-                <IconButton onClick={() => props.setCurrentGame({game: undefined, edit: false})} icon={<NavigateBefore/>}/>
-                <ButtonGroup>
-                    <Button endIcon={<PostAdd/>}  onClick={() => handlerAddResult()} text='New result'/>
-                    <Button onClick={() => setEditMode(true)} endIcon={<Edit/>}/>
-                    <Button onClick={() => setDeleteGameOpen(true)} endIcon={<Delete/>} />
-                </ButtonGroup>
+        <div className='game-complete-card-container'>
+            <div className='game-complete-card'>
+                {props.game.players && 
+                    <div className='game-complete-card-stats'><LineChartResult players={props.players} game={props.game}/></div>
+                }
+                {/* <Grid item>
+                    <BarChartResult players={props.players} game={props.game}/>
+                </Grid> */}
+                {addResultOpen.open ? <GameAddResult game={props.game} players={props.players} addResultOpen={addResultOpen} setAddResultOpen={setAddResultOpen} addNotification={props.addNotification} addResult={addResult} deleteResult={deleteResult}></GameAddResult> : <></>}
+                <div className='game-complete-card-actions'>
+                    <ButtonGroup>
+                        <Button endIcon={<PostAdd/>}  onClick={() => handlerAddResult()} text='New result'/>
+                        <Button onClick={() => setEditMode(true)} endIcon={<Edit/>}/>
+                        <Button onClick={() => setDeleteGameOpen(true)} endIcon={<Delete/>} />
+                    </ButtonGroup>
+                </div>
             </div>
-        <div className='game-complete-card-title'>
-                {props.game.gamename}
         </div>
-        {props.game.players && 
-            <div className='game-complete-card-stats'><LineChartResult players={props.players} game={props.game}/></div>
-        }
-        {/* <Grid item>
-            <BarChartResult players={props.players} game={props.game}/>
-        </Grid> */}
-        {addResultOpen.open ? <GameAddResult game={props.game} players={props.players} addResultOpen={addResultOpen} setAddResultOpen={setAddResultOpen} addNotification={props.addNotification} addResult={addResult} deleteResult={deleteResult}></GameAddResult> : <></>}
-    </Card>
-    <div className='game-complete-card-results'>
-        {displayResults()}
-    </div>
+        <div className='game-complete-card-results'>
+            {displayResults()}
+        </div>
     {deleteGameOpen && <DeleteGame setDeleteGameOpen={setDeleteGameOpen} deleteGame={deleteGame}></DeleteGame>}
     {editMode && <EditGame setEditMode={setEditMode} handleChangeGame={handleChangeGame} currentGame={props.game}></EditGame>}
     </>

@@ -8,6 +8,7 @@ import { gameType, playerType } from '../../../types/data';
 import { getPlayerLabel, getPlayerProfile } from '../../../utils/lib';
 import Avatar from '../../avatar/Avatar';
 import AvatarGroup from '../../avatar/AvatarGroup';
+import GameCompleteCard from './GameCompleteCard';
 
 export interface GameCardProps{
     game: gameType,
@@ -29,14 +30,23 @@ const GameCard = (props: GameCardProps) => {
               </AvatarGroup>)
     }
 
+    const handlerOnClick = () => {
+        if(props.active) {
+            props.setCurrentGame({game: undefined, edit: false})
+            return
+        }
+        props.setCurrentGame({game: props.game, edit: false})
+    }
     return (
     <>
-        <div className={`game-card ${props.active?'active':''}`} onClick={() => props.setCurrentGame({game: props.game, edit: false})}>
-            <p>{props.game.gamename}</p>
-            <div className='game-card-stats'>
-                {/* <p>{props.game.results.length} results</p> */}
-                {renderPlayers()}
-            </div>
+        <div className={`game-card ${props.active?'active':''}`} onClick={handlerOnClick}>
+            {!props.active && <>
+                <p>{props.game.gamename}</p>
+                <div className='game-card-stats'>
+                    {/* <p>{props.game.results.length} results</p> */}
+                    {renderPlayers()}
+                </div>
+            </>}
         </div>
         <div className={`game-card-outside-name-container ${props.active?'active':''}`}>
             <div className='game-card-outside-name'>{props.game.gamename}</div>

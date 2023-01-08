@@ -44,13 +44,12 @@ export default function Games(props: GamesProps){
 
 
     return (
-        <div className='games'>
-            <GamesAdd games={props.games} setGames={props.setGames} setCurrentGame={setCurrentGame} />
-            {renderGameCards(props.games)}
-        </div>
+        <>
+            <div className='games'>
+                <GamesAdd games={props.games} setGames={props.setGames} setCurrentGame={setCurrentGame} />
+                {renderGameCards(props.games)}
+            </div>
+            {currentGame.game && <GameCompleteCard game={currentGame.game} edit={false} changeGameData={changeGameData} setCurrentGame={setCurrentGame} players={props.players} deleteGame={() => { } } addNotification={props.addNotification}></GameCompleteCard>}
+        </>
     );
 }
-
-// { currentGame.game?
-// <GameCompleteCard game={currentGame.game} edit={currentGame.edit} changeGameData={changeGameData} setCurrentGame={setCurrentGame} players={props.players} addNotification={props.addNotification} deleteGame={deleteGame}></GameCompleteCard>
-// :

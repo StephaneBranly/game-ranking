@@ -7,8 +7,10 @@ import {
     Paper,
     Tooltip as Tooltip1
   } from "@material-ui/core";
+
+import "./LineChartResult.scss"
 import { useState } from "react";
-import { LineChart, XAxis, Legend, CartesianGrid, Tooltip, Line, ResponsiveContainer, YAxis } from "recharts";
+import { LineChart, XAxis, Legend, CartesianGrid, Tooltip, Line, ResponsiveContainer, YAxis, Brush } from "recharts";
 import { gameType, historyEntryType, playerType, resultType, scoreType } from "../../types/data";
 import { getPlayerLabel, getPlayerProfile, getResult, toChartScore } from "../../utils/lib";
 import ScoreChip from "../scoreChip/ScoreChip";
@@ -42,7 +44,7 @@ export default function LineChartResult(props: LineChartResultProps){
 
   const generateLines = (players: Array<scoreType>) => {
     return players.map((player) => {
-        return <Line key={player.uuid} type="natural" strokeWidth={lineDesign.width[player.uuid]} strokeOpacity={lineDesign.opacity[player.uuid]} dataKey={player.uuid} stroke={getPlayerProfile(props.players,player.uuid).color} yAxisId={1}/>
+        return <Line key={player.uuid} type="natural" strokeWidth={lineDesign.width[player.uuid]} strokeOpacity={lineDesign.opacity[player.uuid]} dataKey={player.uuid} stroke={getPlayerProfile(props.players,player.uuid).color} yAxisId={1} dot={false} />
       })
   }
 
@@ -57,11 +59,11 @@ export default function LineChartResult(props: LineChartResultProps){
 
   const renderLegend = () => {
     return (
-      <Grid container direction="row" justify="flex-start"  spacing={5}>
+      <div className="linechart-result-legend">
         {
           props.game.rankHistory[props.game.rankHistory.length-1].playersRank.sort((a, b) => a.score < b.score ? 1 : -1).map((player,index) => {
             const playerProfile = getPlayerProfile(props.players,player.playerUuid)
-                  return <Grid item key={index} onMouseEnter={() => handleMouseEnter(player.playerUuid)} onMouseLeave={() => handleMouseLeave()}><Tooltip1 title={playerProfile.username}><Badge
+                  return <div key={index} onMouseEnter={() => handleMouseEnter(player.playerUuid)} onMouseLeave={() => handleMouseLeave()}><Tooltip1 title={playerProfile.username}><Badge
                       overlap="circle"
                       style={{borderColor: "rgba(0,0,0,0)"}}
                       anchorOrigin={{
@@ -71,10 +73,10 @@ export default function LineChartResult(props: LineChartResultProps){
                       badgeContent={<ScoreChip rank={index+1} score={player.score} deltaScore={false}/>}
                   >
                       <Avatar alt={playerProfile.username} style={{backgroundColor: playerProfile.color}}>{getPlayerLabel(playerProfile)}</Avatar>
-                  </Badge></Tooltip1></Grid>
+                  </Badge></Tooltip1></div>
             })
         }
-      </Grid>
+      </div>
     );
   }
   const generateLineScorePlayer = (historyEntry: historyEntryType, playerUuid: string, playing: boolean) => {
@@ -129,7 +131,10 @@ export default function LineChartResult(props: LineChartResultProps){
     }
 
     return null;
-};
+  };
+
+  const brushStartIndex = props.game.rankHistory.length > 25 ? props.game.rankHistory.length - 25 : 0
+  const brushEndIndex = props.game.rankHistory.length - 1
   
   return (
     props.game.rankHistory.length && props.game.players.length ? 
@@ -140,12 +145,13 @@ export default function LineChartResult(props: LineChartResultProps){
       data={toChartScore(props.game.rankHistory)}
       margin={{ top: 20, right: 20, left: 20, bottom: 20 }}
       >
-      <XAxis dataKey="resultUuid" tick={false} />
-      <YAxis yAxisId={1} domain={['dataMin - 50', 'dataMax + 50']}/>
+      <XAxis dataKey="resultUuid" tick={false} axisLine={{ stroke: '#fefefe' }}/>
+      <YAxis yAxisId={1} domain={['dataMin - 50', 'dataMax + 50']} tick={{ fill: "#fefefe" }} axisLine={{ stroke: '#fefefe' }}/>
       <Tooltip content={renderTooltip} />
       <Legend verticalAlign="top" content={renderLegend}/>
-      <CartesianGrid stroke="#d5d5d5" strokeDasharray="3 3"/>
+      {/* <CartesianGrid stroke="#fdfdfd" strokeDasharray="3 3"/> */}
       {generateLines(props.game.players).flat()}
+      <Brush height={30} stroke="#091011" startIndex={brushStartIndex} endIndex={brushEndIndex} />
     </LineChart></ResponsiveContainer></div> : <></>
   );  
 }

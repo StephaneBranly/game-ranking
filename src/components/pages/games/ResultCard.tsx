@@ -43,10 +43,10 @@ const ResultCard = (props: ResultCardProps) => {
   }
 
   return (
-    <Card className='result-card' onClick={()=>props.setAddResultOpen({id: props.result.uuid, open:true})}>
+    <div className='result-card' onClick={()=>props.setAddResultOpen({id: props.result.uuid, open:true})}>
         <div className='result-card-players'>{displayPlayersBadges()}</div>
         <p>{props.result.date.toLocaleString()}</p>
-    </Card>
+    </div>
   );
 }
 
