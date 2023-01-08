@@ -1,20 +1,12 @@
-import {
-    Grid,
-    Chip,
-    Avatar,
-    Badge,
-    Typography,
-    Paper,
-    Tooltip as Tooltip1
-  } from "@material-ui/core";
-
 import "./LineChartResult.scss"
 import { useState } from "react";
 import { LineChart, XAxis, Legend, CartesianGrid, Tooltip, Line, ResponsiveContainer, YAxis, Brush } from "recharts";
 import { gameType, historyEntryType, playerType, resultType, scoreType } from "../../types/data";
 import { getPlayerLabel, getPlayerProfile, getResult, toChartScore } from "../../utils/lib";
 import ScoreChip from "../scoreChip/ScoreChip";
-  
+import Avatar from "../avatar/Avatar";
+import Tooltip1 from "../tooltip/Tooltip";  
+
 export interface LineChartResultProps {
   players: Array<playerType>,
   game: gameType,
@@ -63,7 +55,9 @@ export default function LineChartResult(props: LineChartResultProps){
         {
           props.game.rankHistory[props.game.rankHistory.length-1].playersRank.sort((a, b) => a.score < b.score ? 1 : -1).map((player,index) => {
             const playerProfile = getPlayerProfile(props.players,player.playerUuid)
-                  return <div key={index} onMouseEnter={() => handleMouseEnter(player.playerUuid)} onMouseLeave={() => handleMouseLeave()}><Tooltip1 title={playerProfile.username}><Badge
+                  return <div key={index} onMouseEnter={() => handleMouseEnter(player.playerUuid)} onMouseLeave={() => handleMouseLeave()} className="linechart-result-legend-player">
+                      {/* <Tooltip1 content={playerProfile.username} position="top"> */}
+                    {/* <Badge
                       overlap="circle"
                       style={{borderColor: "rgba(0,0,0,0)"}}
                       anchorOrigin={{
@@ -71,9 +65,11 @@ export default function LineChartResult(props: LineChartResultProps){
                       horizontal: 'right',
                       }}
                       badgeContent={<ScoreChip rank={index+1} score={player.score} deltaScore={false}/>}
-                  >
-                      <Avatar alt={playerProfile.username} style={{backgroundColor: playerProfile.color}}>{getPlayerLabel(playerProfile)}</Avatar>
-                  </Badge></Tooltip1></div>
+                  > */}
+                      <ScoreChip rank={index+1} score={player.score} deltaScore={false} />
+                      <Avatar color={playerProfile.color} label={getPlayerLabel(playerProfile)} />
+                  {/* </Tooltip1> */}
+                  </div>
             })
         }
       </div>
@@ -86,18 +82,18 @@ export default function LineChartResult(props: LineChartResultProps){
     {
       const color = playerRank.deltaScore < 0 ? "#FF2020" : "#10FFB0" 
       const deltaScore = playerRank.deltaScore < 0 ? `${Math.round(playerRank.deltaScore)}` : `+${Math.round(playerRank.deltaScore)}`
-      return <Grid key={playerInfo.uuid} container item direction="row" justify="space-between" alignContent="center" alignItems="baseline">
-              <Grid item xs={5}><Chip label={playerInfo.username} style={{backgroundColor: playerInfo.color, color: "#FFFFFF"}} /></Grid>
-              <Grid item xs={3}>{Math.round(playerRank.score)}</Grid> 
-              <Grid item xs={1} style={{color: color}}>({deltaScore})</Grid>
-            </Grid>
+      return <>
+              <div className="linechart-tooltip-score player" style={{backgroundColor: playerInfo.color, color: "#FFFFFF"}}>{playerInfo.username}</div>
+              <div className="linechart-tooltip-score score">{Math.round(playerRank.score)}</div> 
+              <div className="linechart-tooltip-score delta-score" style={{color: color}}>({deltaScore})</div>
+            </>
     }
     else
-      return <Grid key={playerInfo.uuid} container item direction="row" justify="space-between" alignContent="center" alignItems="baseline">
-              <Grid item xs={5}><Chip label={playerInfo.username} variant="outlined" style={{borderColor: playerInfo.color}} /></Grid>
-              <Grid item xs={3}>{Math.round(playerRank.score)}</Grid> 
-              <Grid item xs={1}></Grid>
-            </Grid>
+      return <>
+              <div className="linechart-tooltip-score player" style={{borderColor: playerInfo.color, color: "#FFFFFF"}}>{playerInfo.username}</div>
+              <div className="linechart-tooltip-score score">{Math.round(playerRank.score)}</div> 
+              <div className="linechart-tooltip-score delta-score"></div>
+            </>
   }
 
   const renderPlayersScore = (result: resultType, data: any) => {
@@ -123,10 +119,10 @@ export default function LineChartResult(props: LineChartResultProps){
     const { active, payload, label} = propsTooltip
     if (active && payload && payload.length && label) {
       return (
-        <Paper variant="outlined">
-          <Typography>{label ? getResult(props.game.results,label).date.toLocaleString() : "Start"}</Typography>
-          <Grid container direction="column" spacing={1}>{renderPlayersScore(getResult(props.game.results, label), payload)}</Grid>
-        </Paper>
+        <div className="linechart-tooltip">
+          <p>{label ? getResult(props.game.results,label).date.toLocaleString() : "Start"}</p>
+          <div className="linechart-tooltip-scores">{renderPlayersScore(getResult(props.game.results, label), payload)}</div>
+        </div>
       );
     }
 

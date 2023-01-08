@@ -24,7 +24,7 @@ const ResultCard = (props: ResultCardProps) => {
         const title = `${getPlayerProfile(props.players, rank.uuid).username} - New score: ${Math.round(playerRank.score)}`
 
         return <div className='result-card-player'>
-            <Tooltip content={title}>
+            {/* <Tooltip content={title}> */}
             {/* <Badge
                 overlap="circle"
                 style={{borderColor: "rgba(0,0,0,0)"}}
@@ -36,7 +36,7 @@ const ResultCard = (props: ResultCardProps) => {
             > */}
               <Avatar label={getPlayerLabel(getPlayerProfile(props.players,rank.uuid))} color={getPlayerProfile(props.players,rank.uuid).color}/>
               {/* </Badge> */}
-            </Tooltip>
+            {/* </Tooltip> */}
             <div className='result-card-rank'>#{rank.rank}</div>
 
         </div>

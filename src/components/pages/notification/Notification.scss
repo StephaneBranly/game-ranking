@@ -1,16 +1,17 @@
 .notification {
     position: absolute;
     top: 0;
+    right: 0;
+
     transition: all 0.3s ease;
     &.close {
         opacity: 0;
-
         & > .notification-content {
             border-color: #000;
         }
     }
     &.open {
-        right: 0;
+        opacity: 1;
     }
 }
 

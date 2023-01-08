@@ -3,8 +3,54 @@
     flex-direction: row;
     align-items: center;
     gap: 50px;
-    height: 100px;
     overflow-x: scroll;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;
+    margin-bottom: 20px;
+    padding-top: 10px;
+}
+
+.linechart-result-legend-player {
+    position: relative;
+
+    & > .score-chip {
+        position: absolute;
+        top: -10px;
+        left: 20px;
+        z-index: 100;
+    }
+}
+
+.linechart-tooltip {
+    background-color: rgb(26, 26, 26);
+    width: fit-content;
+    padding: 10px;
+    border-radius: 10px;
+    z-index: 1000;
+    color: white;
+}
+
+.linechart-tooltip-scores {
+    display: grid;
+    column-gap: 5px;
+    row-gap: 5px;
+}
+
+.linechart-tooltip-score {
+    &.player {
+        grid-column-start: 1;
+        grid-column-end: 1;
+        text-align: left;
+        padding: 3px;
+        border-radius: 5px;
+        border: 1px solid rgb(0, 0, 0);
+    }
+    &.score {
+        grid-column-start: 2;
+        grid-column-end: 2;
+    }
+    &.delta-score {
+        grid-column-start: 3;
+        grid-column-end: 3;
+    }
 }

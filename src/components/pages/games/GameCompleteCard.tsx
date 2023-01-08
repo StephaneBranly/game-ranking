@@ -43,6 +43,7 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
     }
 
     props.changeGameData(newData, props.game.uuid)
+    props.addNotification("Game correctly edited","success")
   }
 
   const deleteGame = () => {
