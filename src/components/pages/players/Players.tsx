@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import './Players.scss';
+
 import PlayersHeader from './PlayersHeader'
 import PlayerCard from './PlayerCard'
 import { gameType, playerType } from '../../../types/data';
@@ -22,7 +24,7 @@ export default function Players(props: PlayersProps){
 
   
     const renderPlayerCards = (players: Array<playerType>) => {
-        return (players.map((player: playerType) => <PlayerCard player={player} games={props.games} changePlayerData={changePlayerData} setCurrentPlayer={setCurrentPlayer}></PlayerCard>))
+        return (players.map((player: playerType) => <PlayerCard player={player} games={props.games} changePlayerData={changePlayerData} setCurrentPlayer={setCurrentPlayer} isSelected={currentPlayer.player === player}></PlayerCard>))
     };
 
     const changePlayerData = (player: playerType, uuid: string) => {
@@ -32,15 +34,13 @@ export default function Players(props: PlayersProps){
     }
 
     const renderPlayersContent = () => {
-      if (currentPlayer.player)
-        return <PlayerCompleteCard player={currentPlayer.player} edit={currentPlayer.edit} changePlayerData={changePlayerData} addNotification={props.addNotification} setCurrentPlayer={setCurrentPlayer} />
-      else
-        return (
-          <>
-            <PlayersHeader players={props.players} setPlayers={props.setPlayers} setCurrentPlayer={setCurrentPlayer}></PlayersHeader>
-            {renderPlayerCards(props.players)}
-          </>
-        )
+      return (
+        <div className='players'>
+          <PlayersHeader players={props.players} setPlayers={props.setPlayers} setCurrentPlayer={setCurrentPlayer}></PlayersHeader>
+          <div className='players-cards'>{renderPlayerCards(props.players)}</div>
+          {currentPlayer.player && <PlayerCompleteCard player={currentPlayer.player} edit={currentPlayer.edit} changePlayerData={changePlayerData} addNotification={props.addNotification} setCurrentPlayer={setCurrentPlayer} />}
+        </div>
+      )
     }
 
   return (

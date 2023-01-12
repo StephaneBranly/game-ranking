@@ -105,7 +105,8 @@ export default function GameCompleteCard(props: GameCompleteCardProps){
                 <div className='game-complete-card-header'>
                     <div className='game-complete-card-general-stats'>
                         <div>{props.game.results.length} results</div>
-                        <div>{props.game.algorithmSettings.algo}</div>
+                        <div>{props.game.players.length} players</div>
+                        <div>algo: {props.game.algorithmSettings.algo}</div>
                     </div>
                     <div className='game-complete-card-general-actions'>
                         <Button endIcon={<PostAdd/>}  onClick={() => handlerAddResult()} text='New result'/>
