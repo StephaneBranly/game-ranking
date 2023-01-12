@@ -147,7 +147,7 @@ export default function LineChartResult(props: LineChartResultProps){
       <Legend verticalAlign="top" content={renderLegend}/>
       {/* <CartesianGrid stroke="#fdfdfd" strokeDasharray="3 3"/> */}
       {generateLines(props.game.players).flat()}
-      <Brush height={30} stroke="#091011" startIndex={brushStartIndex} endIndex={brushEndIndex} />
+      <Brush height={30} stroke="#091011" />
     </LineChart></ResponsiveContainer></div> : <></>
   );  
 }

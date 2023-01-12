@@ -8,21 +8,22 @@
     max-width: 150px;
     background-color: #0000003e;
     border-radius: 20px;
-    border: 2px solid #ffffff00;
+    border: 3px solid #ffffff00;
     color: white;
 
     transition: all 0.2s ease-in-out;
     cursor: pointer;
     
     &.active {
-        border-color: rgba(255, 255, 255, 0.817);
+        box-sizing: border-box;
         min-height: 200px;
         min-width: 200px;
         max-height: 200px;
         max-width: 200px;
         background-color: #1b1b1bd7;
-        opacity: 0.8;
-        background-image:  repeating-radial-gradient( circle at 0 0, transparent 0, #e5e5f785 10px ), repeating-linear-gradient( #00055d55, #0410ff );
+        opacity: 1;
+        background:  repeating-radial-gradient( circle at 0 0, transparent 0, #e5e5f785 10px) padding-box, repeating-linear-gradient( #00055d55, #0410ff) padding-box,
+              linear-gradient(to bottom right, rgb(255, 255, 255), #00055d55) border-box;
     }
 
     &:hover {

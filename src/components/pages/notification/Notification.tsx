@@ -29,10 +29,11 @@ export default function Notification(props: NotificationProps){
   const severity = props.notification.severity ? props.notification.severity : "info"
 
   return (
+    props.notification.open ?
     <div className={`notification ${props.notification.open?'open':'close'}`}>
       <div className={`notification-content ${severity}`}>
         {props.notification.text}
       </div>
-    </div> 
+    </div>  : <></>
   );
 }
