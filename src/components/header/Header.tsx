@@ -6,6 +6,7 @@ import { Settings, Group } from '@material-ui/icons';
 
 export interface HeaderProps{
   setSettingsOpen: React.Dispatch<React.SetStateAction<boolean>>,
+  setPlayersOpen: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
 const Header = (props: HeaderProps) => {
@@ -16,7 +17,7 @@ const Header = (props: HeaderProps) => {
         </div>
         <div className='header-right'>
           <div className='header-icon-button' onClick={() => props.setSettingsOpen(true)}><Settings fontSize='large'/></div>
-          <div className='header-icon-button'><Group fontSize='large'/></div>
+          <div className='header-icon-button'  onClick={() => props.setPlayersOpen(true)}><Group fontSize='large'/></div>
           <div className='today-date'>{new Date().toLocaleDateString()}</div>
         </div>
       </header>

@@ -22,12 +22,12 @@ export default function Pages(props: PagesProps){
   
   const renderPage = (props: PagesProps) => {
     switch(props.currentPage) {
-        case 'players':
-          return <Players players={props.players} games={props.games} setPlayers={props.setPlayers} addNotification={props.addNotification}></Players>;
-        case 'settings':
-          return <Settings handlerSaveData={props.handlerSaveData} handlerLoadData={props.handlerLoadData} handlerResetData={props.handlerResetData}></Settings>;
-        case 'games':
-          return <></>
+        // case 'players':
+        //   return <Players players={props.players} games={props.games} setPlayers={props.setPlayers} addNotification={props.addNotification}></Players>;
+        // case 'settings':
+        //   return <Settings handlerSaveData={props.handlerSaveData} handlerLoadData={props.handlerLoadData} handlerResetData={props.handlerResetData}></Settings>;
+        // case 'games':
+        //   return <></>
         default:
           return <></>;
       }

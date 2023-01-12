@@ -1,20 +1,18 @@
 import React, { useState } from 'react';
-import {
-  Container,
-  Grid,
 
-} from "@material-ui/core";
 import PlayersHeader from './PlayersHeader'
 import PlayerCard from './PlayerCard'
 import { gameType, playerType } from '../../../types/data';
 import { severityType } from '../../../types/notification';
 import PlayerCompleteCard from './PlayerCompleteCard';
+import Dialog from '../../dialog/Dialog';
 
 export interface PlayersProps{
   players: Array<playerType>,
   games: Array<gameType>,
   setPlayers:React.Dispatch<React.SetStateAction<Array<playerType>>>,
   addNotification: (arg0: string, arg1: severityType) => void,
+  setPlayersOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export default function Players(props: PlayersProps){
@@ -33,20 +31,19 @@ export default function Players(props: PlayersProps){
       props.setPlayers(new_data);
     }
 
-  return (
-    <Container>
-      { currentPlayer.player ?
-        <PlayerCompleteCard player={currentPlayer.player} edit={currentPlayer.edit} changePlayerData={changePlayerData} addNotification={props.addNotification} setCurrentPlayer={setCurrentPlayer} /> :
-        <Grid
-            container
-            direction="column"
-            justify="flex-start"
-            alignItems="stretch"
-            spacing={1}
-        >
+    const renderPlayersContent = () => {
+      if (currentPlayer.player)
+        return <PlayerCompleteCard player={currentPlayer.player} edit={currentPlayer.edit} changePlayerData={changePlayerData} addNotification={props.addNotification} setCurrentPlayer={setCurrentPlayer} />
+      else
+        return (
+          <>
             <PlayersHeader players={props.players} setPlayers={props.setPlayers} setCurrentPlayer={setCurrentPlayer}></PlayersHeader>
             {renderPlayerCards(props.players)}
-       </Grid> }
-    </Container>
+          </>
+        )
+    }
+
+  return (
+    <Dialog open={true} title={'Players'} content={renderPlayersContent()} actions={<></>} onClose={() => props.setPlayersOpen(false)} />
   );
 }
