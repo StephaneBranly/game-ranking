@@ -2,6 +2,8 @@ import React from 'react';
 import { gameType } from '../../../types/data';
 import Button from '../../button/Button';
 import Dialog from '../../dialog/Dialog';
+import Input from '../../input/Input';
+import Select from '../../select/Select';
 
 
 export interface EditGameProps{
@@ -15,23 +17,31 @@ export default function EditGame(props: EditGameProps){
  
     const renderDialogContent = () => {
         return (
-            <div>
-                <input value={game.gamename} onChange={(e) => setGame({...game, 'gamename': e.target.value })} ></input>
-                <select value={game.algorithmSettings.algo} ><option selected={true} key={'elo'} value={'elo'}>{'elo'}</option></select>
-                <input
-                  // label="K factor for n first games"
+            <div className='vertical-centered gap-10'>
+                <Input 
+                  label="Game name"
+                  value={game.gamename}
+                  onChange={(e) => setGame({...game, 'gamename': e.target.value })}
+                />
+                <Select
+                  label="Algorithm"
+                  value={game.algorithmSettings.algo}
+                  onChange={() => {}}
+                  options={['elo']}/>
+                <Input
+                  label="K factor for n first games"
                   type='number'
                   value={game.algorithmSettings.params.k_first}
                   onChange={(e) => setGame({...game, 'algorithmSettings': { ...game.algorithmSettings, 'params': { ...game.algorithmSettings.params, 'k_first': Number(e.target.value)} } })}
                 />
-                <input
-                  // label="N"
+                <Input
+                  label="N"
                   type='number'
                   value={game.algorithmSettings.params.n_first}
                   onChange={(e) => setGame({...game, 'algorithmSettings': { ...game.algorithmSettings, 'params': { ...game.algorithmSettings.params, 'n_first': Number(e.target.value)} } })}
                 />
-                <input
-                  // label="K factor after n first games"
+                <Input
+                  label="K factor after n first games"
                   type='number'
                   value={game.algorithmSettings.params.k}
                   onChange={(e) => setGame({...game, 'algorithmSettings': { ...game.algorithmSettings, 'params': { ...game.algorithmSettings.params, 'k': Number(e.target.value)} } })}

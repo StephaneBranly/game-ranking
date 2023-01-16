@@ -4,6 +4,7 @@ import { playerType } from '../../../types/data';
 import { ChromePicker } from 'react-color';
 import Dialog from '../../dialog/Dialog';
 import Button from '../../button/Button';
+import Input from '../../input/Input';
 
 export interface EditPlayerProps{
     player: playerType
@@ -19,9 +20,9 @@ export default function EditPlayer(props: EditPlayerProps){
     };
 
     const renderDialogContent = () => {
-      return (<div>
-          <input type='text' value={player.username} onChange={(e) => setPlayer({...player, username: e.target.value})} />
-          <ChromePicker color={player.color} onChangeComplete={(c) => setPlayer({...player, color: c.hex})} disableAlpha={true}/>
+      return (<div className='vertical-centered gap-10'>
+          <Input label='Username' type='text' value={player.username} onChange={(e) => setPlayer({...player, username: e.target.value})} />
+          <ChromePicker color={player.color} onChangeComplete={(c) => setPlayer({...player, color: c.hex})} disableAlpha={true} className='color-picker' />
           </div>)
     }
     return (
