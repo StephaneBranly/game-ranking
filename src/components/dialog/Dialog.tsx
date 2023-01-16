@@ -6,7 +6,7 @@ export interface DialogProps{
     open: boolean,
     title: string,
     content: JSX.Element,
-    actions: JSX.Element,
+    actions?: JSX.Element[] | JSX.Element
     onClose: () => void
 }
 
@@ -21,9 +21,9 @@ const Dialog = (props: DialogProps) => {
                 <div className="dialog-body">
                     {props.content}
                 </div>
-                <div className="dialog-actions">
+                {props.actions && <div className="dialog-actions">
                     {props.actions}
-                </div>
+                </div>}
             </div>
         </div>
     );

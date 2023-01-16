@@ -123,7 +123,7 @@ function App() {
       <Games games={games} setGames={setGames} players={players} addNotification={addNotification}></Games>  
       {playersOpen && <Players players={players} setPlayers={setPlayers} games={games} addNotification={addNotification} setPlayersOpen={setPlayersOpen} />}
       <Notification {...notificationProps} />
-      <Dialog open={settingsOpen} title={'Settings'} content={<Settings {...settingsProps} />} actions={<></>} onClose={() => setSettingsOpen(false)} />
+      <Dialog open={settingsOpen} title={'Settings'} content={<Settings {...settingsProps} />} onClose={() => setSettingsOpen(false)} />
     </div>
   )
 }

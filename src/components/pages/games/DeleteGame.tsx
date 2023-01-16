@@ -15,10 +15,10 @@ export default function DeleteGame(props: DeleteGameProps){
         title={"Delete this game?"}
         content={<p>This will delete this game and all associated results.</p>}
         actions={
-          <>
-            <Button onClick={() => props.setDeleteGameOpen(false)} text="Cancel"/>
+          [
+            <Button onClick={() => props.setDeleteGameOpen(false)} text="Cancel"/>,
             <Button onClick={() => props.deleteGame()} style={{color: "#DD0505", borderColor: "#DD0505"}} text="Delete" />
-          </>
+          ]
         }
     />
 

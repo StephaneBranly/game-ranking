@@ -55,20 +55,9 @@ export default function LineChartResult(props: LineChartResultProps){
         {
           props.game.rankHistory[props.game.rankHistory.length-1].playersRank.sort((a, b) => a.score < b.score ? 1 : -1).map((player,index) => {
             const playerProfile = getPlayerProfile(props.players,player.playerUuid)
-                  return <div key={index} onMouseEnter={() => handleMouseEnter(player.playerUuid)} onMouseLeave={() => handleMouseLeave()} className="linechart-result-legend-player">
-                      {/* <Tooltip1 content={playerProfile.username} position="top"> */}
-                    {/* <Badge
-                      overlap="circle"
-                      style={{borderColor: "rgba(0,0,0,0)"}}
-                      anchorOrigin={{
-                      vertical: 'top',
-                      horizontal: 'right',
-                      }}
-                      badgeContent={<ScoreChip rank={index+1} score={player.score} deltaScore={false}/>}
-                  > */}
+                  return <div key={index} className={`linechart-result-legend-player rank-${index+1}`} onMouseEnter={() => handleMouseEnter(player.playerUuid)} onMouseLeave={() => handleMouseLeave()}>
                       <ScoreChip rank={index+1} score={player.score} deltaScore={false} />
                       <Avatar color={playerProfile.color} label={getPlayerLabel(playerProfile)} />
-                  {/* </Tooltip1> */}
                   </div>
             })
         }
