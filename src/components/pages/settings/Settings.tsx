@@ -13,7 +13,7 @@ export default function Settings(props: SettingsProps){
     return (
     <div>
       <SettingsHeader {...props}/>
-      {/* <About/> */}
+      <About/>
     </div>
   );
 }

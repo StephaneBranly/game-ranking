@@ -1,27 +1,8 @@
 import React from 'react';
-import {
-  makeStyles,
-  createStyles,
-  Grid,
-  Card,
-  Button,
-  Menu,
-  MenuItem,
-  Divider,
-  ListItemIcon,
-  ListItemText,
-  ButtonGroup,
-} from "@material-ui/core";
 import { Publish, GetApp, Storage, Delete, Favorite, GitHub } from '@material-ui/icons';
-
-
-const useStyles = makeStyles((theme) =>
-createStyles({  
-    padding: {
-        padding: theme.spacing(1),
-    }
-}),
-);
+import ButtonGroup from '../../button/ButtonGroup';
+import Button from '../../button/Button';
+import { Menu, MenuItem, ListItemIcon, ListItemText, Divider } from '@material-ui/core';
 
 export interface SettingsHeaderProps{
     handlerResetData: (cookie: boolean) => void,
@@ -30,36 +11,17 @@ export interface SettingsHeaderProps{
 }
 
 export default function SettingsHeader(props: SettingsHeaderProps){
-    const classes = useStyles(); 
-
-    const [openDataMenu, setOpenDataMenu] = React.useState(null as null | HTMLElement)
+    const [openDataMenu, setOpenDataMenu] = React.useState(true)
   
     const handleClose = (event: any, reason: string) => {
-      setOpenDataMenu(null)
+      setOpenDataMenu(false)
     }
 
     return (
-          <Grid
-            container
-            direction="row"
-            justify="flex-end"
-            alignItems="baseline"
-            spacing={1}
-            className={classes.padding}
-          >
-            <Grid item>
-              <Menu
+       <div className='settings-header'>
+            <Menu
+                open={openDataMenu}
                 onClose={handleClose}
-                open={openDataMenu !== null}
-                anchorEl={openDataMenu}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
               >
                  <input
                   style={{ display: "none" }}
@@ -109,29 +71,23 @@ export default function SettingsHeader(props: SettingsHeaderProps){
                   <ListItemText>Delete cookies</ListItemText>
                 </MenuItem>
             </Menu>
-            <ButtonGroup                 
-                variant="contained"
-                color="primary">
+            <ButtonGroup>
               <Button 
                 endIcon={<Favorite/>} 
                 onClick={() => window.open("https://www.paypal.com/paypalme/StephaneBranly", "_blank")}
-                >
-                  Sponsor
-              </Button>
+                text='Sponsor'
+              />
               <Button 
                 endIcon={<GitHub/>}
                 onClick={() => window.open("https://github.com/StephaneBranly/game-ranking", "_blank")}
-                >
-                  GitHub
-              </Button>
+                text='GitHub'
+              />
               <Button
                 startIcon={<Storage />}
-                onClick={(event) => setOpenDataMenu(event.currentTarget)}
-              >
-                Data
-              </Button>
+                onClick={() => setOpenDataMenu(true)}
+                text='Data'
+              />
             </ButtonGroup>
-            </Grid>
-          </Grid>
+          </div>
   );
 }

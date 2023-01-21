@@ -2,7 +2,7 @@ import "./Button.scss";
 
 export interface ButtonProps{
     text?: string,
-    onClick: () => void,
+    onClick: (args?: any) => void,
     disabled?: boolean,
     color?: "primary" | "secondary" | "default",
     variant?: "text" | "outlined" | "contained",
