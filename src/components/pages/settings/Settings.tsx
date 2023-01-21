@@ -1,6 +1,6 @@
 import React from 'react';
 import About from './About';
-import SettingsHeader, { SettingsHeaderProps } from './SettingsHeader';
+import SettingsHeader from './SettingsHeader';
 
 
 export interface SettingsProps{

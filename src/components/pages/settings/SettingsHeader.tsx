@@ -2,7 +2,9 @@ import React from 'react';
 import { Publish, GetApp, Storage, Delete, Favorite, GitHub } from '@material-ui/icons';
 import ButtonGroup from '../../button/ButtonGroup';
 import Button from '../../button/Button';
-import { Menu, MenuItem, ListItemIcon, ListItemText, Divider } from '@material-ui/core';
+import Menu from '../../menu/Menu';
+import MenuItem from '../../menu/MenuItem';
+import Separator from '../../menu/Separator';
 
 export interface SettingsHeaderProps{
     handlerResetData: (cookie: boolean) => void,
@@ -11,19 +13,22 @@ export interface SettingsHeaderProps{
 }
 
 export default function SettingsHeader(props: SettingsHeaderProps){
-    const [openDataMenu, setOpenDataMenu] = React.useState(true)
+    const [openDataMenu, setOpenDataMenu] = React.useState(false)
   
-    const handleClose = (event: any, reason: string) => {
+    const handleClose = () => {
       setOpenDataMenu(false)
     }
+
+    const ref = React.useRef<HTMLDivElement>(null)
 
     return (
        <div className='settings-header'>
             <Menu
                 open={openDataMenu}
                 onClose={handleClose}
+                anchorEl={ref.current?? undefined}
               >
-                 <input
+                <input
                   style={{ display: "none" }}
                   accept=".json"
                   id="contained-button-import"
@@ -31,45 +36,38 @@ export default function SettingsHeader(props: SettingsHeaderProps){
                   onChange={props.handlerLoadData}
                 />
                 <label htmlFor="contained-button-import">
-                <MenuItem>
-                  <ListItemIcon>
-                  <Publish fontSize="small" />
-                  </ListItemIcon>
-                  <ListItemText>Load from file</ListItemText>
-                </MenuItem>
+                <MenuItem
+                  icon={<Publish fontSize="small" />}
+                  text='Load from file'
+                />
                 </label>
-                <MenuItem onClick={() => props.handlerLoadData(null)}>
-                  <ListItemIcon>
-                  <Storage fontSize="small" />
-                  </ListItemIcon>
-                  <ListItemText>Load from cookies</ListItemText>
-                </MenuItem>
-                <Divider />
-                <MenuItem onClick={() => props.handlerSaveData(false)}>
-                  <ListItemIcon>
-                  <GetApp fontSize="small" />
-                  </ListItemIcon>
-                  <ListItemText>Save as file</ListItemText>
-                </MenuItem>
-                <MenuItem onClick={() => props.handlerSaveData(true)}>
-                  <ListItemIcon>
-                  <Storage fontSize="small" />
-                  </ListItemIcon>
-                  <ListItemText>Save as cookies</ListItemText>
-                </MenuItem>
-                <Divider />
-                <MenuItem onClick={() => props.handlerResetData(false)}>
-                  <ListItemIcon>
-                  <Delete fontSize="small" />
-                  </ListItemIcon>
-                  <ListItemText>Delete current session</ListItemText>
-                </MenuItem>
-                <MenuItem onClick={() => props.handlerResetData(true)}>
-                  <ListItemIcon>
-                  <Delete fontSize="small" />
-                  </ListItemIcon>
-                  <ListItemText>Delete cookies</ListItemText>
-                </MenuItem>
+                <MenuItem
+                  onClick={() => props.handlerLoadData(null)}
+                  icon={<Storage fontSize="small" />}
+                  text='Load from cookies'
+                />
+                <Separator />
+                <MenuItem
+                    onClick={() => props.handlerSaveData(false)}
+                    icon={<GetApp fontSize="small" />}
+                    text='Save as file'
+                  />
+                <MenuItem
+                  onClick={() => props.handlerSaveData(true)}
+                  icon={<Storage fontSize="small" />}
+                  text='Save as cookies'
+                />
+                <Separator />
+                <MenuItem
+                  onClick={() => props.handlerResetData(false)}
+                  icon={<Delete fontSize="small" />}
+                  text='Delete current session'
+                />
+                <MenuItem
+                  onClick={() => props.handlerResetData(true)}
+                  icon={<Delete fontSize="small" />}
+                  text='Delete cookies'
+                />
             </Menu>
             <ButtonGroup>
               <Button 
@@ -82,11 +80,14 @@ export default function SettingsHeader(props: SettingsHeaderProps){
                 onClick={() => window.open("https://github.com/StephaneBranly/game-ranking", "_blank")}
                 text='GitHub'
               />
-              <Button
-                startIcon={<Storage />}
-                onClick={() => setOpenDataMenu(true)}
-                text='Data'
-              />
+              <div ref={ref}>
+                <Button
+                  startIcon={<Storage />}
+                  onClick={() => setOpenDataMenu(true)}
+                  text='Data'
+                  className='data-menu'
+                />
+              </div>
             </ButtonGroup>
           </div>
   );
