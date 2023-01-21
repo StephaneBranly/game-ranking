@@ -1,0 +1,28 @@
+.game-add-result-ranks-players {
+    display: grid;
+    gap: 10px;
+    width: 100%;
+}
+
+.game-add-result-ranks-player {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: space-between;
+    justify-content: space-between;
+    gap: 10px;
+    background-color: #0000003e;
+    border-radius: 5px;
+    width: 100%;
+    padding: 1px 10px;
+    box-sizing: border-box;
+}
+
+.game-add-result-ranks-player-rank {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    justify-content: flex-end;
+    align-content: center;
+}

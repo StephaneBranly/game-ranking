@@ -1,11 +1,10 @@
 import React from 'react';
-import {
-  Typography,
-  DialogContent,
-} from "@material-ui/core";
+
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, DateTimePicker } from '@material-ui/pickers';
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
+
+import './GameAddResultWhen.scss';
 
 export interface GameAddResultWhenProps{
     selectedDate: Date,
@@ -18,14 +17,14 @@ export default function GameAddResultWhen(props: GameAddResultWhenProps){
   };
 
   return (
-    <div>
-        <Typography>When?</Typography>
+    <div className='game-add-result-when'>
+        <p>When?</p>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <DateTimePicker
-            value={props.selectedDate}
-            onChange={handleDateChange}
-            showTodayButton
-            format="dd/MM/yyyy HH:mm"
+              value={props.selectedDate}
+              onChange={handleDateChange}
+              showTodayButton
+              format="dd/MM/yyyy HH:mm"
             />
         </MuiPickersUtilsProvider>
     </div>);

@@ -25,9 +25,9 @@ export default function EditGame(props: EditGameProps){
                 />
                 <Select
                   label="Algorithm"
-                  value={game.algorithmSettings.algo}
+                  defaultValue={game.algorithmSettings.algo}
                   onChange={() => {}}
-                  options={['elo']}/>
+                  options={[{ value: 'elo', label: 'elo'}]}/>
                 <Input
                   label="K factor for n first games"
                   type='number'
@@ -57,7 +57,7 @@ export default function EditGame(props: EditGameProps){
         title="Change the game settings"
         actions={[
           <Button onClick={() => props.setEditMode(false)} text="Cancel" />,
-          <Button onClick={() => { props.handleChangeGame(game); props.setEditMode(false); } } text="Update" />
+          <Button onClick={() => { props.handleChangeGame(game); props.setEditMode(false); } } style={{color: "#0DF505", borderColor: "#0DF505"}} text="Update" />
         ]} 
         content={renderDialogContent()}    
     />)

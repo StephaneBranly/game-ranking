@@ -33,7 +33,7 @@ export default function EditPlayer(props: EditPlayerProps){
           content={renderDialogContent()}
           actions={<>
           <Button onClick={() => props.setEditMode(false)} text='Cancel'/>
-          <Button onClick={() => {props.handleChangePlayer(player); props.setEditMode(false);}} text='Update' />
+          <Button onClick={() => {props.handleChangePlayer(player); props.setEditMode(false);}} text='Update' style={{color: "#0DF505", borderColor: "#0DF505"}} />
         </>}    />
   );
 }

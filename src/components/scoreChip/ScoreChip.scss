@@ -16,4 +16,13 @@
     & > .third {
         color: rgb(212, 102, 7);
     }
+
+    &.delta-negative {
+        color: #FF2020;
+        border: 2px solid #FF2020;
+    }
+    &.delta-positive {
+        color: #10FFB0;
+        border: 2px solid #10FFB0;
+    }
 }
