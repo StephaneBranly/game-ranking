@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/game-ranking/static/css/main.57caa3cb.chunk.css",
-    "main.js": "/game-ranking/static/js/main.5240c4d4.chunk.js",
-    "main.js.map": "/game-ranking/static/js/main.5240c4d4.chunk.js.map",
+    "main.css": "/game-ranking/static/css/main.b00c627c.chunk.css",
+    "main.js": "/game-ranking/static/js/main.d3895516.chunk.js",
+    "main.js.map": "/game-ranking/static/js/main.d3895516.chunk.js.map",
     "runtime-main.js": "/game-ranking/static/js/runtime-main.25aaddb5.js",
     "runtime-main.js.map": "/game-ranking/static/js/runtime-main.25aaddb5.js.map",
-    "static/js/2.9f5ceefd.chunk.js": "/game-ranking/static/js/2.9f5ceefd.chunk.js",
-    "static/js/2.9f5ceefd.chunk.js.map": "/game-ranking/static/js/2.9f5ceefd.chunk.js.map",
+    "static/js/2.c0f407f3.chunk.js": "/game-ranking/static/js/2.c0f407f3.chunk.js",
+    "static/js/2.c0f407f3.chunk.js.map": "/game-ranking/static/js/2.c0f407f3.chunk.js.map",
     "index.html": "/game-ranking/index.html",
-    "static/css/main.57caa3cb.chunk.css.map": "/game-ranking/static/css/main.57caa3cb.chunk.css.map",
-    "static/js/2.9f5ceefd.chunk.js.LICENSE.txt": "/game-ranking/static/js/2.9f5ceefd.chunk.js.LICENSE.txt"
+    "static/css/main.b00c627c.chunk.css.map": "/game-ranking/static/css/main.b00c627c.chunk.css.map",
+    "static/js/2.c0f407f3.chunk.js.LICENSE.txt": "/game-ranking/static/js/2.c0f407f3.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.25aaddb5.js",
-    "static/js/2.9f5ceefd.chunk.js",
-    "static/css/main.57caa3cb.chunk.css",
-    "static/js/main.5240c4d4.chunk.js"
+    "static/js/2.c0f407f3.chunk.js",
+    "static/css/main.b00c627c.chunk.css",
+    "static/js/main.d3895516.chunk.js"
   ]
 }
