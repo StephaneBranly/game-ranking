@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
-import {
-  Container,
-  Grid,
 
-} from "@material-ui/core";
+import './Players.scss';
+
 import PlayersHeader from './PlayersHeader'
 import PlayerCard from './PlayerCard'
 import { gameType, playerType } from '../../../types/data';
 import { severityType } from '../../../types/notification';
 import PlayerCompleteCard from './PlayerCompleteCard';
+import Dialog from '../../dialog/Dialog';
 
 export interface PlayersProps{
   players: Array<playerType>,
   games: Array<gameType>,
   setPlayers:React.Dispatch<React.SetStateAction<Array<playerType>>>,
   addNotification: (arg0: string, arg1: severityType) => void,
+  setPlayersOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export default function Players(props: PlayersProps){
@@ -24,7 +24,7 @@ export default function Players(props: PlayersProps){
 
   
     const renderPlayerCards = (players: Array<playerType>) => {
-        return (players.map((player: playerType) => <PlayerCard player={player} games={props.games} changePlayerData={changePlayerData} setCurrentPlayer={setCurrentPlayer}></PlayerCard>))
+        return (players.map((player: playerType) => <PlayerCard player={player} games={props.games} changePlayerData={changePlayerData} setCurrentPlayer={setCurrentPlayer} isSelected={currentPlayer.player === player}></PlayerCard>))
     };
 
     const changePlayerData = (player: playerType, uuid: string) => {
@@ -33,20 +33,17 @@ export default function Players(props: PlayersProps){
       props.setPlayers(new_data);
     }
 
+    const renderPlayersContent = () => {
+      return (
+        <div className='players'>
+          <PlayersHeader players={props.players} setPlayers={props.setPlayers} setCurrentPlayer={setCurrentPlayer}></PlayersHeader>
+          <div className='players-cards'>{renderPlayerCards(props.players)}</div>
+          {currentPlayer.player && <PlayerCompleteCard player={currentPlayer.player} edit={currentPlayer.edit} changePlayerData={changePlayerData} addNotification={props.addNotification} setCurrentPlayer={setCurrentPlayer} />}
+        </div>
+      )
+    }
+
   return (
-    <Container>
-      { currentPlayer.player ?
-        <PlayerCompleteCard player={currentPlayer.player} edit={currentPlayer.edit} changePlayerData={changePlayerData} addNotification={props.addNotification} setCurrentPlayer={setCurrentPlayer} /> :
-        <Grid
-            container
-            direction="column"
-            justify="flex-start"
-            alignItems="stretch"
-            spacing={1}
-        >
-            <PlayersHeader players={props.players} setPlayers={props.setPlayers} setCurrentPlayer={setCurrentPlayer}></PlayersHeader>
-            {renderPlayerCards(props.players)}
-       </Grid> }
-    </Container>
+    <Dialog open={true} title={'Players'} content={renderPlayersContent()} actions={<></>} onClose={() => props.setPlayersOpen(false)} />
   );
 }

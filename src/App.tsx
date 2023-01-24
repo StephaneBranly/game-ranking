@@ -1,42 +1,24 @@
-import React from "react"
-import {
-  createMuiTheme, ThemeProvider, createStyles, makeStyles, Theme,
-} from "@material-ui/core/styles"
+import React, { useEffect } from "react"
+
+import "./App.scss"
+
 import Header from "./components/header/Header"
-import Footer, { FooterProps } from "./components/footer/Footer"
-import Pages, { PagesProps } from "./components/pages/Pages"
 import { dataType, gameType, playerType } from "./types/data"
-import Notifications, { NotificationProps } from "./components/pages/notifications/Notification"
+import Notification, { NotificationProps } from "./components/pages/notification/Notification"
 import { notificationType, severityType } from "./types/notification"
 import { generateGameFromLoadedData } from "./utils/lib"
-
-export const theme = createMuiTheme({
-  palette: {
-    error: {
-      main: "#DD0505",
-    },
-    primary: {
-      main: "#3f5efb",
-    },
-    secondary: {
-      main: "#d2d2d2",
-    },
-  },
-})
-
-const useStyles = makeStyles((theme) => createStyles({
-  App: {
-    paddingBottom: theme.spacing(15),
-  },
-}))
+import Games from "./components/pages/games/Games"
+import Settings, { SettingsProps } from "./components/pages/settings/Settings"
+import Dialog from "./components/dialog/Dialog"
+import Players from "./components/pages/players/Players"
 
 function App() {
-  const [page, setPage] = React.useState("games")
   const [players, setPlayers] = React.useState([]as Array<playerType>)
   const [games, setGames] = React.useState([] as Array<gameType>)
   const [notification, setNotification] = React.useState({ open: false } as notificationType)
 
-  const classes = useStyles()
+  const [settingsOpen, setSettingsOpen] = React.useState(false)
+  const [playersOpen, setPlayersOpen] = React.useState(false)
 
   const getJsonSavedData = () => {
     const data = {
@@ -45,6 +27,10 @@ function App() {
     }
     return data
   }
+
+  useEffect(() => {
+    handlerLoadData(null)
+  }, [])
 
   const handlerSaveData = (cookie: boolean) => {
     const stringifiedData = JSON.stringify(getJsonSavedData())
@@ -77,7 +63,6 @@ function App() {
             const games: Array<gameType> = data.games.map((game: { uuid: any; gamename: any; results: any, algorithmSettings: any }) => generateGameFromLoadedData(game))
             setGames(games)
             addNotification("Data correctly loaded", "success")
-            setPage("games")
           }
         }
         if (e.target?.files) {
@@ -95,7 +80,6 @@ function App() {
         const games: Array<gameType> = data.games.map((game: { uuid: any; gamename: any; results: any, algorithmSettings: any  }) => generateGameFromLoadedData(game))
         setGames(games)
         addNotification("Data correctly loaded", "success")
-        setPage("games")
       }
       else 
         addNotification("Data not found in cookies", "warning")
@@ -122,41 +106,25 @@ function App() {
     setNotification(new_notification)
   }
 
-  const handleChangeCurrentPage = (event: React.ChangeEvent<{}>, newPage: string) => {
-    setPage(newPage)
-  }
-
-  const pagesProps: PagesProps = {
-    currentPage: page,
-    games,
-    setGames,
-    players,
-    setPlayers,
-    handlerSaveData,
-    handlerLoadData,
-    handlerResetData,
-    addNotification,
-  }
-
-  const footerProps: FooterProps = {
-    handleChangeCurrentPage,
-    currentPage: page,
-  }
-
-  const notificationsProps: NotificationProps = {
+  const notificationProps: NotificationProps = {
     notification,
     setNotification,
   }
 
+  const settingsProps: SettingsProps = {
+    handlerSaveData,
+    handlerLoadData,
+    handlerResetData,
+  }
+
   return (
-    <ThemeProvider theme={theme}>
-      <div className={classes.App}>
-        <Header />
-        <Pages {...pagesProps} />
-        <Footer {...footerProps} />
-      </div>
-      <Notifications {...notificationsProps} />
-    </ThemeProvider>
+    <div className="app">
+      <Header setSettingsOpen={setSettingsOpen} setPlayersOpen={setPlayersOpen} />
+      <Games games={games} setGames={setGames} players={players} addNotification={addNotification}></Games>  
+      {playersOpen && <Players players={players} setPlayers={setPlayers} games={games} addNotification={addNotification} setPlayersOpen={setPlayersOpen} />}
+      <Notification {...notificationProps} />
+      <Dialog open={settingsOpen} title={'Settings'} content={<Settings {...settingsProps} />} onClose={() => setSettingsOpen(false)} />
+    </div>
   )
 }
 

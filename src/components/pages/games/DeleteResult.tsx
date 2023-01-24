@@ -1,13 +1,6 @@
 import React from 'react';
-import {
-    Button,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle,
-} from "@material-ui/core";
-
+import Button from '../../button/Button';
+import Dialog from '../../dialog/Dialog';
 
 export interface DeleteResultProps{
   deleteResult: () => void,
@@ -15,32 +8,17 @@ export interface DeleteResultProps{
 }
 
 export default function DeleteResult(props: DeleteResultProps){  
-  const handleClose = (event: any, reason: string) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    props.setDeleteResultOpen(false);
-  };
-
     return (
     <Dialog
         open={true}
-        onClose={handleClose}
-    >
-        <DialogTitle>
-          {"Delete this Result?"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            This will delete this Result and all associated results.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => props.setDeleteResultOpen(false)} autoFocus>Cancel</Button>
-          <Button onClick={() => props.deleteResult()} variant="outlined" style={{color: "#DD0505", borderColor: "#DD0505"}}>
-            Delete
-          </Button>
-        </DialogActions>
-      </Dialog>
+        onClose={() => props.setDeleteResultOpen(false)}
+        title={'Delete this Result?'}
+        content={<p>This will delete this Result and all associated results</p>}
+        actions={[
+            <Button onClick={() => props.setDeleteResultOpen(false)} text='Cancel' />,
+            <Button onClick={() => props.deleteResult()} style={{color: "#DD0505", borderColor: "#DD0505"}} text='delete' />
+          ]
+        }
+    />
   );
 }

@@ -1,0 +1,67 @@
+.linechart-result-legend {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 50px;
+    overflow-x: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;
+    padding-top: 10px;
+}
+
+.linechart-result-legend-player {
+    position: relative;
+
+    & > .score-chip {
+        position: absolute;
+        top: -10px;
+        left: 20px;
+        z-index: 100;
+    }
+}
+.linechart-result-legend-player.rank-1 {
+    border-bottom: 10px solid rgb(255, 215, 0);
+    padding-bottom: 5px;
+}
+.linechart-result-legend-player.rank-2 {
+    border-bottom: 7px solid rgb(192, 192, 192);
+    padding-bottom: 5px;
+}
+.linechart-result-legend-player.rank-3 {
+    border-bottom: 5px solid rgb(205, 127, 50);
+    padding-bottom: 5px;
+}
+
+.linechart-tooltip {
+    background-color: rgb(26, 26, 26);
+    width: fit-content;
+    padding: 10px;
+    border-radius: 10px;
+    z-index: 1000;
+    color: white;
+}
+
+.linechart-tooltip-scores {
+    display: grid;
+    column-gap: 5px;
+    row-gap: 5px;
+}
+
+.linechart-tooltip-score {
+    &.player {
+        grid-column-start: 1;
+        grid-column-end: 1;
+        text-align: left;
+        padding: 3px;
+        border-radius: 5px;
+        border: 1px solid rgb(0, 0, 0);
+    }
+    &.score {
+        grid-column-start: 2;
+        grid-column-end: 2;
+    }
+    &.delta-score {
+        grid-column-start: 3;
+        grid-column-end: 3;
+    }
+}

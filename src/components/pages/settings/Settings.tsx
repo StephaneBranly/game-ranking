@@ -1,10 +1,6 @@
 import React from 'react';
-import {
-  Container,
-  Grid,
-} from "@material-ui/core";
 import About from './About';
-import SettingsHeader, { SettingsHeaderProps } from './SettingsHeader';
+import SettingsHeader from './SettingsHeader';
 
 
 export interface SettingsProps{
@@ -15,17 +11,9 @@ export interface SettingsProps{
 
 export default function Settings(props: SettingsProps){  
     return (
-    <Container>
-        <Grid
-            container
-            direction="column"
-            justify="flex-start"
-            alignItems="stretch"
-            spacing={1}
-        >
-          <SettingsHeader {...props}/>
-          <About/>
-       </Grid>
-    </Container>
+    <div>
+      <SettingsHeader {...props}/>
+      <About/>
+    </div>
   );
 }

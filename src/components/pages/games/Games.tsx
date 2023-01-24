@@ -1,9 +1,7 @@
+import "./Games.scss"
+
 import React, { useState } from 'react';
-import {
-  Container,
-  Grid,
-} from "@material-ui/core";
-import GamesHeader from './GamesHeader';
+import GamesAdd from './GamesAdd';
 import GameCard from './GameCard';
 import { gameType, playerType } from '../../../types/data';
 import GameCompleteCard from './GameCompleteCard';
@@ -20,7 +18,7 @@ export default function Games(props: GamesProps){
     const [currentGame, setCurrentGame] = useState({game: undefined, edit: false} as unknown as {game: gameType|undefined, edit: boolean});
 
     const renderGameCards = (games: Array<gameType>) => {
-        return (games.map((game: gameType) => <GameCard game={game} changeGameData={changeGameData} setCurrentGame={setCurrentGame} players={props.players} ></GameCard>))
+        return (games.map((game: gameType) => <GameCard game={game} changeGameData={changeGameData} setCurrentGame={setCurrentGame} players={props.players} active={currentGame.game===game} />))
     };
 
     const changeGameData = (game: gameType, uuid: string) => {
@@ -37,21 +35,12 @@ export default function Games(props: GamesProps){
     }
 
     return (
-    <Container>
-        { currentGame.game?
-            <GameCompleteCard game={currentGame.game} edit={currentGame.edit} changeGameData={changeGameData} setCurrentGame={setCurrentGame} players={props.players} addNotification={props.addNotification} deleteGame={deleteGame}></GameCompleteCard>
-            :
-            <Grid
-                container
-                direction="column"
-                justify="flex-start"
-                alignItems="stretch"
-                spacing={1}
-            >
-                <GamesHeader games={props.games} setGames={props.setGames} setCurrentGame={setCurrentGame}></GamesHeader>
+        <div className="games-container">
+            <div className='games'>
+                <GamesAdd games={props.games} setGames={props.setGames} setCurrentGame={setCurrentGame} />
                 {renderGameCards(props.games)}
-        </Grid>
-        }
-    </Container>
-  );
+            </div>
+            {currentGame.game && <GameCompleteCard game={currentGame.game} edit={false} changeGameData={changeGameData} setCurrentGame={setCurrentGame} players={props.players} deleteGame={deleteGame} addNotification={props.addNotification}></GameCompleteCard>}
+        </div>
+    );
 }

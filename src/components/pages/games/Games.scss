@@ -1,0 +1,20 @@
+.games {
+    display: flex;
+    padding:0 80vw 0 50px ;
+    gap: 10px;
+    justify-content: flex-start;
+    flex-direction: row;
+    overflow-x: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;
+    height: 220px;
+    box-sizing: border-box;
+}
+
+.games-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: stretch;
+    flex-direction: column;
+    width: 100vw;
+}

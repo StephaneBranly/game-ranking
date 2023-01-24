@@ -1,0 +1,28 @@
+.score-chip {
+    background-color: black;
+    border: 2px solid black;
+    border-radius: 15px;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 5px;
+    & > .first {
+        color: rgb(255, 222, 10);
+    }
+    & > .second {
+        color: rgb(189, 189, 189);
+    }
+    & > .third {
+        color: rgb(212, 102, 7);
+    }
+
+    &.delta-negative {
+        color: #FF2020;
+        border: 2px solid #FF2020;
+    }
+    &.delta-positive {
+        color: #10FFB0;
+        border: 2px solid #10FFB0;
+    }
+}

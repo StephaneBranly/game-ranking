@@ -1,0 +1,60 @@
+.result-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    min-height: 150px;
+    max-height: 150px;
+    width: 150px;
+    // min-width: 150px;
+    // max-width: 150px;
+    background-color: #0000003e;
+    border-radius: 20px;
+    color: white;
+    padding: 10px;
+    box-sizing: border-box;
+    transition: background-color 0.2s ease-in-out;
+    &:hover {
+        min-width: none !important;
+        max-width: none !important;
+        width: auto !important;
+        background-color: #a7a7a724;
+        & > .result-card-players {
+            padding-right: 25px;
+        }
+    }
+}
+
+.result-card-players {
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;
+    gap: 25px;
+    height: 300px;
+    padding-top: 10px;
+
+}
+
+.result-card-rank {
+    position: relative;
+    background-color: rgb(18, 18, 18);
+    top: -15px;
+    left: 25px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.result-card-player {
+    position: relative;
+
+    & > .score-chip {
+        position: absolute;
+        top: -10px;
+        left: 20px;
+        z-index: 100;
+    }
+}

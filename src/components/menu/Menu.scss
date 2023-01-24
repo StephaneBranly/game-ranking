@@ -1,0 +1,19 @@
+.menu {
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    background-color: #333;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    box-sizing: border-box;
+    padding: 10px;
+    overflow: hidden;
+    z-index: 100;
+
+    &.open {
+        display: flex;
+    }
+
+}

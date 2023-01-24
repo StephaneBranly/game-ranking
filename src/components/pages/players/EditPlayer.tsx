@@ -1,15 +1,10 @@
 import React from 'react';
-import {
-    Button,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle,
-  Input,
-} from "@material-ui/core";
+
 import { playerType } from '../../../types/data';
 import { ChromePicker } from 'react-color';
+import Dialog from '../../dialog/Dialog';
+import Button from '../../button/Button';
+import Input from '../../input/Input';
 
 export interface EditPlayerProps{
     player: playerType
@@ -20,36 +15,26 @@ export interface EditPlayerProps{
 export default function EditPlayer(props: EditPlayerProps){  
     const [player, setPlayer] = React.useState(props.player);
  
-    const handleClose = (event: any, reason: string) => {
-    if (reason === 'clickaway') {
-        return;
-    }
+    const handleClose = () => {
         props.setEditMode(false);
     };
 
+    const renderDialogContent = () => {
+      return (<div className='vertical-centered gap-10'>
+          <Input label='Username' type='text' value={player.username} onChange={(e) => setPlayer({...player, username: e.target.value})} />
+          <ChromePicker color={player.color} onChangeComplete={(c) => setPlayer({...player, color: c.hex})} disableAlpha={true} className='color-picker' />
+          </div>)
+    }
     return (
-    <Dialog
-        open={true}
-        onClose={handleClose}
-    >
-        <DialogTitle>
-          {"Edit player"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            <Input value={player.username} onChange={(e) => setPlayer({...player, username: e.target.value})} ></Input>
-          </DialogContentText>
-          <DialogContentText>
-            <ChromePicker color={player.color} onChangeComplete={(c) => setPlayer({...player, color: c.hex})} disableAlpha={true}/>
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => props.setEditMode(false)} autoFocus>Cancel</Button>
-          <Button onClick={() => {props.handleChangePlayer(player); props.setEditMode(false);}} variant="outlined">
-            Update
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <Dialog
+          open={true}
+          onClose={handleClose} 
+          title={'Edit player'} 
+          content={renderDialogContent()}
+          actions={<>
+          <Button onClick={() => props.setEditMode(false)} text='Cancel'/>
+          <Button onClick={() => {props.handleChangePlayer(player); props.setEditMode(false);}} text='Update' style={{color: "#0DF505", borderColor: "#0DF505"}} />
+        </>}    />
   );
 }
 

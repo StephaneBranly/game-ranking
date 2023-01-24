@@ -1,3 +1,4 @@
+import "./Pages.scss";
 import React from 'react';
 import Players from "./players/Players"
 import Settings from "./settings/Settings"
@@ -21,18 +22,20 @@ export default function Pages(props: PagesProps){
   
   const renderPage = (props: PagesProps) => {
     switch(props.currentPage) {
-        case 'players':
-          return <Players players={props.players} games={props.games} setPlayers={props.setPlayers} addNotification={props.addNotification}></Players>;
-        case 'settings':
-          return <Settings handlerSaveData={props.handlerSaveData} handlerLoadData={props.handlerLoadData} handlerResetData={props.handlerResetData}></Settings>;
-        case 'games':
-          return <Games games={props.games} setGames={props.setGames} players={props.players} addNotification={props.addNotification}></Games>    
+        // case 'players':
+        //   return <Players players={props.players} games={props.games} setPlayers={props.setPlayers} addNotification={props.addNotification}></Players>;
+        // case 'settings':
+        //   return <Settings handlerSaveData={props.handlerSaveData} handlerLoadData={props.handlerLoadData} handlerResetData={props.handlerResetData}></Settings>;
+        // case 'games':
+        //   return <></>
         default:
           return <></>;
       }
   };
 
   return (
-    renderPage(props)
+    <div className="pages">
+      {renderPage(props)}
+    </div>
   );
 }

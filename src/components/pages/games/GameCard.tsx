@@ -1,103 +1,59 @@
 import React from 'react';
-import {
-  makeStyles,
-  createStyles,
-  Card,
-  Grid,
-  Typography,
-  Avatar
-} from "@material-ui/core";
+
+import "./GameCard.scss"
+
+import Card from '../../card/Card';
+
 import { gameType, playerType } from '../../../types/data';
-import { AvatarGroup } from '@material-ui/lab';
 import { getPlayerLabel, getPlayerProfile } from '../../../utils/lib';
+import Avatar from '../../avatar/Avatar';
+import AvatarGroup from '../../avatar/AvatarGroup';
+import GameCompleteCard from './GameCompleteCard';
 
-const useStyles = makeStyles((theme) =>
-createStyles({  
-    Padding: {
-        padding: theme.spacing(2),
-    },
-    first: {
-        color: "#FFD700",
-    },
-    second: {
-        color: "#C0C0C0",
-
-    },
-    third: {
-        color: "#cd7f32",
-    },
-    ColorPicker: {
-        position: "absolute",
-        zIndex: 2
-    },
-    Name: {
-        paddingLeft: theme.spacing(1),
-        paddingRight: theme.spacing(1),
-        borderRadius: theme.spacing(1),
-        margin: "0px",
-        border: "1px solid rgba(0,0,0,0.1)",
-        width: theme.spacing(17)
-    }
-}),
-);
 export interface GameCardProps{
     game: gameType,
     players: playerType[],
     changeGameData: (arg0: gameType, arg1: string) => void,
     setCurrentGame: React.Dispatch<React.SetStateAction<{game: gameType|undefined, edit: boolean}>>
+    active: boolean
 }
 
-export default function GameCard(props: GameCardProps){
-  const classes = useStyles(); 
-
+const GameCard = (props: GameCardProps) => {
     const renderPlayers = () => {
-        return (<AvatarGroup max={4}>
+        if (props.game.rankHistory.length === 0)
+            return <div></div>
+        return (<AvatarGroup max={3}>
                 {
                     props.game.rankHistory[props.game.rankHistory.length-1].playersRank.sort((a, b) => a.score < b.score ? 1 : -1).map((player,index) => {
                         const playerProfile = getPlayerProfile(props.players,player.playerUuid)
-                        return <Avatar alt={playerProfile.username} style={{backgroundColor: playerProfile.color}}>{getPlayerLabel(playerProfile)}</Avatar>
+                        return <Avatar label={getPlayerLabel(playerProfile)} color={playerProfile.color} key={index}/>
                     })
                 }
               </AvatarGroup>)
     }
 
+    const handlerOnClick = () => {
+        if(props.active) {
+            props.setCurrentGame({game: undefined, edit: false})
+            return
+        }
+        props.setCurrentGame({game: props.game, edit: false})
+    }
     return (
-    <Grid item spacing={1}>
-        <Card className={classes.Padding} onClick={() => props.setCurrentGame({game: props.game, edit: false})}>
-            <Grid
-                container
-                direction="row"
-                justify="space-between"
-                alignItems="baseline"
-                alignContent="space-between"
-            >
-                <Grid item>
-                    <Grid
-                        container
-                        direction="row"
-                        justify="space-between"
-                        alignItems="baseline"
-                        spacing={1}
-                    >
-                        <Grid item>
-                            <Typography>{props.game.gamename}</Typography>
-                        </Grid>
-                    </Grid>
-                </Grid>
-                <Grid item>
-                    <Grid
-                        container
-                        direction="row"
-                        justify="space-between"
-                        alignItems="baseline"
-                        spacing={1}
-                    >
-                        <Grid item><Typography>{`${props.game.results.length} results | `}</Typography></Grid>
-                        <Grid item>{renderPlayers()}</Grid>
-                    </Grid>
-                </Grid>
-            </Grid>
-        </Card>
-    </Grid>
+    <>
+        <div className={`game-card ${props.active?'active':''}`} onClick={handlerOnClick}>
+            {!props.active && <>
+                <p>{props.game.gamename}</p>
+                <div className='game-card-stats'>
+                    {renderPlayers()}
+                </div>
+            </>}
+        </div>
+        <div className={`game-card-outside-name-container ${props.active?'active':''}`}>
+            <div className='game-card-outside-name'>{props.game.gamename}</div>
+        </div>
+    </>
   );
 }
+
+export default GameCard;

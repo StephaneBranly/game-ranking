@@ -1,0 +1,41 @@
+// import theme.scss file
+@import '../../utils/theme.scss';
+
+.input-container {
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.input-container > label {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    font-size: 0.9rem;
+    color: rgb(193, 193, 193);
+    transition: all 0.2s ease-in-out;
+}
+
+.input-container > input {
+    width: 100%;
+    padding: 1.5rem 0 0.5rem 0;
+    font-size: 1.2rem;
+    border: none;
+    border-bottom: 1px solid white;
+    background: none;
+    outline: none;
+    transition: all 0.2s ease-in-out;
+    color: white;
+
+    &:hover {
+        border-bottom: 1px solid $selected-color;
+        color: $selected-color;
+        background-color: $selected-background-color;
+    }
+
+    &:focus {
+        border-bottom: 1px solid $selected-color;
+        color: $selected-color;
+        background-color: rgba(0, 176, 255, 0.1);
+    }
+}

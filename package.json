@@ -19,6 +19,7 @@
     "react-mathjax": "^1.0.1",
     "react-scripts": "4.0.3",
     "recharts": "^2.1.4",
+    "sass": "^1.57.1",
     "uuidv4": "^6.2.12",
     "web-vitals": "^1.1.2"
   },

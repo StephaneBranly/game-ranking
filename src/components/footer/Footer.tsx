@@ -18,7 +18,6 @@ const useStyles = makeStyles((theme) =>
 createStyles({
   root: {
     flexGrow: 1,
-    backgroundColor: theme.palette.secondary.main,
     width: "100%",
     position: 'fixed',
     bottom: 0,

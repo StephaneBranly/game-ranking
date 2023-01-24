@@ -1,46 +1,27 @@
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  makeStyles,
-  createStyles,
-} from "@material-ui/core";
-import EmojiEvents from '@material-ui/icons/EmojiEvents';
-import React, { Component } from "react";
+import './Header.scss'
 
+import EmojiEvents from '@material-ui/icons/EmojiEvents'
+import React, { Component } from "react"
+import { Settings, Group } from '@material-ui/icons';
 
-const useStyles = makeStyles((theme) =>
-createStyles({
-  root: {
-    flexGrow: 1,
-    marginBottom: theme.spacing(4),
-  },
-  AppBar: {
-    background: "radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 110%)"
-  },
-  EmojiEvents: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
-}),
-);
-
-export default function Header(){
-  const classes = useStyles(); 
-  
-  return (
-      <div className={classes.root}>
-          <AppBar className={classes.AppBar} position="static">
-          <Toolbar>
-              <EmojiEvents className={classes.EmojiEvents}/>
-              <Typography variant="h6" className={classes.title}>
-                  Game Ranking
-              </Typography>
-          </Toolbar>
-          </AppBar>
-      </div>
-      );
-  
+export interface HeaderProps{
+  setSettingsOpen: React.Dispatch<React.SetStateAction<boolean>>,
+  setPlayersOpen: React.Dispatch<React.SetStateAction<boolean>>,
 }
+
+const Header = (props: HeaderProps) => {
+  return (
+      <header>
+        <div>
+          <h1>Game Ranking</h1>
+        </div>
+        <div className='header-right'>
+          <div className='header-icon-button' onClick={() => props.setSettingsOpen(true)}><Settings fontSize='large'/></div>
+          <div className='header-icon-button'  onClick={() => props.setPlayersOpen(true)}><Group fontSize='large'/></div>
+          <div className='today-date'>{new Date().toLocaleDateString()}</div>
+        </div>
+      </header>
+    );
+}
+
+export default Header
